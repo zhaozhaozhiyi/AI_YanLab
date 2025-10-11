@@ -16,17 +16,97 @@
   
   <!-- Hero Section 样式 -->
   <style>
+    /* 防止横向滚动 */
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+    
+    main {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    
     /* Hero Section 主容器 */
     .hero-section {
-      position: relative;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
-      color: white;
-      overflow: visible;
-      min-height: 70vh;
-      padding: 2rem 0 6rem;
-      display: flex;
-      flex-direction: column;
-    }
+        position: relative;
+        background: conic-gradient(
+          from 0deg at 50% 35%,
+          #ff6b9d,
+          #8b5cf6,
+          #3b82f6,
+          #10b981,
+          #fbbf24,
+          #ec4899,
+          #ff6b9d
+        );
+        color: white;
+        overflow: hidden;
+        min-height: 70vh;
+        padding: 2rem 0 6rem;
+        display: flex;
+        flex-direction: column;
+        animation: heroGradientFlow 8s linear infinite;
+      }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: conic-gradient(
+          from 180deg at 50% 35%,
+          #10b981,
+          #fbbf24,
+          #ec4899,
+          #ff6b9d,
+          #8b5cf6,
+          #3b82f6,
+          #10b981
+        );
+        opacity: 0.6;
+        animation: heroGradientFlow2 12s linear infinite reverse;
+        z-index: 0;
+      }
+      
+    @keyframes heroGradientFlow {
+        0% {
+          transform: scale(1) rotate(0deg);
+        }
+        25% {
+          transform: scale(1.01) rotate(1deg);
+        }
+        50% {
+          transform: scale(1) rotate(0deg);
+        }
+        75% {
+          transform: scale(1.01) rotate(-1deg);
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+    @keyframes heroGradientFlow2 {
+        0% {
+          filter: blur(0px);
+          transform: scale(1) rotate(0deg);
+        }
+        33% {
+          filter: blur(1px);
+          transform: scale(1.02) rotate(2deg);
+        }
+        66% {
+          filter: blur(0px);
+          transform: scale(1) rotate(0deg);
+        }
+        100% {
+          filter: blur(1px);
+          transform: scale(1.02) rotate(-2deg);
+        }
+      }
     
     /* 背景装饰 */
     .hero-background {
@@ -65,14 +145,16 @@
     
     /* 主要内容容器 */
     .hero-content {
-      position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      min-height: calc(70vh - 8rem);
-    }
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        min-height: calc(70vh - 8rem);
+        z-index: 1;
+        overflow: hidden;
+      }
     
     .hero-container {
       max-width: 1200px;
@@ -83,18 +165,21 @@
       text-align: center;
       gap: 1.5rem;
       padding: 1rem 0;
+      overflow: hidden;
     }
     
     /* 图片区域 */
     .hero-image-section {
       position: relative;
       margin-bottom: 1rem;
+      overflow: visible;
     }
     
     .hero-image-wrapper {
-      position: relative;
-      display: inline-block;
-    }
+        position: relative;
+        display: inline-block;
+        z-index: 2;
+      }
     
     .hero-image-container {
       position: relative;
@@ -102,20 +187,176 @@
       height: 240px;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      background: white;
+      z-index: 2;
+      padding: 4px;
+      box-shadow: 
+         0 10px 40px rgba(0, 0, 0, 0.15),
+         inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+    
+    /* 移除图片光晕层，因为背景本身就是动态渐变 */
+    
+    
+    /* 波浪旋转动画 */
+    @keyframes waveRotate {
+      0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      50% {
+        transform: translate(-50%, -50%) rotate(180deg);
+      }
+    }
+    
+    /* 波浪形状变化1 - 增强波浪幅度 */
+    @keyframes waveShape1 {
+      0%, 100% {
+        border-radius: 45% 55% 48% 52% / 55% 45% 55% 45%;
+      }
+      25% {
+        border-radius: 55% 45% 45% 55% / 45% 55% 48% 52%;
+      }
+      50% {
+        border-radius: 48% 52% 55% 45% / 52% 48% 45% 55%;
+      }
+      75% {
+        border-radius: 45% 55% 52% 48% / 48% 45% 55% 45%;
+      }
+    }
+    
+    /* 波浪形状变化2 - 增强波浪幅度 */
+    @keyframes waveShape2 {
+      0%, 100% {
+        border-radius: 52% 48% 55% 45% / 45% 55% 45% 55%;
+      }
+      25% {
+        border-radius: 45% 55% 48% 52% / 55% 45% 52% 48%;
+      }
+      50% {
+        border-radius: 55% 55% 45% 45% / 48% 52% 55% 45%;
+      }
+      75% {
+        border-radius: 48% 45% 52% 55% / 55% 48% 45% 52%;
+      }
+    }
+    
+    /* 选中状态 */
+    .hero-image-container.selected {
+      animation: pulse 0.6s ease-in-out;
+      box-shadow: 
+        0 15px 60px rgba(255, 255, 255, 0.4),
+        inset 0 0 0 3px rgba(255, 255, 255, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.7);
+      transform: scale(1.05);
+    }
+    
+    .hero-section.selected {
+      animation: heroGradientRotate 3s ease-in-out infinite;
+    }
+
+    @keyframes heroGradientRotate {
+      0% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.02);
+      }
+      50% {
+        transform: scale(1);
+      }
+      75% {
+        transform: scale(1.02);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.03);
+      }
     }
     
     .hero-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease, filter 0.2s ease;
+      opacity: 1;
+      filter: blur(0px);
+      position: relative;
+      z-index: 1;
+      border-radius: 50%;
+    }
+    
+    .hero-image.fast-scrolling {
+      filter: blur(3px);
+    }
+    
+    .hero-image.selected {
+      transform: scale(1.05);
+      filter: blur(0px);
     }
     
     .hero-image:hover {
       transform: scale(1.05);
+    }
+    
+    /* 图片占位符 */
+    .hero-image-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: white;
+    }
+    
+    .hero-image-placeholder i {
+      font-size: 5rem;
+      opacity: 0.9;
+    }
+    
+    /* AI筛选提示 */
+    .ai-selecting-hint {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      color: #ec4899;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+      z-index: 15;
+    }
+    
+    .ai-selecting-hint.active {
+      opacity: 1;
+    }
+    
+    .ai-selecting-hint i {
+      margin-right: 6px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     
     /* 装饰标签 */
@@ -132,6 +373,7 @@
       gap: 0.25rem;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
       backdrop-filter: blur(10px);
+      z-index: 15;
     }
     
     .hero-badge-1 {
@@ -168,6 +410,7 @@
       justify-content: center;
       backdrop-filter: blur(10px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 10;
     }
     
     .hero-icon-1 {
@@ -234,7 +477,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
       transition: all 0.3s ease;
     }
     
@@ -302,10 +545,6 @@
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
-    }
-    
-    .hero-image-container {
-      animation: float 6s ease-in-out infinite;
     }
     
     .hero-decoration-1 {
@@ -873,13 +1112,23 @@
           <div class="hero-image-section">
             <div class="hero-image-wrapper">
               <!-- 主图片 -->
-              <div class="hero-image-container">
+              <div class="hero-image-container" id="heroImageContainer">
                 <img 
-                  src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=500&h=500&fit=crop&crop=face&auto=format&q=80" 
+                  id="heroImage"
+                  src="/web/assets/images/face/face1.jpg" 
                   alt="AI颜值评估示例" 
                   class="hero-image"
-                  loading="lazy"
+                  loading="eager"
                 >
+                <!-- 占位符（图片加载失败时显示） -->
+                <div class="hero-image-placeholder" id="heroImagePlaceholder" style="display: none;">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <!-- AI筛选提示 -->
+                <div class="ai-selecting-hint" id="aiSelectingHint">
+                  <i class="fas fa-sync-alt"></i>
+                  <span>AI智能筛选中...</span>
+                </div>
               </div>
               
               <!-- 装饰元素 -->
@@ -1106,9 +1355,192 @@
 
   <!-- 页面脚本 -->
   <script>
+    // 主图片轮播配置
+    const heroImages = [
+      '/web/assets/images/face/face1.jpg',
+      '/web/assets/images/face/face2.jpg',
+      '/web/assets/images/face/face3.jpg',
+      '/web/assets/images/face/face4.png',
+      '/web/assets/images/face/face5.png',
+      '/web/assets/images/face/face6.png',
+      '/web/assets/images/face/face7.png',
+      '/web/assets/images/face/face8.png',
+      '/web/assets/images/face/face9.png',
+      '/web/assets/images/face/face10.png',
+      '/web/assets/images/face/face11.png'
+    ];
+    
+    let currentImageIndex = 0;
+    let imageCarouselTimeout = null;
+    let isCarouselRunning = false;
+    
+    // 切换图片（无动画）
+    function switchImage(index) {
+      const heroImage = document.getElementById('heroImage');
+      if (heroImage) {
+        heroImage.src = heroImages[index];
+      }
+    }
+    
+    // 阶段1: 快速滚动
+    function fastScrollPhase(callback) {
+      const heroImage = document.getElementById('heroImage');
+      const container = document.getElementById('heroImageContainer');
+      const hint = document.getElementById('aiSelectingHint');
+      
+      if (!heroImage || !container) return;
+      
+      // 显示提示和模糊效果
+      heroImage.classList.add('fast-scrolling');
+      if (hint) hint.classList.add('active');
+      
+      let scrollCount = 0;
+      const maxScrolls = 30; // 快速滚动30次
+      
+      const fastInterval = setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+        switchImage(currentImageIndex);
+        scrollCount++;
+        
+        if (scrollCount >= maxScrolls) {
+          clearInterval(fastInterval);
+          callback();
+        }
+      }, 50); // 每50ms切换一次
+    }
+    
+    // 阶段2: 减速阶段
+    function slowDownPhase(callback) {
+      const heroImage = document.getElementById('heroImage');
+      const delays = [100, 150, 250, 400, 600]; // 逐渐减速
+      let step = 0;
+      
+      function nextStep() {
+        if (step < delays.length) {
+          currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+          switchImage(currentImageIndex);
+          step++;
+          imageCarouselTimeout = setTimeout(nextStep, delays[step - 1]);
+        } else {
+          callback();
+        }
+      }
+      
+      nextStep();
+    }
+    
+    // 阶段3: 选中停留
+    function selectedPhase(callback) {
+      const heroImage = document.getElementById('heroImage');
+      const container = document.getElementById('heroImageContainer');
+      const wrapper = container ? container.parentElement : null;
+      const hint = document.getElementById('aiSelectingHint');
+      
+      if (!heroImage || !container) return;
+      
+      // 移除模糊，添加选中效果
+      heroImage.classList.remove('fast-scrolling');
+      heroImage.classList.add('selected');
+      container.classList.add('selected');
+      if (wrapper) wrapper.classList.add('selected');
+      
+      // 隐藏提示
+      if (hint) hint.classList.remove('active');
+      
+      // 停留3秒
+      imageCarouselTimeout = setTimeout(() => {
+        // 移除选中效果
+        heroImage.classList.remove('selected');
+        container.classList.remove('selected');
+        if (wrapper) wrapper.classList.remove('selected');
+        
+        // 短暂淡出
+        heroImage.style.opacity = '0.7';
+        setTimeout(() => {
+          heroImage.style.opacity = '1';
+          callback();
+        }, 300);
+      }, 3000); // 停留3秒
+    }
+    
+    // 开始一轮完整的"开盲盒"动画
+    function startBlindBoxAnimation() {
+      if (isCarouselRunning) return;
+      isCarouselRunning = true;
+      
+      // 阶段1: 快速滚动
+      fastScrollPhase(() => {
+        // 阶段2: 减速
+        slowDownPhase(() => {
+          // 阶段3: 选中停留
+          selectedPhase(() => {
+            isCarouselRunning = false;
+            // 等待1秒后开始下一轮
+            imageCarouselTimeout = setTimeout(() => {
+              startBlindBoxAnimation();
+            }, 1000);
+          });
+        });
+      });
+    }
+    
+    // 停止图片轮播
+    function stopImageCarousel() {
+      if (imageCarouselTimeout) {
+        clearTimeout(imageCarouselTimeout);
+        imageCarouselTimeout = null;
+      }
+      isCarouselRunning = false;
+      
+      // 清理状态
+      const heroImage = document.getElementById('heroImage');
+      const container = document.getElementById('heroImageContainer');
+      const wrapper = container ? container.parentElement : null;
+      const hint = document.getElementById('aiSelectingHint');
+      
+      if (heroImage) {
+        heroImage.classList.remove('fast-scrolling', 'selected');
+      }
+      if (container) {
+        container.classList.remove('selected');
+      }
+      if (wrapper) {
+        wrapper.classList.remove('selected');
+      }
+      if (hint) {
+        hint.classList.remove('active');
+      }
+    }
+    
+    // 启动图片轮播（开盲盒模式）
+    function startImageCarousel() {
+      stopImageCarousel();
+      // 延迟1秒后开始第一轮
+      imageCarouselTimeout = setTimeout(() => {
+        startBlindBoxAnimation();
+      }, 1000);
+    }
+    
     // 页面加载时渲染文章列表
     document.addEventListener('DOMContentLoaded', () => {
       renderArticles();
+      
+      // 启动主图片轮播
+      startImageCarousel();
+      
+      // 页面可见性变化时，暂停/恢复轮播
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          stopImageCarousel();
+        } else {
+          startImageCarousel();
+        }
+      });
+    });
+    
+    // 页面卸载时清理定时器
+    window.addEventListener('beforeunload', () => {
+      stopImageCarousel();
     });
 
     // 渲染文章列表
