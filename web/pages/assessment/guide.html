@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍照引导 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .guide-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(236, 72, 153, 0.15);
+    }
+
+    .angle-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fef7fb 100%);
+      border: 2px solid #fce7f3;
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .angle-card:hover {
+      border-color: #ec4899;
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.2);
+    }
+
+    .angle-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      border-radius: 50%;
+      color: white;
+      font-size: 2rem;
+    }
+
+    .tip-item {
+      background: #fef7fb;
+      border-left: 4px solid #ec4899;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .tip-item:hover {
+      background: #fce7f3;
+      transform: translateX(5px);
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .start-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+    }
+
+    .start-button:active {
+      transform: translateY(0);
+    }
+
+    .header-gradient {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 2rem 1rem;
+      border-radius: 0 0 30px 30px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .pulse-animate {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <div class="header-gradient">
+    <div class="max-w-4xl mx-auto">
+      <button onclick="Router.back()" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回</span>
+      </button>
+      <div class="text-center">
+        <div class="badge">
+          <i class="fas fa-crown mr-1"></i>
+          专业AI评估
+        </div>
+        <h1 class="text-3xl font-bold mb-2">免费颜值评估</h1>
+        <p class="text-white/90">仅需30秒，获取专业面部分析报告</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容 -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- 拍照角度说明 -->
+    <div class="guide-card p-8 mb-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <i class="fas fa-camera text-pink-500 mr-2"></i>
+        拍照角度说明
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- 正面照 -->
+        <div class="angle-card text-center">
+          <div class="angle-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">正面照</h3>
+          <p class="text-gray-600 text-sm mb-3">面部完整，正对镜头</p>
+          <div class="flex items-center justify-center text-pink-500 text-sm">
+            <i class="fas fa-check-circle mr-1"></i>
+            <span>必拍</span>
+          </div>
+        </div>
+
+        <!-- 左侧45度 -->
+        <div class="angle-card text-center">
+          <div class="angle-icon">
+            <i class="fas fa-user-slash" style="transform: rotate(-45deg);"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">左侧45°</h3>
+          <p class="text-gray-600 text-sm mb-3">轻微转向左侧</p>
+          <div class="flex items-center justify-center text-pink-500 text-sm">
+            <i class="fas fa-check-circle mr-1"></i>
+            <span>必拍</span>
+          </div>
+        </div>
+
+        <!-- 右侧45度 -->
+        <div class="angle-card text-center">
+          <div class="angle-icon">
+            <i class="fas fa-user-slash" style="transform: rotate(45deg);"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">右侧45°</h3>
+          <p class="text-gray-600 text-sm mb-3">轻微转向右侧</p>
+          <div class="flex items-center justify-center text-pink-500 text-sm">
+            <i class="fas fa-check-circle mr-1"></i>
+            <span>必拍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 拍照小贴士 -->
+    <div class="guide-card p-8 mb-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">
+        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+        拍照小贴士
+      </h2>
+      
+      <div class="space-y-4">
+        <div class="tip-item">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-sun"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">光线充足</h3>
+              <p class="text-gray-600 text-sm">在光线明亮的环境下拍摄，避免背光和强光直射</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-item">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-smile"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">面部放松</h3>
+              <p class="text-gray-600 text-sm">保持自然表情，面部放松，不要刻意做表情</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-item">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">五官清晰</h3>
+              <p class="text-gray-600 text-sm">确保面部五官清晰可见，不要被头发遮挡</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-item">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-ban"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">避免遮挡</h3>
+              <p class="text-gray-600 text-sm">拍摄时摘掉眼镜、口罩等遮挡物，露出完整面部</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-item">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center mr-3">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-1">隐私保护</h3>
+              <p class="text-gray-600 text-sm">您的照片仅用于AI分析，我们承诺严格保护您的隐私</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 评估优势说明 -->
+    <div class="guide-card p-8 mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <i class="fas fa-star text-yellow-500 mr-2"></i>
+        为什么选择我们
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">AI智能分析</h3>
+          <p class="text-gray-600 text-sm">采用先进AI技术，精准识别面部问题</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">专家级报告</h3>
+          <p class="text-gray-600 text-sm">专业医美专家团队提供权威建议</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white text-2xl">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">隐私保护</h3>
+          <p class="text-gray-600 text-sm">数据加密存储，绝不泄露个人信息</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 开始拍照按钮 -->
+    <div class="text-center mb-8">
+      <button onclick="startCamera()" class="start-button mx-auto">
+        <i class="fas fa-camera"></i>
+        <span>开始拍照</span>
+      </button>
+      <p class="text-gray-500 text-sm mt-4">
+        <i class="fas fa-clock mr-1 pulse-animate"></i>
+        预计评估时间：30-60秒
+      </p>
+    </div>
+  </div>
+
+  <!-- 引入共享脚本 -->
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+
+  <script>
+    // 开始拍照
+    function startCamera() {
+      // 检查登录状态
+      if (!Storage.get('currentUser')) {
+        if (confirm('拍照评估需要登录，是否前往登录页面？')) {
+          Router.navigate('/web/pages/auth/login.html');
+          return;
+        }
+      }
+      
+      // 跳转到拍照页面
+      Router.navigate('./camera.html');
+    }
+
+    // 页面加载时的动画效果
+    document.addEventListener('DOMContentLoaded', function() {
+      // 添加淡入动画
+      const cards = document.querySelectorAll('.guide-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
+        }, index * 100);
+      });
+    });
+  </script>
+</body>
+</html>
+

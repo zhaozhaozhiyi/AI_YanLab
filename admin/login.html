@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - AI颜值管家后台管理系统</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="./assets/css/base.css">
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              400: '#FF6B9D',
+              500: '#FF3B7B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-primary-50 to-secondary-50 min-h-screen flex items-center justify-center">
+  
+  <div class="w-full max-w-md px-4">
+    
+    <!-- 登录卡片 -->
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+          <i class="fas fa-spa text-primary-400 text-3xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">AI颜值管家</h1>
+        <p class="text-sm text-gray-500 mt-2">后台管理系统</p>
+      </div>
+
+      <!-- 登录表单 -->
+      <form onsubmit="handleLogin(event)">
+        
+        <!-- 用户名 -->
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-user mr-2 text-gray-400"></i>
+            用户名
+          </label>
+          <input 
+            type="text" 
+            id="username" 
+            class="form-input" 
+            placeholder="请输入用户名"
+            value="admin"
+            required
+          >
+        </div>
+
+        <!-- 密码 -->
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-lock mr-2 text-gray-400"></i>
+            密码
+          </label>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-input" 
+            placeholder="请输入密码"
+            value="admin123"
+            required
+          >
+        </div>
+
+        <!-- 记住我 -->
+        <div class="form-group flex items-center justify-between">
+          <label class="flex items-center cursor-pointer">
+            <input type="checkbox" class="mr-2">
+            <span class="text-sm text-gray-600">记住我</span>
+          </label>
+          <a href="#" class="text-sm text-primary-400 hover:underline">忘记密码？</a>
+        </div>
+
+        <!-- 登录按钮 -->
+        <button type="submit" class="btn btn-primary w-full text-lg">
+          <i class="fas fa-sign-in-alt mr-2"></i>
+          登录
+        </button>
+
+      </form>
+
+      <!-- 提示信息 -->
+      <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+        <p class="text-sm text-blue-700">
+          <i class="fas fa-info-circle mr-2"></i>
+          <strong>测试账号：</strong>
+        </p>
+        <ul class="text-xs text-blue-600 mt-2 space-y-1 ml-6">
+          <li>• 管理员：admin / admin123</li>
+          <li>• 运营：operator / op123</li>
+          <li>• 知识管理员：knowledge / km123</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 版权信息 -->
+    <div class="text-center mt-8 text-sm text-gray-500">
+      <p>AI颜值管家后台管理系统 v2.1</p>
+      <p class="mt-1">© 2024 All Rights Reserved</p>
+    </div>
+
+  </div>
+
+  <!-- 共享工具 -->
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/utils.js"></script>
+  <script src="../shared/router.js"></script>
+
+  <!-- 页面脚本 -->
+  <script>
+    // 处理登录
+    function handleLogin(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // 获取管理员账号列表
+      const adminUsers = Storage.get('adminUsers') || [
+        { id: 1, username: 'admin', password: 'admin123', name: '系统管理员', role: 'admin' },
+        { id: 2, username: 'operator', password: 'op123', name: '运营人员', role: 'operator' },
+        { id: 3, username: 'knowledge', password: 'km123', name: '知识管理员', role: 'knowledge' },
+      ];
+      
+      // 验证账号密码
+      const admin = adminUsers.find(u => u.username === username && u.password === password);
+      
+      if (admin) {
+        // 保存登录信息
+        Storage.set('currentAdmin', admin);
+        Utils.showToast('登录成功！', 'success');
+        
+        // 跳转到后台首页
+        setTimeout(() => {
+          Router.navigate('./index.html');
+        }, 500);
+      } else {
+        Utils.showToast('用户名或密码错误', 'error');
+      }
+    }
+  </script>
+
+</body>
+</html>
+

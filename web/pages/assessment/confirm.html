@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>确认照片 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.2);
+    }
+
+    .photo-image {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      background: #f3f4f6;
+    }
+
+    .photo-label {
+      padding: 0.75rem;
+      text-align: center;
+      font-weight: 600;
+      color: #1f2937;
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+    }
+
+    .retake-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .retake-button:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
+
+    .action-button {
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .submit-button {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+    }
+
+    .submit-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .retake-all-button {
+      background: white;
+      color: #6b7280;
+      border: 2px solid #e5e7eb;
+    }
+
+    .retake-all-button:hover {
+      border-color: #ec4899;
+      color: #ec4899;
+      transform: translateY(-2px);
+    }
+
+    .header-gradient {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 2rem 1rem;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+    }
+
+    .check-icon {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #10b981;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.5);
+    }
+
+    .tip-box {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+      border-left: 4px solid #ec4899;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-image {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <div class="header-gradient">
+    <div class="max-w-4xl mx-auto">
+      <button onclick="Router.back()" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回</span>
+      </button>
+      <div class="text-center">
+        <h1 class="text-2xl font-bold mb-2">确认照片</h1>
+        <p class="text-white/90">请检查照片质量，确认后即可开始评估</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容 -->
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <!-- 照片预览网格 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="photoGrid">
+      <!-- 照片卡片将通过JavaScript动态生成 -->
+    </div>
+
+    <!-- 提示信息 -->
+    <div class="tip-box fade-in">
+      <div class="flex items-start gap-3">
+        <i class="fas fa-info-circle text-pink-500 text-xl mt-1"></i>
+        <div>
+          <h3 class="font-semibold text-gray-800 mb-2">照片质量检查</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>✓ 确保面部清晰可见，无模糊</li>
+            <li>✓ 光线充足，五官清晰</li>
+            <li>✓ 没有遮挡物（眼镜、口罩等）</li>
+            <li>✓ 三个角度都已拍摄完整</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+      <button onclick="retakeAll()" class="action-button retake-all-button w-full sm:w-auto">
+        <i class="fas fa-redo"></i>
+        <span>重新拍摄</span>
+      </button>
+      <button onclick="submitPhotos()" class="action-button submit-button w-full sm:w-auto" id="submitButton">
+        <i class="fas fa-paper-plane"></i>
+        <span>提交评估</span>
+      </button>
+    </div>
+
+    <!-- 隐私保护说明 -->
+    <div class="text-center text-sm text-gray-500">
+      <i class="fas fa-lock mr-1"></i>
+      您的照片采用端到端加密传输，仅用于AI评估分析
+    </div>
+  </div>
+
+  <!-- 图片灯箱 -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">
+      <i class="fas fa-times"></i>
+    </button>
+    <img id="lightboxImage" class="lightbox-image" alt="照片预览">
+  </div>
+
+  <!-- 引入共享脚本 -->
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+
+  <script>
+    let photos = [];
+    
+    const angleLabels = {
+      'front': '正面照',
+      'left': '左侧45°',
+      'right': '右侧45°'
+    };
+
+    // 页面加载时初始化
+    window.addEventListener('load', () => {
+      loadPhotos();
+      renderPhotos();
+    });
+
+    // 加载照片数据
+    function loadPhotos() {
+      photos = Storage.get('capturedPhotos') || [];
+      
+      if (photos.length === 0) {
+        alert('未找到照片数据，请重新拍摄');
+        Router.navigate('./guide.html');
+      }
+    }
+
+    // 渲染照片
+    function renderPhotos() {
+      const photoGrid = document.getElementById('photoGrid');
+      photoGrid.innerHTML = '';
+      
+      photos.forEach((photo, index) => {
+        const card = document.createElement('div');
+        card.className = 'photo-card relative fade-in';
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        card.innerHTML = `
+          <div class="check-icon">
+            <i class="fas fa-check"></i>
+          </div>
+          <button class="retake-button" onclick="retakePhoto(${index})" title="重拍">
+            <i class="fas fa-redo"></i>
+          </button>
+          <img src="${photo.data}" alt="${angleLabels[photo.angle]}" class="photo-image" onclick="openLightbox('${photo.data}')">
+          <div class="photo-label">
+            <i class="fas fa-camera mr-2"></i>
+            ${angleLabels[photo.angle]}
+          </div>
+        `;
+        
+        photoGrid.appendChild(card);
+      });
+    }
+
+    // 打开灯箱
+    function openLightbox(imageSrc) {
+      event.stopPropagation();
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImage = document.getElementById('lightboxImage');
+      
+      lightboxImage.src = imageSrc;
+      lightbox.classList.add('active');
+    }
+
+    // 关闭灯箱
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+    }
+
+    // 重拍单张照片
+    function retakePhoto(index) {
+      event.stopPropagation();
+      
+      if (confirm(`确定要重拍${angleLabels[photos[index].angle]}吗？`)) {
+        // 移除该照片
+        photos.splice(index, 1);
+        Storage.set('capturedPhotos', photos);
+        
+        // 返回拍照页面
+        Router.navigate('./camera.html');
+      }
+    }
+
+    // 重新拍摄所有照片
+    function retakeAll() {
+      if (confirm('确定要重新拍摄所有照片吗？')) {
+        // 清除所有照片
+        Storage.remove('capturedPhotos');
+        
+        // 返回拍照引导页
+        Router.navigate('./guide.html');
+      }
+    }
+
+    // 提交照片开始评估
+    async function submitPhotos() {
+      const submitButton = document.getElementById('submitButton');
+      
+      // 禁用按钮
+      submitButton.disabled = true;
+      submitButton.innerHTML = `
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>提交中...</span>
+      `;
+      
+      try {
+        // 模拟上传照片
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // 生成评估ID
+        const assessmentId = 'ASSESS_' + Date.now();
+        
+        // 保存评估数据
+        Storage.set('currentAssessment', {
+          id: assessmentId,
+          photos: photos,
+          status: 'processing',
+          startTime: Date.now(),
+          userId: Storage.get('currentUser')?.id || 'guest'
+        });
+        
+        // 跳转到评估等待页
+        Router.navigate('./waiting.html');
+        
+      } catch (error) {
+        console.error('提交失败:', error);
+        alert('提交失败，请重试');
+        
+        // 恢复按钮
+        submitButton.disabled = false;
+        submitButton.innerHTML = `
+          <i class="fas fa-paper-plane"></i>
+          <span>提交评估</span>
+        `;
+      }
+    }
+
+    // 阻止灯箱内容点击冒泡
+    document.getElementById('lightboxImage').addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  </script>
+</body>
+</html>
+

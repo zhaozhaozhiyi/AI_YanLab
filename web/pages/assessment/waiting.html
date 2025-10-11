@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI评估中 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      min-height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 背景动画装饰 */
+    .bg-decoration {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      filter: blur(60px);
+    }
+
+    .bg-decoration-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -150px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .bg-decoration-2 {
+      width: 200px;
+      height: 200px;
+      bottom: -100px;
+      right: -100px;
+      animation: float 6s ease-in-out infinite reverse;
+    }
+
+    .bg-decoration-3 {
+      width: 250px;
+      height: 250px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse-slow 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(30px, 30px);
+      }
+    }
+
+    @keyframes pulse-slow {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.3;
+      }
+    }
+
+    /* 主容器 */
+    .waiting-container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+    }
+
+    /* AI分析动画 */
+    .ai-animation {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .ai-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .ai-circle-1 {
+      width: 200px;
+      height: 200px;
+      animation: rotate 3s linear infinite;
+      border-top-color: white;
+    }
+
+    .ai-circle-2 {
+      width: 160px;
+      height: 160px;
+      animation: rotate 2s linear infinite reverse;
+      border-top-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .ai-circle-3 {
+      width: 120px;
+      height: 120px;
+      animation: rotate 1.5s linear infinite;
+      border-top-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .ai-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* 进度条 */
+    .progress-container {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      height: 8px;
+      overflow: hidden;
+      margin: 2rem 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+      border-radius: 50px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    /* 分析步骤 */
+    .analysis-steps {
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      opacity: 0.5;
+    }
+
+    .step-item.active {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(5px);
+    }
+
+    .step-item.completed {
+      opacity: 0.7;
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .step-item.active .step-icon {
+      background: white;
+      color: #ec4899;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .step-item.completed .step-icon {
+      background: #10b981;
+      color: white;
+    }
+
+    .step-content h3 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    /* 提示信息 */
+    .tips-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .tips-box h3 {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tip-text {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景装饰 -->
+  <div class="bg-decoration bg-decoration-1"></div>
+  <div class="bg-decoration bg-decoration-2"></div>
+  <div class="bg-decoration bg-decoration-3"></div>
+
+  <!-- 主要内容 -->
+  <div class="waiting-container fade-in">
+    <!-- AI分析动画 -->
+    <div class="ai-animation">
+      <div class="ai-circle ai-circle-1"></div>
+      <div class="ai-circle ai-circle-2"></div>
+      <div class="ai-circle ai-circle-3"></div>
+      <i class="fas fa-brain ai-icon"></i>
+    </div>
+
+    <!-- 标题和描述 -->
+    <h1 class="text-3xl font-bold mb-3">AI智能分析中</h1>
+    <p class="text-white/90 text-lg mb-4" id="statusText">正在分析您的面部特征...</p>
+
+    <!-- 进度条 -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+    <p class="text-white/80 text-sm" id="progressText">0%</p>
+
+    <!-- 分析步骤 -->
+    <div class="analysis-steps">
+      <div class="step-item" data-step="1">
+        <div class="step-icon">
+          <i class="fas fa-upload"></i>
+        </div>
+        <div class="step-content">
+          <h3>上传照片</h3>
+          <p>正在上传您的面部照片...</p>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="2">
+        <div class="step-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <div class="step-content">
+          <h3>特征识别</h3>
+          <p>AI正在识别面部特征点...</p>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="3">
+        <div class="step-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <div class="step-content">
+          <h3>智能分析</h3>
+          <p>深度分析皮肤状态和面部问题...</p>
+        </div>
+      </div>
+
+      <div class="step-item" data-step="4">
+        <div class="step-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="step-content">
+          <h3>生成报告</h3>
+          <p>正在生成个性化评估报告...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 温馨提示 -->
+    <div class="tips-box">
+      <h3>
+        <i class="fas fa-lightbulb"></i>
+        温馨提示
+      </h3>
+      <p class="tip-text">
+        评估过程通常需要30-60秒，我们的AI系统正在分析数百个面部特征点，
+        为您提供最准确的评估结果。请耐心等待...
+      </p>
+    </div>
+  </div>
+
+  <!-- 引入共享脚本 -->
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/mock.js"></script>
+
+  <script>
+    let currentStep = 0;
+    let progress = 0;
+    const totalSteps = 4;
+    const totalTime = 45000; // 45秒完成评估
+    const stepTime = totalTime / totalSteps;
+
+    // 步骤描述
+    const stepDescriptions = [
+      { text: '正在上传您的面部照片...', progress: 25 },
+      { text: 'AI正在识别面部特征点...', progress: 50 },
+      { text: '深度分析皮肤状态和面部问题...', progress: 75 },
+      { text: '正在生成个性化评估报告...', progress: 100 }
+    ];
+
+    // 更新进度
+    function updateProgress() {
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const statusText = document.getElementById('statusText');
+
+      if (currentStep < totalSteps) {
+        const stepItems = document.querySelectorAll('.step-item');
+        
+        // 更新步骤状态
+        if (currentStep > 0) {
+          stepItems[currentStep - 1].classList.remove('active');
+          stepItems[currentStep - 1].classList.add('completed');
+        }
+        stepItems[currentStep].classList.add('active');
+
+        // 更新进度条和文字
+        const targetProgress = stepDescriptions[currentStep].progress;
+        const statusDescription = stepDescriptions[currentStep].text;
+        
+        statusText.textContent = statusDescription;
+        
+        // 平滑过渡进度条
+        const progressInterval = setInterval(() => {
+          progress += 1;
+          progressBar.style.width = progress + '%';
+          progressText.textContent = progress + '%';
+          
+          if (progress >= targetProgress) {
+            clearInterval(progressInterval);
+          }
+        }, stepTime / (targetProgress - progress));
+
+        currentStep++;
+        
+        if (currentStep < totalSteps) {
+          setTimeout(updateProgress, stepTime);
+        } else {
+          setTimeout(completeAnalysis, stepTime);
+        }
+      }
+    }
+
+    // 完成分析
+    function completeAnalysis() {
+      const statusText = document.getElementById('statusText');
+      statusText.textContent = '分析完成！正在跳转到报告页面...';
+      
+      // 标记最后一步完成
+      const stepItems = document.querySelectorAll('.step-item');
+      stepItems[totalSteps - 1].classList.remove('active');
+      stepItems[totalSteps - 1].classList.add('completed');
+      
+      // 生成模拟评估报告
+      const assessment = Storage.get('currentAssessment');
+      const report = generateMockReport(assessment);
+      
+      // 保存报告
+      Storage.set('currentReport', report);
+      
+      // 更新评估状态
+      assessment.status = 'completed';
+      assessment.completedTime = Date.now();
+      assessment.reportId = report.id;
+      Storage.set('currentAssessment', assessment);
+      
+      // 保存到历史记录
+      saveToHistory(report);
+      
+      // 跳转到报告页面
+      setTimeout(() => {
+        Router.navigate('./report.html');
+      }, 1500);
+    }
+
+    // 生成模拟报告
+    function generateMockReport(assessment) {
+      const reportId = 'REPORT_' + Date.now();
+      
+      return {
+        id: reportId,
+        assessmentId: assessment.id,
+        userId: assessment.userId,
+        createdAt: Date.now(),
+        overallScore: Math.floor(Math.random() * 15) + 75, // 75-90分
+        ageScore: Math.floor(Math.random() * 20) + 70,
+        skinScore: Math.floor(Math.random() * 20) + 70,
+        faceScore: Math.floor(Math.random() * 20) + 70,
+        estimatedAge: 28 + Math.floor(Math.random() * 5),
+        actualAge: 32,
+        issues: [
+          {
+            id: 1,
+            name: '细纹与皱纹',
+            severity: 'medium',
+            score: 72,
+            areas: ['眼周', '额头', '法令纹'],
+            description: '在眼周和额头区域发现轻度细纹，建议及时进行抗衰护理。',
+            suggestions: [
+              '使用含视黄醇的眼霜',
+              '定期进行补水护理',
+              '考虑肉毒素注射治疗'
+            ]
+          },
+          {
+            id: 2,
+            name: '肤色不均',
+            severity: 'low',
+            score: 78,
+            areas: ['面颊', 'T区'],
+            description: '面部肤色整体均匀，局部T区略有色差。',
+            suggestions: [
+              '使用美白精华液',
+              '注意防晒保护',
+              '定期去角质'
+            ]
+          },
+          {
+            id: 3,
+            name: '毛孔粗大',
+            severity: 'medium',
+            score: 70,
+            areas: ['鼻翼', '面颊'],
+            description: 'T区毛孔较为明显，需要加强清洁和收敛护理。',
+            suggestions: [
+              '深层清洁面膜',
+              '使用收敛水',
+              '光子嫩肤治疗'
+            ]
+          }
+        ],
+        recommendations: [
+          {
+            priority: 'high',
+            title: '抗衰老护理',
+            treatments: ['肉毒素', '玻尿酸填充', '热玛吉'],
+            estimatedCost: '8000-15000元',
+            duration: '3-6个月'
+          },
+          {
+            priority: 'medium',
+            title: '肤质改善',
+            treatments: ['光子嫩肤', '水光针', '果酸焕肤'],
+            estimatedCost: '3000-8000元',
+            duration: '1-3个月'
+          }
+        ],
+        strengths: [
+          '面部轮廓清晰，骨骼结构良好',
+          '皮肤底子较好，无明显色斑',
+          '五官比例协调'
+        ]
+      };
+    }
+
+    // 保存到历史记录
+    function saveToHistory(report) {
+      let history = Storage.get('assessmentHistory') || [];
+      history.unshift({
+        id: report.id,
+        date: report.createdAt,
+        score: report.overallScore,
+        preview: '面部综合评估报告'
+      });
+      
+      // 只保留最近20条记录
+      if (history.length > 20) {
+        history = history.slice(0, 20);
+      }
+      
+      Storage.set('assessmentHistory', history);
+      Storage.set('report_' + report.id, report);
+    }
+
+    // 页面加载时开始评估
+    window.addEventListener('load', () => {
+      // 检查是否有评估数据
+      const assessment = Storage.get('currentAssessment');
+      if (!assessment) {
+        alert('未找到评估数据');
+        Router.navigate('./guide.html');
+        return;
+      }
+      
+      // 延迟开始，让动画先展示
+      setTimeout(() => {
+        updateProgress();
+      }, 1000);
+    });
+
+    // 防止用户返回
+    window.addEventListener('popstate', (e) => {
+      if (confirm('评估正在进行中，确定要取消吗？')) {
+        // 清理评估数据
+        Storage.remove('currentAssessment');
+        Storage.remove('capturedPhotos');
+      } else {
+        // 阻止返回
+        window.history.pushState(null, '', window.location.href);
+      }
+    });
+
+    // 添加一个历史记录条目以防止返回
+    window.history.pushState(null, '', window.location.href);
+  </script>
+</body>
+</html>
+

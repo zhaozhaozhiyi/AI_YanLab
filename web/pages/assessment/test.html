@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试页面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .box {
+      border: 2px solid #333;
+      padding: 20px;
+      margin: 20px 0;
+      background: #f5f5f5;
+    }
+    .success { color: green; }
+    .error { color: red; }
+    pre {
+      background: #fff;
+      padding: 10px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>评估模块测试页面</h1>
+  
+  <div class="box">
+    <h2>环境检查</h2>
+    <div id="envCheck">检查中...</div>
+  </div>
+
+  <div class="box">
+    <h2>测试数据</h2>
+    <div id="dataTest">生成中...</div>
+  </div>
+
+  <div class="box">
+    <h2>存储测试</h2>
+    <div id="storageTest">测试中...</div>
+  </div>
+
+  <div class="box">
+    <h2>调试信息</h2>
+    <pre id="debugInfo"></pre>
+  </div>
+
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+
+  <script>
+    // 环境检查
+    function checkEnvironment() {
+      const checks = [];
+      
+      checks.push(`✓ Router: ${typeof Router !== 'undefined' ? '已加载' : '未加载'}`);
+      checks.push(`✓ Utils: ${typeof Utils !== 'undefined' ? '已加载' : '未加载'}`);
+      checks.push(`✓ Storage: ${typeof Storage !== 'undefined' ? '已加载' : '未加载'}`);
+      checks.push(`✓ localStorage: ${typeof localStorage !== 'undefined' ? '可用' : '不可用'}`);
+      
+      document.getElementById('envCheck').innerHTML = checks.join('<br>');
+    }
+
+    // 测试数据生成
+    function testDataGeneration() {
+      try {
+        const testReport = {
+          id: 'TEST_' + Date.now(),
+          overallScore: 82,
+          createdAt: Date.now(),
+          estimatedAge: 28,
+          actualAge: 32,
+          issues: [
+            { name: '测试问题1', severity: 'low', score: 75 },
+            { name: '测试问题2', severity: 'medium', score: 80 }
+          ]
+        };
+        
+        document.getElementById('dataTest').innerHTML = `
+          <span class="success">✓ 数据生成成功</span><br>
+          报告ID: ${testReport.id}<br>
+          综合评分: ${testReport.overallScore}<br>
+          问题数量: ${testReport.issues.length}
+        `;
+        
+        return testReport;
+      } catch (error) {
+        document.getElementById('dataTest').innerHTML = `
+          <span class="error">✗ 数据生成失败: ${error.message}</span>
+        `;
+        return null;
+      }
+    }
+
+    // 测试存储
+    function testStorage(testReport) {
+      try {
+        // 保存测试数据
+        Storage.set('testReport', testReport);
+        
+        // 读取测试数据
+        const retrieved = Storage.get('testReport');
+        
+        if (retrieved && retrieved.id === testReport.id) {
+          document.getElementById('storageTest').innerHTML = `
+            <span class="success">✓ 存储测试成功</span><br>
+            数据已保存并成功读取<br>
+            <button onclick="viewStorage()">查看localStorage</button>
+            <button onclick="clearTestData()">清除测试数据</button>
+          `;
+        } else {
+          document.getElementById('storageTest').innerHTML = `
+            <span class="error">✗ 数据读取不一致</span>
+          `;
+        }
+      } catch (error) {
+        document.getElementById('storageTest').innerHTML = `
+          <span class="error">✗ 存储测试失败: ${error.message}</span>
+        `;
+      }
+    }
+
+    // 查看存储
+    function viewStorage() {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        keys.push(`${key}: ${localStorage.getItem(key).substring(0, 100)}...`);
+      }
+      
+      document.getElementById('debugInfo').textContent = keys.join('\n\n');
+    }
+
+    // 清除测试数据
+    function clearTestData() {
+      Storage.remove('testReport');
+      alert('测试数据已清除');
+    }
+
+    // 生成演示报告
+    function generateDemoReport() {
+      const demoReport = {
+        id: 'REPORT_' + Date.now(),
+        assessmentId: 'ASSESS_TEST',
+        userId: 'USER_TEST',
+        createdAt: Date.now(),
+        isTestData: true,
+        overallScore: 82,
+        ageScore: 75,
+        skinScore: 80,
+        faceScore: 85,
+        estimatedAge: 28,
+        actualAge: 32,
+        issues: [
+          {
+            id: 1,
+            name: '细纹与皱纹',
+            severity: 'medium',
+            score: 72,
+            areas: ['眼周', '额头'],
+            description: '测试描述',
+            suggestions: ['建议1', '建议2']
+          }
+        ],
+        recommendations: [
+          {
+            priority: 'high',
+            title: '抗衰老护理',
+            treatments: ['肉毒素', '玻尿酸'],
+            estimatedCost: '8000-15000元',
+            duration: '3-6个月'
+          }
+        ],
+        strengths: ['优势1', '优势2', '优势3']
+      };
+
+      Storage.set('currentReport', demoReport);
+      alert('演示报告已生成并保存到 localStorage');
+      console.log('演示报告:', demoReport);
+    }
+
+    // 页面加载时执行
+    window.addEventListener('load', () => {
+      checkEnvironment();
+      const testReport = testDataGeneration();
+      if (testReport) {
+        testStorage(testReport);
+      }
+    });
+  </script>
+
+  <div class="box">
+    <h2>操作</h2>
+    <button onclick="generateDemoReport()">生成演示报告数据</button>
+    <button onclick="window.location.href='./report.html'">跳转到报告页面</button>
+    <button onclick="localStorage.clear(); alert('所有数据已清除')">清空所有数据</button>
+  </div>
+</body>
+</html>
+

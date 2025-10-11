@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI颜值管家 - 您的专属AI颜值顾问</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <!-- Hero Section 样式 -->
+  <style>
+    /* Hero Section 主容器 */
+    .hero-section {
+      position: relative;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      overflow: visible;
+      min-height: 70vh;
+      padding: 2rem 0 6rem;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* 背景装饰 */
+    .hero-background {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    
+    .hero-decoration {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      filter: blur(40px);
+    }
+    
+    .hero-decoration-1 {
+      width: 200px;
+      height: 200px;
+      top: 10%;
+      left: 5%;
+    }
+    
+    .hero-decoration-2 {
+      width: 150px;
+      height: 150px;
+      bottom: 15%;
+      right: 10%;
+    }
+    
+    .hero-decoration-3 {
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 20%;
+    }
+    
+    /* 主要内容容器 */
+    .hero-content {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: calc(70vh - 8rem);
+    }
+    
+    .hero-container {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+    
+    /* 图片区域 */
+    .hero-image-section {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero-image-container {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+    
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .hero-image:hover {
+      transform: scale(1.05);
+    }
+    
+    /* 装饰标签 */
+    .hero-badge {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      color: #374151;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+    }
+    
+    .hero-badge-1 {
+      top: 1rem;
+      left: -2rem;
+    }
+    
+    .hero-badge-2 {
+      bottom: 2rem;
+      right: -2rem;
+    }
+    
+    .hero-badge i {
+      font-size: 0.875rem;
+    }
+    
+    .hero-badge-1 i {
+      color: #f59e0b;
+    }
+    
+    .hero-badge-2 i {
+      color: #10b981;
+    }
+    
+    /* 装饰图标 */
+    .hero-icon {
+      position: absolute;
+      width: 3rem;
+      height: 3rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-icon-1 {
+      top: -0.5rem;
+      right: -0.5rem;
+    }
+    
+    .hero-icon-2 {
+      bottom: -1rem;
+      left: -1rem;
+      width: 4rem;
+      height: 4rem;
+    }
+    
+    .hero-icon i {
+      font-size: 1.25rem;
+      color: white;
+    }
+    
+    .hero-icon-2 i {
+      font-size: 1.5rem;
+    }
+    
+    /* 文字内容区域 */
+    .hero-text-section {
+      max-width: 600px;
+    }
+    
+    .hero-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .hero-title-main {
+      color: white;
+    }
+    
+    .hero-title-sub {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .hero-description {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 400;
+    }
+    
+    .hero-button {
+      background: white;
+      color: #ec4899;
+      padding: 0.875rem 2rem;
+      border-radius: 3rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .hero-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      background: #f8fafc;
+    }
+    
+    .hero-button i {
+      font-size: 1.25rem;
+    }
+    
+    /* 波浪装饰 */
+    .hero-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+    }
+    
+    .hero-wave-svg {
+      width: 100%;
+      height: 5rem;
+    }
+    
+    /* 响应式设计 */
+    @media (min-width: 768px) {
+      .hero-image-container {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .hero-title {
+        font-size: 2.75rem;
+      }
+      
+      .hero-description {
+        font-size: 1.125rem;
+      }
+      
+      .hero-button {
+        padding: 1rem 2.5rem;
+        font-size: 1.125rem;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-image-container {
+        width: 320px;
+        height: 320px;
+      }
+      
+      .hero-title {
+        font-size: 3rem;
+      }
+      
+      .hero-container {
+        gap: 2rem;
+      }
+    }
+    
+    /* 动画效果 */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .hero-image-container {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .hero-decoration-1 {
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .hero-decoration-2 {
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    
+    /* 核心功能区域样式 */
+    .features-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      padding: 4rem 0;
+      position: relative;
+    }
+    
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .features-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, #1f2937, #6b7280);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-card-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .feature-icon-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+    
+    .feature-icon-1 {
+      background: linear-gradient(135deg, #ec4899, #f97316);
+    }
+    
+    .feature-icon-2 {
+      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    }
+    
+    .feature-icon-3 {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    .feature-icon-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      opacity: 0.1;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card-1 .feature-icon-bg {
+      background: #ec4899;
+    }
+    
+    .feature-card-2 .feature-icon-bg {
+      background: #8b5cf6;
+    }
+    
+    .feature-card-3 .feature-icon-bg {
+      background: #10b981;
+    }
+    
+    .feature-card:hover .feature-icon-bg {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.2;
+    }
+    
+    .feature-content {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .feature-content .feature-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    
+    .feature-description {
+      font-size: 1rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      color: #374151;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background: #f3f4f6;
+      border-radius: 50%;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-arrow i {
+      font-size: 1rem;
+      color: #6b7280;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-arrow {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      transform: scale(1.1);
+    }
+    
+    .feature-card:hover .feature-arrow i {
+      color: white;
+      transform: translateX(2px);
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .feature-card {
+        padding: 1.5rem;
+      }
+      
+      .features-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+    }
+    
+    /* 科普文章区域样式 */
+    .articles-section {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      padding: 4rem 0;
+      position: relative;
+    }
+    
+    .articles-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .articles-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+    
+    .articles-title-wrapper {
+      flex: 1;
+    }
+    
+    .articles-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #1f2937, #6b7280);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .articles-subtitle {
+      font-size: 1.125rem;
+      color: #6b7280;
+      font-weight: 400;
+    }
+    
+    .articles-more-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: white;
+      text-decoration: none;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    }
+    
+    .articles-more-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+    }
+    
+    .articles-more-link i {
+      font-size: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .articles-more-link:hover i {
+      transform: translateX(2px);
+    }
+    
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .article-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .article-image {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    
+    .article-image-real {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+    
+    .article-card:hover .article-image-real {
+      transform: scale(1.05);
+    }
+    
+    .article-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .article-image-placeholder i {
+      font-size: 2rem;
+      color: #9ca3af;
+      transition: all 0.3s ease;
+    }
+    
+    .article-card:hover .article-image-placeholder {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    }
+    
+    .article-card:hover .article-image-placeholder i {
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    .article-category {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .article-content {
+      padding: 0.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .article-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+    }
+    
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .article-author-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .article-author-name {
+      font-size: 0.75rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    
+    .article-likes {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    
+    .article-likes i {
+      font-size: 0.75rem;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        max-width: 100%;
+      }
+      
+      .articles-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .articles-title {
+        font-size: 2rem;
+      }
+      
+      .article-content {
+        padding: 0.5rem;
+      }
+      
+      .article-title {
+        font-size: 0.75rem;
+      }
+      
+      .article-author-avatar {
+        width: 16px;
+        height: 16px;
+      }
+      
+      .article-author-name {
+        font-size: 0.625rem;
+      }
+      
+      .article-likes {
+        font-size: 0.625rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .articles-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .article-content {
+        padding: 0.75rem;
+      }
+      
+      .article-title {
+        font-size: 0.875rem;
+      }
+    }
+  </style>
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#FFF1F5',
+              100: '#FFE4EC',
+              200: '#FFCADA',
+              300: '#FF9BBF',
+              400: '#FF6B9D',
+              500: '#FF3B7B',
+              600: '#E0005F',
+              700: '#B8004D',
+              800: '#8F003C',
+              900: '#66002B',
+            },
+            secondary: {
+              50: '#F0EFFF',
+              100: '#E1DFFF',
+              200: '#C3BFFF',
+              300: '#A5A0FF',
+              400: '#8780FF',
+              500: '#6B66FF',
+              600: '#4C47CC',
+              700: '#3A3699',
+              800: '#282566',
+              900: '#161433',
+            },
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50">
+  
+  <!-- 顶部导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 z-50 flex flex-row items-center justify-between" style="height: 56px;">
+    <!-- 左侧 Logo -->
+    <div class="flex items-center gap-2.5 flex-shrink-0">
+      <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-lg flex items-center justify-center">
+        <i class="fas fa-spa text-white text-xl"></i>
+      </div>
+      <span class="text-xl font-bold text-gray-900">AI颜值管家</span>
+    </div>
+    
+    <!-- 右侧用户头像 -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <button onclick="goToNotifications()" class="relative w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
+        <i class="far fa-bell text-xl"></i>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+      <a href="./pages/profile/index.html">
+        <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity">
+          <i class="fas fa-user text-white text-sm"></i>
+        </div>
+      </a>
+    </div>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main style="padding-bottom: 60px;padding-top: 56px;">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <!-- 背景渐变和装饰 -->
+      <div class="hero-background">
+        <div class="hero-decoration hero-decoration-1"></div>
+        <div class="hero-decoration hero-decoration-2"></div>
+        <div class="hero-decoration hero-decoration-3"></div>
+      </div>
+      
+      <!-- 主要内容容器 -->
+      <div class="hero-content">
+        <div class="hero-container">
+          
+          <!-- 人脸图片区域 -->
+          <div class="hero-image-section">
+            <div class="hero-image-wrapper">
+              <!-- 主图片 -->
+              <div class="hero-image-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=500&h=500&fit=crop&crop=face&auto=format&q=80" 
+                  alt="AI颜值评估示例" 
+                  class="hero-image"
+                  loading="lazy"
+                >
+              </div>
+              
+              <!-- 装饰元素 -->
+              <div class="hero-badge hero-badge-1">
+                <i class="fas fa-star"></i>
+                <span>专业AI评估</span>
+              </div>
+              <div class="hero-badge hero-badge-2">
+                <i class="fas fa-shield-alt"></i>
+                <span>隐私保护</span>
+              </div>
+              <div class="hero-icon hero-icon-1">
+                <i class="fas fa-sparkles"></i>
+              </div>
+              <div class="hero-icon hero-icon-2">
+                <i class="fas fa-crown"></i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 文字内容区域 -->
+          <div class="hero-text-section">
+            <h1 class="hero-title">
+              <span class="hero-title-main">您的专属</span>
+              <span class="hero-title-sub">AI颜值顾问</span>
+            </h1>
+            <p class="hero-description">
+              AI面部评估 · 专家在线咨询 · 个性化治疗方案
+            </p>
+            <button onclick="goToAssessment()" class="hero-button">
+              <i class="fas fa-camera"></i>
+              <span>立即免费评估</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 底部波浪装饰 -->
+      <div class="hero-wave">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="hero-wave-svg">
+          <defs>
+            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:rgba(255,255,255,0.9);stop-opacity:1" />
+              <stop offset="30%" style="stop-color:rgba(255,255,255,0.6);stop-opacity:1" />
+              <stop offset="70%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" />
+              <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M0,60 C150,20 300,100 450,60 C600,20 750,100 900,60 C1050,20 1200,100 1200,60 L1200,120 L0,120 Z" fill="url(#waveGradient)"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section class="features-section">
+      <div class="features-container">
+        <h2 class="features-title">核心功能</h2>
+        <div class="features-grid">
+          
+          <!-- 功能卡片1 -->
+          <div class="feature-card feature-card-1" onclick="goToAssessment()">
+            <div class="feature-card-inner">
+              <div class="feature-icon-wrapper">
+                <div class="feature-icon feature-icon-1">
+                  <i class="fas fa-camera"></i>
+                </div>
+                <div class="feature-icon-bg"></div>
+              </div>
+              <div class="feature-content">
+                <h3 class="feature-title">AI面部评估</h3>
+                <p class="feature-description">专业AI算法，3秒生成评估报告</p>
+                <div class="feature-badge">
+                  <span>免费体验</span>
+                </div>
+              </div>
+              <div class="feature-arrow">
+                <i class="fas fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- 功能卡片2 -->
+          <div class="feature-card feature-card-2" onclick="goToChat()">
+            <div class="feature-card-inner">
+              <div class="feature-icon-wrapper">
+                <div class="feature-icon feature-icon-2">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="feature-icon-bg"></div>
+              </div>
+              <div class="feature-content">
+                <h3 class="feature-title">AI专家问答</h3>
+                <p class="feature-description">7x24小时在线，专业解答疑问</p>
+                <div class="feature-badge">
+                  <span>智能回复</span>
+                </div>
+              </div>
+              <div class="feature-arrow">
+                <i class="fas fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- 功能卡片3 -->
+          <div class="feature-card feature-card-3" onclick="goToBooking()">
+            <div class="feature-card-inner">
+              <div class="feature-icon-wrapper">
+                <div class="feature-icon feature-icon-3">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="feature-icon-bg"></div>
+              </div>
+              <div class="feature-content">
+                <h3 class="feature-title">在线预约</h3>
+                <p class="feature-description">预约专家，享受一对一服务</p>
+                <div class="feature-badge">
+                  <span>专业服务</span>
+                </div>
+              </div>
+              <div class="feature-arrow">
+                <i class="fas fa-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 成功案例 -->
+    <section class="max-w-4xl mx-auto px-4 py-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">成功案例</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+          <div class="aspect-square bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-image text-gray-400 text-3xl"></i>
+          </div>
+          <div class="p-3">
+            <p class="text-sm font-medium text-gray-900">案例1</p>
+            <p class="text-xs text-gray-500">激光祛斑</p>
+          </div>
+        </div>
+
+        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+          <div class="aspect-square bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-image text-gray-400 text-3xl"></i>
+          </div>
+          <div class="p-3">
+            <p class="text-sm font-medium text-gray-900">案例2</p>
+            <p class="text-xs text-gray-500">超声刀提拉</p>
+          </div>
+        </div>
+
+        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+          <div class="aspect-square bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-image text-gray-400 text-3xl"></i>
+          </div>
+          <div class="p-3">
+            <p class="text-sm font-medium text-gray-900">案例3</p>
+            <p class="text-xs text-gray-500">水光针</p>
+          </div>
+        </div>
+
+        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+          <div class="aspect-square bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-image text-gray-400 text-3xl"></i>
+          </div>
+          <div class="p-3">
+            <p class="text-sm font-medium text-gray-900">案例4</p>
+            <p class="text-xs text-gray-500">热玛吉</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 科普文章 -->
+    <section class="articles-section">
+      <div class="articles-container">
+        <div class="articles-header">
+          <div class="articles-title-wrapper">
+            <h2 class="articles-title">科普文章</h2>
+            <p class="articles-subtitle">专业美容知识分享</p>
+          </div>
+          <a href="./pages/community/index.html" class="articles-more-link">
+            <span>查看更多</span>
+            <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="articles-grid" id="articleList">
+          <!-- 文章列表会通过JS动态加载 -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部导航栏 -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
+    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+      <i class="fas fa-home text-xl mb-1"></i>
+      <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+      <i class="fas fa-camera text-xl mb-1"></i>
+      <span class="text-xs">评估</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToCommunity()">
+      <i class="fas fa-comments text-xl mb-1"></i>
+      <span class="text-xs">社区</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
+      <i class="far fa-user text-xl mb-1"></i>
+      <span class="text-xs">我的</span>
+    </div>
+  </nav>
+
+  <!-- 共享工具 -->
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/mock.js"></script>
+  <script src="../shared/utils.js"></script>
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/router.js"></script>
+
+  <!-- 页面脚本 -->
+  <script>
+    // 页面加载时渲染文章列表
+    document.addEventListener('DOMContentLoaded', () => {
+      renderArticles();
+    });
+
+    // 渲染文章列表
+    function renderArticles() {
+      const articles = Storage.get('articles') || [];
+      const articleList = document.getElementById('articleList');
+      
+      if (articles.length === 0) {
+        articleList.innerHTML = '<div class="empty-state"><p>暂无文章</p></div>';
+        return;
+      }
+      
+      const beautyImages = [
+        'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=225&fit=crop&auto=format&q=80', // 护肤产品
+        'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=225&fit=crop&auto=format&q=80', // 化妆镜
+        'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=225&fit=crop&auto=format&q=80', // 美容工具
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=225&fit=crop&auto=format&q=80', // 面膜
+        'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&h=225&fit=crop&auto=format&q=80', // 化妆品
+        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=225&fit=crop&auto=format&q=80'  // 护肤流程
+      ];
+      
+      articleList.innerHTML = articles.slice(0, 4).map((article, index) => `
+        <article class="article-card" onclick="goToArticle(${article.id})">
+          <div class="article-image">
+            <img src="${beautyImages[index] || beautyImages[0]}" alt="${article.title}" class="article-image-real">
+            <div class="article-category">
+              <span>美容知识</span>
+            </div>
+          </div>
+          <div class="article-content">
+            <h3 class="article-title">${article.title}</h3>
+            <div class="article-footer">
+              <div class="article-author">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                     alt="作者头像" class="article-author-avatar">
+                <span class="article-author-name">AI颜值管家</span>
+              </div>
+              <div class="article-likes">
+                <i class="far fa-heart"></i>
+                <span>${article.likes}</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // 页面跳转函数
+    function goToAssessment() {
+      Router.navigate('/web/pages/assessment/guide.html');
+    }
+
+    function goToChat() {
+      Router.navigate('/web/pages/chat/detail.html');
+    }
+
+    function goToCommunity() {
+      Router.navigate('/web/pages/community/index.html');
+    }
+
+    function goToProfile() {
+      Router.navigate('/web/pages/profile/index.html');
+    }
+
+    function goToBooking() {
+      Router.navigate('/web/pages/booking/experts.html');
+    }
+
+    function goToArticle(id) {
+      Router.navigate('/web/pages/community/article.html', { id: id });
+    }
+
+    function goToNotifications() {
+      // 暂时跳转到个人中心
+      Router.navigate('/web/pages/profile/index.html');
+    }
+  </script>
+
+</body>
+</html>
+

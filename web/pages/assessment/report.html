@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>评估报告 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .header-gradient {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 2rem 1rem 4rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-decoration {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      filter: blur(40px);
+    }
+
+    .score-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.15);
+      margin-top: -3rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .score-circle {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .score-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .score-value {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .report-section {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .report-section:hover {
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .dimension-card {
+      background: linear-gradient(135deg, #fef7fb 0%, #f5f7fe 100%);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .dimension-card:hover {
+      border-color: #ec4899;
+      transform: translateX(5px);
+    }
+
+    .dimension-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .dimension-name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 1.125rem;
+    }
+
+    .dimension-score {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .progress-bar-container {
+      background: rgba(236, 72, 153, 0.1);
+      border-radius: 50px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+      border-radius: 50px;
+      transition: width 1s ease;
+    }
+
+    .issue-card {
+      background: white;
+      border: 2px solid #f3f4f6;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .issue-card:hover {
+      border-color: #ec4899;
+      box-shadow: 0 4px 20px rgba(236, 72, 153, 0.1);
+    }
+
+    .severity-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .severity-high {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .severity-medium {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .severity-low {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.375rem 0.75rem;
+      background: #fef7fb;
+      border: 1px solid #fce7f3;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      color: #ec4899;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .recommendation-card {
+      background: linear-gradient(135deg, #fff 0%, #fef7fb 100%);
+      border: 2px solid #fce7f3;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .recommendation-card:hover {
+      border-color: #ec4899;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+    }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .priority-high {
+      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+      color: white;
+    }
+
+    .priority-medium {
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      color: white;
+    }
+
+    .action-button {
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+    }
+
+    .primary-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+    }
+
+    .secondary-button {
+      background: white;
+      color: #6b7280;
+      border: 2px solid #e5e7eb;
+    }
+
+    .secondary-button:hover {
+      border-color: #ec4899;
+      color: #ec4899;
+      transform: translateY(-2px);
+    }
+
+    .strength-item {
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #dcfce7;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+    }
+
+    .strength-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #10b981;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .age-comparison {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #fef7fb 0%, #f5f7fe 100%);
+      border-radius: 16px;
+      margin: 1.5rem 0;
+    }
+
+    .age-item {
+      text-align: center;
+    }
+
+    .age-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+
+    .age-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .age-separator {
+      font-size: 2rem;
+      color: #d1d5db;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部背景 -->
+  <div class="header-gradient">
+    <div class="header-decoration" style="width: 200px; height: 200px; top: -100px; left: -50px;"></div>
+    <div class="header-decoration" style="width: 150px; height: 150px; bottom: -50px; right: -30px;"></div>
+    
+    <div class="max-w-4xl mx-auto relative z-10">
+      <button onclick="Router.navigate('/web/index.html')" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <i class="fas fa-home"></i>
+        <span>返回首页</span>
+      </button>
+      <div class="text-center">
+        <div class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-2" id="statusBadge">
+          <i class="fas fa-check-circle mr-1"></i>
+          评估完成
+        </div>
+        <h1 class="text-3xl font-bold">您的专属面部评估报告</h1>
+        <p class="text-white/90 mt-2" id="reportDate"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容 -->
+  <div class="max-w-4xl mx-auto px-4 pb-8">
+    <!-- 总体评分卡片 -->
+    <div class="score-card fade-in-up">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">综合评分</h2>
+        <p class="text-gray-600">基于AI多维度分析</p>
+      </div>
+      
+      <div class="score-circle">
+        <canvas id="scoreChart"></canvas>
+        <div class="score-number">
+          <div class="score-value" id="overallScore">0</div>
+          <div class="text-gray-600 text-sm font-semibold">分</div>
+        </div>
+      </div>
+
+      <div class="age-comparison">
+        <div class="age-item">
+          <div class="age-label">AI预测年龄</div>
+          <div class="age-value" style="color: #ec4899;" id="estimatedAge">--</div>
+        </div>
+        <div class="age-separator">vs</div>
+        <div class="age-item">
+          <div class="age-label">实际年龄</div>
+          <div class="age-value" id="actualAge">--</div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-gray-600 text-sm" id="ageMessage"></p>
+      </div>
+    </div>
+
+    <!-- 各维度评分 -->
+    <div class="report-section fade-in-up" style="animation-delay: 0.1s;">
+      <h2 class="section-title">
+        <span class="section-icon">
+          <i class="fas fa-chart-bar"></i>
+        </span>
+        维度评分
+      </h2>
+      
+      <div id="dimensionsContainer">
+        <!-- 维度卡片将通过JavaScript动态生成 -->
+      </div>
+    </div>
+
+    <!-- 面部问题分析 -->
+    <div class="report-section fade-in-up" style="animation-delay: 0.2s;">
+      <h2 class="section-title">
+        <span class="section-icon">
+          <i class="fas fa-search"></i>
+        </span>
+        面部问题分析
+      </h2>
+      
+      <div id="issuesContainer">
+        <!-- 问题卡片将通过JavaScript动态生成 -->
+      </div>
+    </div>
+
+    <!-- 优势特征 -->
+    <div class="report-section fade-in-up" style="animation-delay: 0.3s;">
+      <h2 class="section-title">
+        <span class="section-icon">
+          <i class="fas fa-star"></i>
+        </span>
+        您的优势特征
+      </h2>
+      
+      <div id="strengthsContainer">
+        <!-- 优势项将通过JavaScript动态生成 -->
+      </div>
+    </div>
+
+    <!-- 改善建议 -->
+    <div class="report-section fade-in-up" style="animation-delay: 0.4s;">
+      <h2 class="section-title">
+        <span class="section-icon">
+          <i class="fas fa-lightbulb"></i>
+        </span>
+        个性化改善建议
+      </h2>
+      
+      <div id="recommendationsContainer">
+        <!-- 建议卡片将通过JavaScript动态生成 -->
+      </div>
+    </div>
+
+    <!-- 操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-4 my-8">
+      <button onclick="consultExpert()" class="action-button primary-button flex-1">
+        <i class="fas fa-comment-medical"></i>
+        <span>咨询专家</span>
+      </button>
+      <button onclick="bookAppointment()" class="action-button secondary-button flex-1">
+        <i class="fas fa-calendar-check"></i>
+        <span>预约治疗</span>
+      </button>
+      <button onclick="shareReport()" class="action-button secondary-button">
+        <i class="fas fa-share-alt"></i>
+      </button>
+    </div>
+
+    <!-- 测试数据提示 -->
+    <div id="testDataNotice" class="text-center text-sm mt-8 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg" style="display: none;">
+      <div class="flex items-center justify-center gap-2 text-amber-700 font-semibold mb-2">
+        <i class="fas fa-flask"></i>
+        <span>这是演示数据</span>
+      </div>
+      <p class="text-amber-600 mb-3">当前显示的是示例报告，如需获取真实的评估报告，请完成完整的评估流程。</p>
+      <button onclick="Router.navigate('/web/pages/assessment/guide.html')" class="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all">
+        <i class="fas fa-camera"></i>
+        <span>开始真实评估</span>
+      </button>
+    </div>
+
+    <!-- 免责声明 -->
+    <div class="text-center text-sm text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
+      <i class="fas fa-info-circle mr-1"></i>
+      本报告仅供参考，具体治疗方案请咨询专业医师
+    </div>
+  </div>
+
+  <!-- 引入共享脚本 -->
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+
+  <script>
+    let report = null;
+
+    // 页面加载时初始化
+    window.addEventListener('load', () => {
+      console.log('页面加载完成，开始初始化...');
+      try {
+        loadReport();
+        console.log('报告数据已加载:', report);
+        renderReport();
+        console.log('报告渲染完成');
+      } catch (error) {
+        console.error('初始化错误:', error);
+        alert('页面初始化失败: ' + error.message);
+      }
+    });
+
+    // 加载报告数据
+    function loadReport() {
+      report = Storage.get('currentReport');
+      
+      if (!report) {
+        console.warn('未找到报告数据，生成测试数据...');
+        // 生成测试数据以便预览
+        report = generateTestReport();
+        report.isTestData = true; // 标记为测试数据
+        Storage.set('currentReport', report);
+      }
+    }
+
+    // 生成测试报告数据
+    function generateTestReport() {
+      const reportId = 'REPORT_' + Date.now();
+      
+      return {
+        id: reportId,
+        assessmentId: 'ASSESS_TEST',
+        userId: 'USER_TEST',
+        createdAt: Date.now(),
+        overallScore: 82,
+        ageScore: 75,
+        skinScore: 80,
+        faceScore: 85,
+        estimatedAge: 28,
+        actualAge: 32,
+        issues: [
+          {
+            id: 1,
+            name: '细纹与皱纹',
+            severity: 'medium',
+            score: 72,
+            areas: ['眼周', '额头', '法令纹'],
+            description: '在眼周和额头区域发现轻度细纹，建议及时进行抗衰护理。',
+            suggestions: [
+              '使用含视黄醇的眼霜',
+              '定期进行补水护理',
+              '考虑肉毒素注射治疗'
+            ]
+          },
+          {
+            id: 2,
+            name: '肤色不均',
+            severity: 'low',
+            score: 78,
+            areas: ['面颊', 'T区'],
+            description: '面部肤色整体均匀，局部T区略有色差。',
+            suggestions: [
+              '使用美白精华液',
+              '注意防晒保护',
+              '定期去角质'
+            ]
+          },
+          {
+            id: 3,
+            name: '毛孔粗大',
+            severity: 'medium',
+            score: 70,
+            areas: ['鼻翼', '面颊'],
+            description: 'T区毛孔较为明显，需要加强清洁和收敛护理。',
+            suggestions: [
+              '深层清洁面膜',
+              '使用收敛水',
+              '光子嫩肤治疗'
+            ]
+          }
+        ],
+        recommendations: [
+          {
+            priority: 'high',
+            title: '抗衰老护理',
+            treatments: ['肉毒素', '玻尿酸填充', '热玛吉'],
+            estimatedCost: '8000-15000元',
+            duration: '3-6个月'
+          },
+          {
+            priority: 'medium',
+            title: '肤质改善',
+            treatments: ['光子嫩肤', '水光针', '果酸焕肤'],
+            estimatedCost: '3000-8000元',
+            duration: '1-3个月'
+          }
+        ],
+        strengths: [
+          '面部轮廓清晰，骨骼结构良好',
+          '皮肤底子较好，无明显色斑',
+          '五官比例协调'
+        ]
+      };
+    }
+
+    // 渲染报告
+    function renderReport() {
+      if (!report) {
+        console.error('报告数据为空，无法渲染');
+        return;
+      }
+
+      console.log('开始渲染报告...');
+
+      try {
+        // 设置报告日期
+        const reportDate = document.getElementById('reportDate');
+        if (reportDate && Utils && Utils.formatDate) {
+          reportDate.textContent = Utils.formatDate(report.createdAt);
+          console.log('报告日期已设置');
+        }
+
+        // 如果是测试数据，显示提示
+        if (report.isTestData) {
+          console.log('这是测试数据，显示演示标识');
+          const statusBadge = document.getElementById('statusBadge');
+          if (statusBadge) {
+            statusBadge.innerHTML = `
+              <i class="fas fa-flask mr-1"></i>
+              演示数据
+            `;
+            statusBadge.style.background = 'rgba(245, 158, 11, 0.3)';
+          }
+          
+          // 显示测试数据提示框
+          const testDataNotice = document.getElementById('testDataNotice');
+          if (testDataNotice) {
+            testDataNotice.style.display = 'block';
+          }
+        }
+
+        // 渲染总体评分
+        console.log('渲染总体评分...');
+        renderOverallScore();
+
+        // 渲染各维度评分
+        console.log('渲染维度评分...');
+        renderDimensions();
+
+        // 渲染问题分析
+        console.log('渲染问题分析...');
+        renderIssues();
+
+        // 渲染优势特征
+        console.log('渲染优势特征...');
+        renderStrengths();
+
+        // 渲染改善建议
+        console.log('渲染改善建议...');
+        renderRecommendations();
+        
+        console.log('所有内容渲染完成！');
+      } catch (error) {
+        console.error('渲染报告时出错:', error);
+        alert('渲染报告失败: ' + error.message);
+      }
+    }
+
+    // 渲染总体评分
+    function renderOverallScore() {
+      try {
+        const scoreElement = document.getElementById('overallScore');
+        const estimatedAgeElement = document.getElementById('estimatedAge');
+        const actualAgeElement = document.getElementById('actualAge');
+        const ageMessageElement = document.getElementById('ageMessage');
+
+        if (!scoreElement || !estimatedAgeElement || !actualAgeElement || !ageMessageElement) {
+          console.error('缺少必要的DOM元素');
+          return;
+        }
+
+        // 动画显示分数
+        let currentScore = 0;
+        const targetScore = report.overallScore;
+        const interval = setInterval(() => {
+          currentScore++;
+          if (scoreElement) {
+            scoreElement.textContent = currentScore;
+          }
+          
+          if (currentScore >= targetScore) {
+            clearInterval(interval);
+          }
+        }, 20);
+
+        // 显示年龄
+        estimatedAgeElement.textContent = report.estimatedAge;
+        actualAgeElement.textContent = report.actualAge;
+
+        // 年龄对比信息
+        const ageDiff = report.actualAge - report.estimatedAge;
+        if (ageDiff > 0) {
+          ageMessageElement.innerHTML = `<i class="fas fa-check-circle text-green-500 mr-1"></i> 恭喜！您看起来比实际年龄年轻 ${ageDiff} 岁`;
+        } else if (ageDiff < 0) {
+          ageMessageElement.innerHTML = `<i class="fas fa-exclamation-circle text-orange-500 mr-1"></i> 建议加强抗衰护理，改善面部状态`;
+        } else {
+          ageMessageElement.innerHTML = `<i class="fas fa-info-circle text-blue-500 mr-1"></i> 您的外表年龄与实际年龄相符`;
+        }
+
+        // 绘制评分圆环
+        renderScoreChart();
+      } catch (error) {
+        console.error('渲染总体评分时出错:', error);
+      }
+    }
+
+    // 绘制评分圆环图
+    function renderScoreChart() {
+      const ctx = document.getElementById('scoreChart').getContext('2d');
+      const score = report.overallScore;
+      const remaining = 100 - score;
+
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [score, remaining],
+            backgroundColor: [
+              'rgba(236, 72, 153, 1)',
+              'rgba(243, 244, 246, 1)'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          cutout: '85%',
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          }
+        }
+      });
+    }
+
+    // 渲染各维度评分
+    function renderDimensions() {
+      const container = document.getElementById('dimensionsContainer');
+      
+      const dimensions = [
+        { name: '皮肤状态', score: report.skinScore, icon: 'fa-spa' },
+        { name: '面部轮廓', score: report.faceScore, icon: 'fa-portrait' },
+        { name: '年龄状态', score: report.ageScore, icon: 'fa-clock' }
+      ];
+
+      dimensions.forEach(dim => {
+        const card = document.createElement('div');
+        card.className = 'dimension-card';
+        
+        card.innerHTML = `
+          <div class="dimension-header">
+            <div class="flex items-center gap-2">
+              <i class="fas ${dim.icon} text-pink-500"></i>
+              <span class="dimension-name">${dim.name}</span>
+            </div>
+            <span class="dimension-score">${dim.score}</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" style="width: ${dim.score}%"></div>
+          </div>
+          <div class="text-right text-sm text-gray-600">${getScoreLevel(dim.score)}</div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 渲染问题分析
+    function renderIssues() {
+      const container = document.getElementById('issuesContainer');
+      
+      report.issues.forEach(issue => {
+        const card = document.createElement('div');
+        card.className = 'issue-card';
+        
+        const severityClass = `severity-${issue.severity}`;
+        const severityText = {
+          'high': '高度关注',
+          'medium': '中度关注',
+          'low': '轻度关注'
+        }[issue.severity];
+        
+        card.innerHTML = `
+          <div class="flex justify-between items-start mb-3">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-1">${issue.name}</h3>
+              <span class="severity-badge ${severityClass}">${severityText}</span>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold" style="color: ${getScoreColor(issue.score)}">${issue.score}</div>
+              <div class="text-sm text-gray-600">分</div>
+            </div>
+          </div>
+          
+          <p class="text-gray-600 mb-3">${issue.description}</p>
+          
+          <div class="mb-3">
+            <div class="text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-map-marker-alt text-pink-500 mr-1"></i>
+              影响区域：
+            </div>
+            <div>
+              ${issue.areas.map(area => `<span class="tag">${area}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div>
+            <div class="text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-hand-holding-medical text-pink-500 mr-1"></i>
+              改善建议：
+            </div>
+            <ul class="text-sm text-gray-600 space-y-1">
+              ${issue.suggestions.map(s => `<li>• ${s}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 渲染优势特征
+    function renderStrengths() {
+      const container = document.getElementById('strengthsContainer');
+      
+      report.strengths.forEach(strength => {
+        const item = document.createElement('div');
+        item.className = 'strength-item';
+        
+        item.innerHTML = `
+          <div class="strength-icon">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="flex-1 text-gray-800">${strength}</div>
+        `;
+        
+        container.appendChild(item);
+      });
+    }
+
+    // 渲染改善建议
+    function renderRecommendations() {
+      const container = document.getElementById('recommendationsContainer');
+      
+      report.recommendations.forEach(rec => {
+        const card = document.createElement('div');
+        card.className = 'recommendation-card';
+        
+        const priorityClass = `priority-${rec.priority}`;
+        const priorityText = {
+          'high': '优先推荐',
+          'medium': '建议考虑'
+        }[rec.priority];
+        
+        card.innerHTML = `
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="text-lg font-semibold text-gray-800">${rec.title}</h3>
+            <span class="priority-badge ${priorityClass}">${priorityText}</span>
+          </div>
+          
+          <div class="mb-3">
+            <div class="text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-syringe text-pink-500 mr-1"></i>
+              推荐治疗项目：
+            </div>
+            <div>
+              ${rec.treatments.map(t => `<span class="tag">${t}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="text-gray-600">预估费用</div>
+              <div class="font-semibold text-gray-800">${rec.estimatedCost}</div>
+            </div>
+            <div>
+              <div class="text-gray-600">建议周期</div>
+              <div class="font-semibold text-gray-800">${rec.duration}</div>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 获取评分等级
+    function getScoreLevel(score) {
+      if (score >= 85) return '优秀';
+      if (score >= 75) return '良好';
+      if (score >= 65) return '一般';
+      return '需改善';
+    }
+
+    // 获取评分颜色
+    function getScoreColor(score) {
+      if (score >= 85) return '#10b981';
+      if (score >= 75) return '#3b82f6';
+      if (score >= 65) return '#f59e0b';
+      return '#ef4444';
+    }
+
+    // 咨询专家
+    function consultExpert() {
+      Router.navigate('/web/pages/chat/detail.html', { 
+        reportId: report.id,
+        context: 'report_consult'
+      });
+    }
+
+    // 预约治疗
+    function bookAppointment() {
+      Router.navigate('/web/pages/booking/experts.html', {
+        reportId: report.id
+      });
+    }
+
+    // 分享报告
+    function shareReport() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'AI颜值管家 - 我的面部评估报告',
+          text: `我的综合评分：${report.overallScore}分，AI预测年龄：${report.estimatedAge}岁`,
+          url: window.location.href
+        }).catch(err => console.log('分享失败', err));
+      } else {
+        alert('您的浏览器不支持分享功能');
+      }
+    }
+  </script>
+</body>
+</html>
+

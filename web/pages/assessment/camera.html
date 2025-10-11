@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍照评估 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .camera-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .camera-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 1rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+    }
+
+    .camera-preview {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    .face-guide {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 360px;
+      border: 3px solid rgba(236, 72, 153, 0.6);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      pointer-events: none;
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% {
+        border-color: rgba(236, 72, 153, 0.6);
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        border-color: rgba(236, 72, 153, 0.9);
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+    }
+
+    .camera-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 2rem 1rem 3rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+
+    .camera-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 4px solid white;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .camera-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+    }
+
+    .camera-button:active {
+      transform: scale(0.95);
+    }
+
+    .angle-indicator {
+      position: absolute;
+      top: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      z-index: 15;
+      backdrop-filter: blur(10px);
+    }
+
+    .angle-progress {
+      position: absolute;
+      top: 8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 15;
+    }
+
+    .angle-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .angle-dot.active {
+      background: #ec4899;
+      box-shadow: 0 0 10px #ec4899;
+    }
+
+    .angle-dot.completed {
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    .tip-message {
+      position: absolute;
+      bottom: 10rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(236, 72, 153, 0.9);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      z-index: 15;
+      max-width: 80%;
+      text-align: center;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    .switch-camera {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .switch-camera:hover {
+      background: rgba(0, 0, 0, 0.7);
+      transform: scale(1.1);
+    }
+
+    .flash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      transition: opacity 0.2s ease;
+    }
+
+    .flash-overlay.active {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="camera-container">
+    <!-- 顶部导航 -->
+    <div class="camera-header">
+      <button onclick="Router.back()" class="text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回</span>
+      </button>
+    </div>
+
+    <!-- 切换摄像头按钮 -->
+    <button class="switch-camera" onclick="switchCamera()" title="切换摄像头">
+      <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <!-- 角度指示器 -->
+    <div class="angle-indicator">
+      <i class="fas fa-camera mr-2"></i>
+      <span id="angleText">正面照</span>
+    </div>
+
+    <!-- 进度指示器 -->
+    <div class="angle-progress">
+      <div class="angle-dot active" data-angle="front"></div>
+      <div class="angle-dot" data-angle="left"></div>
+      <div class="angle-dot" data-angle="right"></div>
+    </div>
+
+    <!-- 拍照提示 -->
+    <div class="tip-message" id="tipMessage">
+      请将面部对准椭圆框内
+    </div>
+
+    <!-- 相机预览 -->
+    <div class="camera-preview">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas"></canvas>
+      <div class="face-guide"></div>
+    </div>
+
+    <!-- 底部控制按钮 -->
+    <div class="camera-controls">
+      <div class="flex items-center justify-center gap-8">
+        <button onclick="capturePhoto()" class="camera-button" title="拍照">
+          <i class="fas fa-camera"></i>
+        </button>
+      </div>
+      <div class="text-white text-center mt-4 text-sm">
+        <span id="photoCount">已拍摄 0/3 张</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 闪光效果 -->
+  <div class="flash-overlay" id="flashOverlay"></div>
+
+  <!-- 引入共享脚本 -->
+  <script src="/shared/router.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/storage.js"></script>
+
+  <script>
+    let stream = null;
+    let currentFacingMode = 'user'; // 'user' 为前置摄像头，'environment' 为后置摄像头
+    let capturedPhotos = [];
+    let currentAngle = 0;
+    
+    const angles = [
+      { name: 'front', text: '正面照', tip: '请将面部对准椭圆框内，保持正面角度' },
+      { name: 'left', text: '左侧45°', tip: '请将面部轻微转向左侧，约45度角' },
+      { name: 'right', text: '右侧45°', tip: '请将面部轻微转向右侧，约45度角' }
+    ];
+
+    // 初始化相机
+    async function initCamera() {
+      try {
+        const constraints = {
+          video: {
+            facingMode: currentFacingMode,
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          },
+          audio: false
+        };
+
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+        const video = document.getElementById('video');
+        video.srcObject = stream;
+      } catch (error) {
+        console.error('无法访问相机:', error);
+        alert('无法访问相机，请检查权限设置');
+        Router.back();
+      }
+    }
+
+    // 切换摄像头
+    async function switchCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      
+      currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+      await initCamera();
+    }
+
+    // 拍照
+    function capturePhoto() {
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      const flash = document.getElementById('flashOverlay');
+      
+      // 设置canvas尺寸
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      
+      // 绘制图像
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // 闪光效果
+      flash.classList.add('active');
+      setTimeout(() => {
+        flash.classList.remove('active');
+      }, 200);
+      
+      // 获取照片数据
+      const photoData = canvas.toDataURL('image/jpeg', 0.9);
+      
+      // 保存照片
+      capturedPhotos.push({
+        angle: angles[currentAngle].name,
+        data: photoData,
+        timestamp: Date.now()
+      });
+      
+      // 更新进度
+      updateProgress();
+      
+      // 移到下一个角度
+      currentAngle++;
+      
+      if (currentAngle < angles.length) {
+        updateAngleIndicator();
+        showTip(`拍摄成功！请继续拍摄${angles[currentAngle].text}`);
+      } else {
+        // 所有照片拍摄完成
+        showTip('拍摄完成！即将跳转...');
+        
+        // 保存照片数据
+        Storage.set('capturedPhotos', capturedPhotos);
+        
+        // 停止相机
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+        }
+        
+        // 跳转到确认页面
+        setTimeout(() => {
+          Router.navigate('./confirm.html');
+        }, 1000);
+      }
+    }
+
+    // 更新角度指示器
+    function updateAngleIndicator() {
+      const angleText = document.getElementById('angleText');
+      const tipMessage = document.getElementById('tipMessage');
+      
+      angleText.textContent = angles[currentAngle].text;
+      tipMessage.textContent = angles[currentAngle].tip;
+      
+      // 更新进度点
+      document.querySelectorAll('.angle-dot').forEach((dot, index) => {
+        dot.classList.remove('active');
+        if (index === currentAngle) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    // 更新进度
+    function updateProgress() {
+      const photoCount = document.getElementById('photoCount');
+      photoCount.textContent = `已拍摄 ${capturedPhotos.length}/3 张`;
+      
+      // 更新进度点
+      document.querySelectorAll('.angle-dot').forEach((dot, index) => {
+        if (index < capturedPhotos.length) {
+          dot.classList.add('completed');
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    // 显示提示
+    function showTip(message) {
+      const tipMessage = document.getElementById('tipMessage');
+      tipMessage.textContent = message;
+      tipMessage.style.animation = 'none';
+      setTimeout(() => {
+        tipMessage.style.animation = 'slideUp 0.5s ease-out';
+      }, 10);
+    }
+
+    // 页面加载时初始化相机
+    window.addEventListener('load', () => {
+      initCamera();
+    });
+
+    // 页面卸载时停止相机
+    window.addEventListener('beforeunload', () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    });
+
+    // 监听返回按钮
+    window.addEventListener('popstate', () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    });
+  </script>
+</body>
+</html>
+

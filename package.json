@@ -1,0 +1,22 @@
+{
+  "name": "ai-beauty-manager",
+  "version": "2.1.0",
+  "description": "AI颜值管家 - 页面原型Demo项目（纯前端静态）",
+  "scripts": {
+    "dev": "npx serve -l 3000",
+    "start": "npx serve -l 3000",
+    "serve": "python -m http.server 8000"
+  },
+  "keywords": [
+    "AI",
+    "beauty",
+    "medical",
+    "prototype",
+    "demo"
+  ],
+  "author": "AI颜值管家团队",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
+

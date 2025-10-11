@@ -1,0 +1,201 @@
+/**
+ * 基础样式
+ * 全局样式和常用组件样式
+ */
+
+/* ==================== 全局样式 ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", 
+               "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+               "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 隐藏滚动条但保持可滚动 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==================== 常用组件 ==================== */
+
+/* 卡片 */
+.card {
+  @apply bg-white rounded-lg shadow-md p-4;
+}
+
+/* 按钮 */
+.btn-primary {
+  @apply bg-primary-400 hover:bg-primary-500 text-white px-6 py-3 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg transition-colors duration-200;
+}
+
+.btn-outline {
+  @apply border-2 border-primary-400 text-primary-400 hover:bg-primary-50 px-6 py-3 rounded-lg transition-colors duration-200;
+}
+
+/* 输入框 */
+.input {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent;
+}
+
+/* 标签 */
+.badge {
+  @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply bg-primary-100 text-primary-600;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-600;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-600;
+}
+
+.badge-error {
+  @apply bg-red-100 text-red-600;
+}
+
+/* 分隔线 */
+.divider {
+  @apply border-t border-gray-200 my-4;
+}
+
+/* 加载动画 */
+.loading {
+  @apply inline-block w-6 h-6 border-4 border-gray-200 border-t-primary-400 rounded-full animate-spin;
+}
+
+/* 底部导航栏 */
+.tabbar {
+  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center z-50;
+  height: 60px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tabbar-item {
+  @apply flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer;
+  padding: 8px 0;
+}
+
+.tabbar-item.active {
+  @apply text-primary-400;
+}
+
+/* 顶部导航栏 */
+.navbar {
+  @apply fixed top-0 left-0 right-0 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-50;
+  height: 56px;
+  padding-top: env(safe-area-inset-top);
+}
+
+/* ==================== 动画效果 ==================== */
+
+/* 淡入 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* 滑入（从下） */
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* 脉冲 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ==================== 工具类 ==================== */
+
+/* 文本省略 */
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 多行文本省略 */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 安全区域（适配刘海屏） */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ==================== 响应式工具 ==================== */
+
+/* 移动端可见，桌面端隐藏 */
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* 桌面端可见，移动端隐藏 */
+@media (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
