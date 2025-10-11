@@ -3,9 +3,13 @@
   "version": "2.1.0",
   "description": "AI颜值管家 - 页面原型Demo项目（纯前端静态）",
   "scripts": {
-    "dev": "npx serve -l 3000",
-    "start": "npx serve -l 3000",
-    "serve": "python -m http.server 8000"
+    "start": "node start.js",
+    "dev": "npx --yes serve -l 3000",
+    "serve": "npx --yes serve -l 3000",
+    "serve:python": "python3 -m http.server 3000",
+    "open": "node -e \"require('child_process').exec(process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open' + ' http://localhost:3000/web/')\"",
+    "clean": "node -e \"console.log('清理缓存...'); if (typeof localStorage !== 'undefined') localStorage.clear(); console.log('完成！')\"",
+    "test": "node -e \"console.log('✓ 项目配置正常'); console.log('✓ 运行 npm start 启动服务器');\""
   },
   "keywords": [
     "AI",

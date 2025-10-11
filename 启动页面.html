@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI颜值管家 - 启动页面</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .card-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card.admin .card-icon {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      color: #718096;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .card-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .card.admin .card-button {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    }
+
+    .card-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .features {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      color: white;
+      animation: fadeIn 1s ease;
+    }
+
+    .features h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .feature-item i {
+      color: #ffd700;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      margin-top: 2rem;
+      opacity: 0.9;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2rem; }
+      .card-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <div class="header">
+      <div class="logo">✨</div>
+      <h1 class="title">AI颜值管家</h1>
+      <p class="subtitle">您的专属AI颜值顾问平台原型</p>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>Demo演示版本</span>
+      </div>
+    </div>
+
+    <!-- 卡片选择 -->
+    <div class="card-container">
+      <!-- 前台卡片 -->
+      <div class="card" onclick="openFrontend()">
+        <div class="card-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h2 class="card-title">前台系统</h2>
+        <p class="card-desc">用户端 H5/小程序界面<br>面部评估 · AI问答 · 专家预约</p>
+        <a href="http://localhost:3000/web/" class="card-button" onclick="event.stopPropagation()">
+          <i class="fas fa-rocket"></i>
+          <span>立即体验</span>
+        </a>
+      </div>
+
+      <!-- 后台卡片 -->
+      <div class="card admin" onclick="openAdmin()">
+        <div class="card-icon">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <h2 class="card-title">后台系统</h2>
+        <p class="card-desc">管理端后台界面<br>数据分析 · 用户管理 · 内容运营</p>
+        <a href="http://localhost:3000/admin/login.html" class="card-button" onclick="event.stopPropagation()">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>进入后台</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 功能特点 -->
+    <div class="features">
+      <h3><i class="fas fa-star"></i> 核心功能</h3>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>AI面部评估</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>智能问答系统</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>专家预约</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>数据分析</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>用户管理</span>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-check-circle"></i>
+          <span>内容运营</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer">
+      <p><i class="fas fa-info-circle"></i> 请确保服务器已启动（端口3000）</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem;">如果无法访问，请先运行 <code style="background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 4px;">npm start</code></p>
+    </div>
+  </div>
+
+  <script>
+    function openFrontend() {
+      window.open('http://localhost:3000/web/', '_blank');
+    }
+
+    function openAdmin() {
+      window.open('http://localhost:3000/admin/login.html', '_blank');
+    }
+
+    // 检查服务器是否运行
+    function checkServer() {
+      fetch('http://localhost:3000/web/')
+        .then(() => {
+          console.log('✓ 服务器运行正常');
+        })
+        .catch(() => {
+          const footer = document.querySelector('.footer');
+          footer.innerHTML = `
+            <p style="color: #ffd700;"><i class="fas fa-exclamation-triangle"></i> 检测到服务器未启动</p>
+            <p style="margin-top: 0.5rem;">请双击 <strong>启动.command</strong> (Mac) 或 <strong>启动.bat</strong> (Windows) 启动服务器</p>
+            <p style="margin-top: 0.5rem;">或在终端运行: <code style="background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 4px;">npm start</code></p>
+          `;
+        });
+    }
+
+    // 页面加载时检查
+    window.addEventListener('load', () => {
+      setTimeout(checkServer, 500);
+    });
+  </script>
+</body>
+</html>
+
