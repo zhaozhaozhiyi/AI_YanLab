@@ -290,17 +290,28 @@
     </div>
   </nav>
 
-  <!-- 共享工具 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/router.js"></script>
+  <!-- 路径配置 -->
+  <script src="/shared/path-config.js"></script>
 
   <script>
-    // 页面加载时初始化
-    document.addEventListener('DOMContentLoaded', function() {
+    // 动态加载共享脚本
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        await PathConfig.loadSharedScripts();
+        // 脚本加载完成后初始化页面
+        initPage();
+      } catch (error) {
+        console.error('Failed to load shared scripts:', error);
+        // 即使脚本加载失败，也尝试初始化页面
+        initPage();
+      }
+    });
+
+    // 页面初始化函数
+    function initPage() {
       loadStatistics();
       loadHistory();
-    });
+    }
 
     // 加载统计数据
     function loadStatistics() {
@@ -376,22 +387,38 @@
 
     // 开始评估
     function startAssessment() {
-      Router.navigate('./pages/assessment/guide.html');
+      if (window.Router) {
+        Router.navigate('./pages/assessment/guide.html');
+      } else {
+        window.location.href = './pages/assessment/guide.html';
+      }
     }
 
     // 查看报告
     function viewReport(id) {
-      Router.navigate(`./pages/assessment/report.html?id=${id}`);
+      if (window.Router) {
+        Router.navigate(`./pages/assessment/report.html?id=${id}`);
+      } else {
+        window.location.href = `./pages/assessment/report.html?id=${id}`;
+      }
     }
 
     // 查看历史
     function viewHistory() {
-      Router.navigate('./pages/profile/reports.html');
+      if (window.Router) {
+        Router.navigate('./pages/profile/reports.html');
+      } else {
+        window.location.href = './pages/profile/reports.html';
+      }
     }
 
     // 导航函数
     function goToHome() {
-      Router.navigate('/web/index.html');
+      if (window.Router) {
+        Router.navigate('/web/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/index.html');
+      }
     }
 
     function goToAssessment() {
@@ -399,11 +426,19 @@
     }
 
     function goToCommunity() {
-      Router.navigate('/web/pages/community/index.html');
+      if (window.Router) {
+        Router.navigate('/web/pages/community/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/pages/community/index.html');
+      }
     }
 
     function goToProfile() {
-      Router.navigate('/web/pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('/web/pages/profile/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/pages/profile/index.html');
+      }
     }
 
     function goToNotifications() {

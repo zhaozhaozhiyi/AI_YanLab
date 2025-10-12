@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路径修复测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 路径修复测试工具</h1>
+    
+    <div class="test-section info">
+        <h3>📋 测试说明</h3>
+        <p>这个工具用于测试路径配置修复是否正常工作。请按顺序执行测试：</p>
+        <ol>
+            <li>点击"加载路径配置"按钮</li>
+            <li>点击"测试脚本加载"按钮</li>
+            <li>点击"测试导航功能"按钮</li>
+            <li>查看测试结果</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 环境检测</h3>
+        <div id="envInfo">等待检测...</div>
+        <button onclick="detectEnvironment()">检测环境</button>
+    </div>
+
+    <div class="test-section">
+        <h3>📁 路径配置测试</h3>
+        <div id="pathTest">等待测试...</div>
+        <button onclick="testPathConfig()">测试路径配置</button>
+    </div>
+
+    <div class="test-section">
+        <h3>📜 脚本加载测试</h3>
+        <div id="scriptTest">等待测试...</div>
+        <button onclick="testScriptLoading()">测试脚本加载</button>
+    </div>
+
+    <div class="test-section">
+        <h3>🧭 导航功能测试</h3>
+        <div id="navTest">等待测试...</div>
+        <button onclick="testNavigation()">测试导航功能</button>
+    </div>
+
+    <div class="test-section">
+        <h3>📝 测试日志</h3>
+        <div id="testLog" class="log">测试日志将显示在这里...\n</div>
+        <button onclick="clearLog()">清空日志</button>
+    </div>
+
+    <!-- 加载路径配置脚本 -->
+    <script src="/shared/path-config.js"></script>
+
+    <script>
+        let logElement = document.getElementById('testLog');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}\n`;
+            logElement.textContent += logMessage;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            logElement.textContent = '日志已清空\n';
+        }
+
+        function detectEnvironment() {
+            log('🔍 开始环境检测...');
+            
+            try {
+                const env = PathConfig.getEnvironmentInfo();
+                const envInfo = document.getElementById('envInfo');
+                
+                envInfo.innerHTML = `
+                    <p><strong>环境类型:</strong> ${env.type}</p>
+                    <p><strong>基础路径:</strong> ${env.basePath || '(空)'}</p>
+                    <p><strong>仓库名:</strong> ${env.repository || '(无)'}</p>
+                    <p><strong>主机名:</strong> ${env.hostname}</p>
+                    <p><strong>当前路径:</strong> ${env.pathname}</p>
+                    <p><strong>完整URL:</strong> ${env.fullUrl}</p>
+                `;
+                
+                log(`✅ 环境检测成功: ${env.type} 环境`);
+                if (env.basePath) {
+                    log(`📁 基础路径: ${env.basePath}`);
+                }
+                
+            } catch (error) {
+                log(`❌ 环境检测失败: ${error.message}`, 'error');
+                document.getElementById('envInfo').innerHTML = `<p style="color: red;">环境检测失败: ${error.message}</p>`;
+            }
+        }
+
+        function testPathConfig() {
+            log('🔧 开始路径配置测试...');
+            
+            try {
+                const testPaths = [
+                    '/shared/storage.js',
+                    '/web/index.html',
+                    '/web/assets/css/base.css'
+                ];
+                
+                let results = '<h4>路径转换测试:</h4>';
+                
+                testPaths.forEach(path => {
+                    const convertedPath = PathConfig.getAssetPath(path);
+                    results += `<p><code>${path}</code> → <code>${convertedPath}</code></p>`;
+                    log(`📁 ${path} → ${convertedPath}`);
+                });
+                
+                document.getElementById('pathTest').innerHTML = results;
+                log('✅ 路径配置测试完成');
+                
+            } catch (error) {
+                log(`❌ 路径配置测试失败: ${error.message}`, 'error');
+                document.getElementById('pathTest').innerHTML = `<p style="color: red;">路径配置测试失败: ${error.message}</p>`;
+            }
+        }
+
+        async function testScriptLoading() {
+            log('📜 开始脚本加载测试...');
+            
+            try {
+                // 测试加载 storage.js
+                log('正在加载 storage.js...');
+                await PathConfig.loadScript('/shared/storage.js');
+                log('✅ storage.js 加载成功');
+                
+                // 测试 Storage 对象是否可用
+                if (window.Storage) {
+                    log('✅ Storage 对象可用');
+                    // 测试存储功能
+                    Storage.set('test', 'hello world');
+                    const testValue = Storage.get('test');
+                    if (testValue === 'hello world') {
+                        log('✅ Storage 存储/读取功能正常');
+                    } else {
+                        log('❌ Storage 存储/读取功能异常', 'error');
+                    }
+                } else {
+                    log('❌ Storage 对象不可用', 'error');
+                }
+                
+                document.getElementById('scriptTest').innerHTML = `
+                    <p>✅ 脚本加载测试完成</p>
+                    <p>Storage 对象: ${window.Storage ? '可用' : '不可用'}</p>
+                    <p>Router 对象: ${window.Router ? '可用' : '不可用'}</p>
+                `;
+                
+            } catch (error) {
+                log(`❌ 脚本加载测试失败: ${error.message}`, 'error');
+                document.getElementById('scriptTest').innerHTML = `<p style="color: red;">脚本加载测试失败: ${error.message}</p>`;
+            }
+        }
+
+        function testNavigation() {
+            log('🧭 开始导航功能测试...');
+            
+            try {
+                // 测试路径生成
+                const testNavPaths = [
+                    '/web/index.html',
+                    '/web/pages/assessment/index.html',
+                    '/web/pages/community/index.html'
+                ];
+                
+                let results = '<h4>导航路径测试:</h4>';
+                
+                testNavPaths.forEach(path => {
+                    const navPath = PathConfig.getPagePath(path);
+                    results += `<p><code>${path}</code> → <code>${navPath}</code></p>`;
+                    log(`🧭 ${path} → ${navPath}`);
+                });
+                
+                // 测试 Router 对象
+                if (window.Router) {
+                    results += '<p>✅ Router 对象可用</p>';
+                    log('✅ Router 对象可用');
+                } else {
+                    results += '<p>⚠️ Router 对象不可用，将使用备用导航</p>';
+                    log('⚠️ Router 对象不可用，将使用备用导航');
+                }
+                
+                document.getElementById('navTest').innerHTML = results;
+                log('✅ 导航功能测试完成');
+                
+            } catch (error) {
+                log(`❌ 导航功能测试失败: ${error.message}`, 'error');
+                document.getElementById('navTest').innerHTML = `<p style="color: red;">导航功能测试失败: ${error.message}</p>`;
+            }
+        }
+
+        // 页面加载完成后自动检测环境
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 测试工具已加载');
+            detectEnvironment();
+        });
+    </script>
+</body>
+</html>

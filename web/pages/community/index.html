@@ -368,20 +368,32 @@
     </div>
   </nav>
 
-  <!-- 共享工具 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/mock.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/router.js"></script>
+  <!-- 路径配置 -->
+  <script src="/shared/path-config.js"></script>
 
   <script>
+    // 动态加载共享脚本
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        await PathConfig.loadSharedScripts();
+        // 脚本加载完成后初始化页面
+        initPage();
+      } catch (error) {
+        console.error('Failed to load shared scripts:', error);
+        // 即使脚本加载失败，也尝试初始化页面
+        initPage();
+      }
+    });
+
+    // 页面初始化函数
+    function initPage() {
+      loadArticles();
+      setupCategoryTabs();
+      setupSearchBar();
+    }
+
     let allArticles = [];
     let currentCategory = 'all';
-
-    // 页面加载时初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      loadArticles();
-    });
 
     // 加载文章列表
     function loadArticles() {
@@ -538,11 +550,19 @@
 
     // 导航函数
     function goToHome() {
-      Router.navigate('/web/index.html');
+      if (window.Router) {
+        Router.navigate('/web/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/index.html');
+      }
     }
 
     function goToAssessment() {
-      Router.navigate('/web/pages/assessment/index.html');
+      if (window.Router) {
+        Router.navigate('/web/pages/assessment/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/pages/assessment/index.html');
+      }
     }
 
     function goToCommunity() {
@@ -550,11 +570,19 @@
     }
 
     function goToProfile() {
-      Router.navigate('/web/pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('/web/pages/profile/index.html');
+      } else {
+        window.location.href = PathConfig.getPagePath('/web/pages/profile/index.html');
+      }
     }
 
     function goToNotifications() {
-      Router.navigate('./pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('./pages/profile/index.html');
+      } else {
+        window.location.href = './pages/profile/index.html';
+      }
     }
 
     function goToSearch() {

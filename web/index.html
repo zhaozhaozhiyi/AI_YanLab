@@ -1346,18 +1346,34 @@
     </div>
   </nav>
 
-  <!-- 共享工具 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/mock.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/constants.js"></script>
-  <script src="/shared/router.js"></script>
+  <!-- 路径配置 -->
+  <script src="/shared/path-config.js"></script>
 
   <!-- 页面脚本 -->
   <script>
-    // URL标准化：确保访问 /web 时重定向到 /web/
-    if (window.location.pathname === '/web') {
-      window.location.replace('/web/');
+    // 动态加载共享脚本
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        await PathConfig.loadSharedScripts();
+        // 脚本加载完成后初始化页面
+        initPage();
+      } catch (error) {
+        console.error('Failed to load shared scripts:', error);
+        // 即使脚本加载失败，也尝试初始化页面
+        initPage();
+      }
+    });
+
+    // 页面初始化函数
+    function initPage() {
+      // URL标准化：确保访问 /web 时重定向到 /web/
+      if (window.location.pathname === '/web') {
+        window.location.replace('/web/');
+      }
+      
+      // 启动页面功能
+      startImageCarousel();
+      renderArticles();
     }
     
     // 主图片轮播配置
@@ -1526,21 +1542,13 @@
       }, 1000);
     }
     
-    // 页面加载时渲染文章列表
-    document.addEventListener('DOMContentLoaded', () => {
-      renderArticles();
-      
-      // 启动主图片轮播
-      startImageCarousel();
-      
-      // 页面可见性变化时，暂停/恢复轮播
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          stopImageCarousel();
-        } else {
-          startImageCarousel();
-        }
-      });
+    // 页面可见性变化时，暂停/恢复轮播
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopImageCarousel();
+      } else {
+        startImageCarousel();
+      }
     });
     
     // 页面卸载时清理定时器
@@ -1599,32 +1607,60 @@
     }
 
     function goToAssessment() {
-      Router.navigate('./pages/assessment/index.html');
+      if (window.Router) {
+        Router.navigate('./pages/assessment/index.html');
+      } else {
+        window.location.href = './pages/assessment/index.html';
+      }
     }
 
     function goToChat() {
-      Router.navigate('./pages/chat/detail.html');
+      if (window.Router) {
+        Router.navigate('./pages/chat/detail.html');
+      } else {
+        window.location.href = './pages/chat/detail.html';
+      }
     }
 
     function goToCommunity() {
-      Router.navigate('./pages/community/index.html');
+      if (window.Router) {
+        Router.navigate('./pages/community/index.html');
+      } else {
+        window.location.href = './pages/community/index.html';
+      }
     }
 
     function goToProfile() {
-      Router.navigate('./pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('./pages/profile/index.html');
+      } else {
+        window.location.href = './pages/profile/index.html';
+      }
     }
 
     function goToBooking() {
-      Router.navigate('./pages/booking/experts.html');
+      if (window.Router) {
+        Router.navigate('./pages/booking/experts.html');
+      } else {
+        window.location.href = './pages/booking/experts.html';
+      }
     }
 
     function goToArticle(id) {
-      Router.navigate('./pages/community/article.html', { id: id });
+      if (window.Router) {
+        Router.navigate('./pages/community/article.html', { id: id });
+      } else {
+        window.location.href = `./pages/community/article.html?id=${id}`;
+      }
     }
 
     function goToNotifications() {
       // 暂时跳转到个人中心
-      Router.navigate('./pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('./pages/profile/index.html');
+      } else {
+        window.location.href = './pages/profile/index.html';
+      }
     }
   </script>
 
