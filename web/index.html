@@ -43,7 +43,7 @@
         color: white;
         overflow: hidden;
         min-height: 70vh;
-        padding: 2rem 0 6rem;
+        padding: 5rem 0 6rem;
         display: flex;
         flex-direction: column;
         animation: heroGradientFlow 8s linear infinite;
@@ -1069,31 +1069,241 @@
 <body class="bg-gray-50">
   
   <!-- 顶部导航栏 -->
-  <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 z-50 flex flex-row items-center justify-between" style="height: 56px;">
-    <!-- 左侧 Logo -->
-    <div class="flex items-center gap-2.5 flex-shrink-0">
-      <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-lg flex items-center justify-center">
-        <i class="fas fa-spa text-white text-xl"></i>
-      </div>
-      <span class="text-xl font-bold text-gray-900">AI颜值管家</span>
+  <nav class="glass-nav fixed top-0 left-0 right-0 px-4 z-50 flex flex-row items-center justify-between" style="height: 64px;">
+    <!-- 左侧品牌 -->
+    <div class="flex items-center flex-shrink-0" style="height: 44px;">
+      <span class="brand-title text-2xl font-bold leading-none">AI颜值管家</span>
     </div>
     
-    <!-- 右侧用户头像 -->
-    <div class="flex items-center gap-3 flex-shrink-0">
-      <button onclick="goToNotifications()" class="relative w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
+    <!-- 右侧功能区 -->
+    <div class="flex items-center gap-3 flex-shrink-0" style="height: 44px;">
+      <!-- 通知按钮 -->
+      <button onclick="goToNotifications()" class="simple-icon-button relative w-11 h-11 flex items-center justify-center transition-all">
         <i class="far fa-bell text-xl"></i>
-        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        <span class="notification-badge absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
       </button>
+      <!-- 用户头像 -->
       <a href="./pages/profile/index.html">
-        <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity">
-          <i class="fas fa-user text-white text-sm"></i>
+        <div class="simple-icon-button w-11 h-11 flex items-center justify-center transition-all">
+          <i class="far fa-user text-xl"></i>
         </div>
       </a>
     </div>
   </nav>
 
+  <style>
+    /* 融入式导航栏 - 初始状态完全透明 */
+    .glass-nav {
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-bottom: 1px solid transparent;
+      box-shadow: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 滚动后的玻璃拟态效果 */
+    .glass-nav.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 0 1px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Logo 渐变效果 */
+    .logo-glass {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.2);
+    }
+
+    .logo-glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .logo-glass:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
+    }
+
+    .logo-glass:hover::before {
+      left: 100%;
+    }
+
+    /* 品牌文字 - 初始白色 */
+    .brand-text {
+      transition: color 0.4s ease;
+    }
+    
+    .glass-nav .brand-title {
+      color: white;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .glass-nav .brand-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 滚动后文字变深色 */
+    .glass-nav.scrolled .brand-title {
+      color: #111827;
+      text-shadow: none;
+    }
+    
+    .glass-nav.scrolled .brand-subtitle {
+      color: #6b7280;
+      text-shadow: none;
+    }
+
+    /* 玻璃按钮 - 初始状态 */
+    .glass-button {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .glass-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .glass-button:active {
+      transform: translateY(0);
+    }
+
+    /* 滚动后按钮效果 */
+    .glass-nav.scrolled .glass-button {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .glass-nav.scrolled .glass-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 按钮图标颜色 - 初始白色 */
+    .glass-button i {
+      color: white;
+      transition: color 0.4s ease;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    }
+
+    /* 滚动后图标变深色 */
+    .glass-nav.scrolled .glass-button i {
+      color: #374151;
+      filter: none;
+    }
+
+    .glass-nav.scrolled .glass-button:hover i {
+      color: #ec4899;
+    }
+
+    /* 用户头像按钮保持渐变 */
+    .glass-button.avatar-button {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .glass-nav.scrolled .glass-button.avatar-button {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .glass-button.avatar-button i {
+      color: white !important;
+      filter: none !important;
+    }
+
+    /* 简约图标按钮 */
+    .simple-icon-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .simple-icon-button i {
+      color: white;
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+    }
+
+    .simple-icon-button:hover {
+      transform: scale(1.1);
+    }
+
+    .simple-icon-button:hover i {
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    }
+
+    .simple-icon-button:active {
+      transform: scale(1.05);
+    }
+
+    /* 滚动后图标变深色 */
+    .glass-nav.scrolled .simple-icon-button i {
+      color: #374151;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+
+    .glass-nav.scrolled .simple-icon-button:hover i {
+      color: #ec4899;
+      filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
+    }
+
+    /* 通知徽章动画 */
+    .notification-badge {
+      animation: pulse-badge 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 640px) {
+      .glass-nav {
+        height: 60px;
+      }
+      
+      .logo-glass {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .logo-glass i {
+        font-size: 1.125rem;
+      }
+    }
+  </style>
+
   <!-- 主内容区 -->
-  <main style="padding-bottom: 60px;padding-top: 56px;">
+  <main style="padding-bottom: 60px;padding-top: 0px;">
     
     <!-- Hero Section -->
     <section class="hero-section">
@@ -1489,6 +1699,31 @@
       // 启动页面功能
       startImageCarousel();
       renderArticles();
+      initGlassNavScroll();
+    }
+    
+    // 融入式导航栏滚动效果
+    function initGlassNavScroll() {
+      const nav = document.querySelector('.glass-nav');
+      if (!nav) return;
+      
+      // 页面加载时检查滚动位置
+      const checkScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // 滚动超过 20px 时添加 scrolled 类，实现平滑过渡
+        if (scrollTop > 20) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      };
+      
+      // 初始检查
+      checkScroll();
+      
+      // 监听滚动事件
+      window.addEventListener('scroll', checkScroll, { passive: true });
     }
     
     // 主图片轮播配置

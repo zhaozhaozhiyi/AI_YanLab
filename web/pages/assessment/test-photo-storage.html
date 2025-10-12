@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>照片存储测试</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .status {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      border: 2px solid;
+    }
+    .success {
+      background: #d1fae5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+    .error {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+    .info {
+      background: #dbeafe;
+      border-color: #3b82f6;
+      color: #1e3a8a;
+    }
+    pre {
+      background: #f3f4f6;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.875rem;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <h1>📸 照片存储测试工具</h1>
+  
+  <div class="info">
+    <strong>说明：</strong> 此工具用于检查拍照流程中保存的照片数据
+  </div>
+
+  <button onclick="checkStorage()">🔍 检查存储</button>
+  <button onclick="clearStorage()">🗑️ 清除照片数据</button>
+  <button onclick="location.href='camera.html'">📷 去拍照</button>
+
+  <div id="results"></div>
+
+  <script src="../../../shared/storage.js"></script>
+  <script>
+    function checkStorage() {
+      const results = document.getElementById('results');
+      results.innerHTML = '<h2>检查结果：</h2>';
+
+      // 检查 capturedPhotos
+      const capturedPhotos = Storage.get('capturedPhotos');
+      if (capturedPhotos && capturedPhotos.length > 0) {
+        results.innerHTML += `
+          <div class="status success">
+            ✅ 找到拍摄的照片：${capturedPhotos.length} 张
+          </div>
+        `;
+
+        capturedPhotos.forEach((photo, index) => {
+          results.innerHTML += `
+            <h3>照片 ${index + 1}：${photo.angle}</h3>
+            <pre>
+角度: ${photo.angle}
+时间: ${new Date(photo.timestamp).toLocaleString()}
+数据大小: ${Math.round(photo.data.length / 1024)} KB
+数据格式: ${photo.data.substring(0, 30)}...
+            </pre>
+            <img src="${photo.data}" alt="${photo.angle}">
+          `;
+        });
+      } else {
+        results.innerHTML += `
+          <div class="status error">
+            ❌ 未找到拍摄的照片 (capturedPhotos)
+          </div>
+        `;
+      }
+
+      // 检查 assessmentPhoto
+      const assessmentPhoto = Storage.get('assessmentPhoto');
+      if (assessmentPhoto) {
+        results.innerHTML += `
+          <div class="status success">
+            ✅ 找到单张评估照片 (assessmentPhoto)
+          </div>
+          <img src="${assessmentPhoto}" alt="评估照片">
+        `;
+      } else {
+        results.innerHTML += `
+          <div class="status error">
+            ❌ 未找到单张评估照片 (assessmentPhoto)
+          </div>
+        `;
+      }
+
+      // 检查报告数据
+      const currentReport = Storage.get('currentReport');
+      if (currentReport) {
+        results.innerHTML += `
+          <div class="status info">
+            ℹ️ 找到当前报告
+            <pre>${JSON.stringify(currentReport, null, 2).substring(0, 500)}...</pre>
+          </div>
+        `;
+      } else {
+        results.innerHTML += `
+          <div class="status error">
+            ❌ 未找到当前报告 (currentReport)
+          </div>
+        `;
+      }
+
+      // 检查所有存储的键
+      const allKeys = Object.keys(localStorage).filter(key => 
+        key.includes('photo') || key.includes('Photo') || key.includes('report') || key.includes('Report')
+      );
+      results.innerHTML += `
+        <h3>存储中的相关键：</h3>
+        <pre>${allKeys.join('\n')}</pre>
+      `;
+    }
+
+    function clearStorage() {
+      if (confirm('确定要清除所有照片数据吗？')) {
+        Storage.remove('capturedPhotos');
+        Storage.remove('assessmentPhoto');
+        Storage.remove('currentReport');
+        alert('照片数据已清除！');
+        checkStorage();
+      }
+    }
+
+    // 页面加载时自动检查
+    window.addEventListener('load', checkStorage);
+  </script>
+</body>
+</html>
+

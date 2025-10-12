@@ -388,6 +388,359 @@
       font-size: 2rem;
       color: #d1d5db;
     }
+
+    /* 预期效果模态框样式 */
+    .effect-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .effect-modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+    }
+
+    .effect-modal-content {
+      position: relative;
+      background: white;
+      border-radius: 24px;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: modalSlideUp 0.3s ease-out;
+      /* 优化滚动效果 */
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .effect-modal-header {
+      padding: 2rem;
+      border-bottom: 2px solid #f3f4f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #fef7fb 0%, #f5f7fe 100%);
+      border-radius: 24px 24px 0 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .effect-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .effect-close-btn:hover {
+      border-color: #ec4899;
+      color: #ec4899;
+      transform: rotate(90deg);
+    }
+
+    .effect-modal-body {
+      padding: 2rem;
+    }
+
+    .effect-loading {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .effect-spinner {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+      border: 4px solid #f3f4f6;
+      border-top-color: #ec4899;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .comparison-container {
+      margin-bottom: 2rem;
+    }
+
+    .comparison-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      aspect-ratio: 4/5;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .comparison-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .comparison-image img,
+    .comparison-image canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .enhanced-image {
+      clip-path: inset(0 50% 0 0);
+      transition: clip-path 0.1s ease;
+    }
+
+    .image-label {
+      position: absolute;
+      top: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    .original-label {
+      left: 1rem;
+      background: rgba(107, 114, 128, 0.9);
+      color: white;
+    }
+
+    .enhanced-label {
+      right: 1rem;
+      background: rgba(236, 72, 153, 0.9);
+      color: white;
+    }
+
+    .comparison-slider {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 100%;
+      transform: translateX(-50%);
+      cursor: ew-resize;
+      z-index: 10;
+    }
+
+    .slider-line {
+      width: 100%;
+      height: 100%;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      background: white;
+      border: 3px solid #ec4899;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .slider-handle:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
+    }
+
+    .slider-handle i {
+      font-size: 0.75rem;
+      color: #ec4899;
+    }
+
+    .improvement-summary {
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0f9ff 100%);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .improvement-items {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .improvement-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .improvement-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+
+    .improvement-content {
+      flex: 1;
+    }
+
+    .improvement-name {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .improvement-detail {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .improvement-percent {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .effect-disclaimer {
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: #fef3c7;
+      border: 2px solid #fde68a;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      color: #92400e;
+      margin-bottom: 1.5rem;
+    }
+
+    .effect-disclaimer i {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .effect-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .effect-action-btn {
+      padding: 0.875rem 1.75rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .effect-action-btn.primary {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    }
+
+    .effect-action-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+    }
+
+    .effect-action-btn.secondary {
+      background: white;
+      color: #6b7280;
+      border: 2px solid #e5e7eb;
+    }
+
+    .effect-action-btn.secondary:hover {
+      border-color: #ec4899;
+      color: #ec4899;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      .effect-modal-content {
+        max-height: 95vh;
+      }
+
+      .effect-modal-header,
+      .effect-modal-body {
+        padding: 1.5rem;
+      }
+
+      .comparison-wrapper {
+        aspect-ratio: 3/4;
+      }
+
+      .effect-actions {
+        flex-direction: column;
+      }
+
+      .effect-action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -504,9 +857,13 @@
 
     <!-- 操作按钮 -->
     <div class="flex flex-col sm:flex-row gap-4 my-8">
-      <button onclick="consultExpert()" class="action-button primary-button flex-1">
+      <button onclick="consultExpert()" class="action-button secondary-button flex-1">
         <i class="fas fa-comment-medical"></i>
         <span>咨询专家</span>
+      </button>
+      <button onclick="showExpectedEffect()" class="action-button primary-button flex-1">
+        <i class="fas fa-magic"></i>
+        <span>查看预期效果</span>
       </button>
       <button onclick="bookAppointment()" class="action-button secondary-button flex-1">
         <i class="fas fa-calendar-check"></i>
@@ -534,6 +891,99 @@
     <div class="text-center text-sm text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
       <i class="fas fa-info-circle mr-1"></i>
       本报告仅供参考，具体治疗方案请咨询专业医师
+    </div>
+  </div>
+
+  <!-- 预期效果预览模态框 -->
+  <div id="effectModal" class="effect-modal" style="display: none;">
+    <div class="effect-modal-overlay" onclick="closeEffectModal()"></div>
+    <div class="effect-modal-content">
+      <div class="effect-modal-header">
+        <h2 class="text-2xl font-bold text-gray-800">
+          <i class="fas fa-magic mr-2" style="color: #ec4899;"></i>
+          AI 预期效果预览
+        </h2>
+        <button onclick="closeEffectModal()" class="effect-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="effect-modal-body">
+        <!-- 加载状态 -->
+        <div id="effectLoading" class="effect-loading">
+          <div class="effect-spinner"></div>
+          <p class="mt-4 text-gray-600">AI 正在生成预期效果...</p>
+          <p class="text-sm text-gray-500 mt-2">根据您的评估报告智能美化中</p>
+        </div>
+
+        <!-- 对比展示区 -->
+        <div id="effectComparison" style="display: none;">
+          <!-- 图片对比滑块 -->
+          <div class="comparison-container">
+            <div class="comparison-wrapper">
+              <!-- 原始图片 -->
+              <div class="comparison-image original-image">
+                <img id="originalImage" src="" alt="原始照片">
+                <div class="image-label original-label">
+                  <i class="fas fa-camera mr-1"></i>
+                  原始照片
+                </div>
+              </div>
+              
+              <!-- 美化后图片 -->
+              <div class="comparison-image enhanced-image" id="enhancedImageContainer">
+                <canvas id="enhancedCanvas"></canvas>
+                <div class="image-label enhanced-label">
+                  <i class="fas fa-sparkles mr-1"></i>
+                  预期效果
+                </div>
+              </div>
+              
+              <!-- 滑动条 -->
+              <div class="comparison-slider" id="comparisonSlider">
+                <div class="slider-line"></div>
+                <div class="slider-handle">
+                  <i class="fas fa-chevron-left"></i>
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 改善说明 -->
+          <div class="improvement-summary">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">
+              <i class="fas fa-check-circle text-green-500 mr-2"></i>
+              模拟改善效果
+            </h3>
+            <div id="improvementList" class="improvement-items">
+              <!-- 动态生成改善项 -->
+            </div>
+          </div>
+
+          <!-- 免责声明 -->
+          <div class="effect-disclaimer">
+            <i class="fas fa-info-circle mr-2"></i>
+            <span>此为 AI 模拟效果，实际治疗效果因个人体质、治疗方案等因素而异，仅供参考</span>
+          </div>
+
+          <!-- 底部按钮 -->
+          <div class="effect-actions">
+            <button onclick="downloadEffectImage()" class="effect-action-btn secondary">
+              <i class="fas fa-download mr-2"></i>
+              下载预期图
+            </button>
+            <button onclick="consultFromEffect()" class="effect-action-btn primary">
+              <i class="fas fa-comment-medical mr-2"></i>
+              咨询专家了解更多
+            </button>
+            <button onclick="bookFromEffect()" class="effect-action-btn primary">
+              <i class="fas fa-calendar-check mr-2"></i>
+              立即预约治疗
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1082,6 +1532,508 @@
       } else {
         alert('您的浏览器不支持分享功能');
       }
+    }
+
+    // ============ 预期效果功能 ============
+    
+    let originalImageData = null;
+    let enhancedImageData = null;
+
+    // 显示预期效果
+    function showExpectedEffect() {
+      console.log('显示预期效果...');
+      
+      // 获取用户照片
+      const userPhoto = getUserPhoto();
+      
+      if (!userPhoto) {
+        // 如果没有用户照片，使用演示照片
+        showDemoEffect();
+        return;
+      }
+      
+      // 显示模态框
+      const modal = document.getElementById('effectModal');
+      const loading = document.getElementById('effectLoading');
+      const comparison = document.getElementById('effectComparison');
+      
+      modal.style.display = 'flex';
+      loading.style.display = 'block';
+      comparison.style.display = 'none';
+      
+      // 模拟加载延迟，处理图像
+      setTimeout(() => {
+        processImageEnhancement(userPhoto);
+      }, 1500);
+    }
+
+    // 获取用户照片
+    function getUserPhoto() {
+      console.log('🔍 开始查找用户照片...');
+      
+      // 1. 从拍照流程获取（camera.html 保存的）
+      const capturedPhotos = Storage.get('capturedPhotos');
+      if (capturedPhotos && capturedPhotos.length > 0) {
+        console.log('✅ 找到拍摄的照片，数量:', capturedPhotos.length);
+        // 使用第一张（正面）照片
+        return capturedPhotos[0].data;
+      }
+      
+      // 2. 从单张照片存储获取
+      const currentPhoto = Storage.get('assessmentPhoto');
+      if (currentPhoto) {
+        console.log('✅ 找到当前评估照片');
+        return currentPhoto;
+      }
+      
+      // 3. 从报告数据获取
+      if (report && report.photos && report.photos.length > 0) {
+        console.log('✅ 从报告数据获取照片');
+        return report.photos[0];
+      }
+      
+      // 4. 从评估历史获取
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      if (assessmentHistory.length > 0) {
+        const latestAssessment = assessmentHistory[0];
+        if (latestAssessment.photo) {
+          console.log('✅ 从历史记录获取照片');
+          return latestAssessment.photo;
+        }
+      }
+      
+      console.warn('❌ 未找到用户照片，将使用演示照片');
+      return null;
+    }
+
+    // 使用演示照片
+    function showDemoEffect() {
+      console.log('使用演示照片展示效果');
+      
+      // 使用项目中的演示照片（使用相对路径，更稳定）
+      const demoPhotos = [
+        '../../assets/images/face/face1.jpg',
+        '../../assets/images/face/face2.jpg',
+        '../../assets/images/face/face3.jpg',
+        '../../assets/images/face/face4.png',
+        '../../assets/images/face/face5.png'
+      ];
+      
+      const randomPhoto = demoPhotos[Math.floor(Math.random() * demoPhotos.length)];
+      console.log('尝试加载演示照片:', randomPhoto);
+      
+      // 加载演示照片
+      const img = new Image();
+      // 不设置 crossOrigin，避免跨域问题
+      img.onload = () => {
+        console.log('演示照片加载成功，尺寸:', img.width, 'x', img.height);
+        
+        // 将图片转为 base64
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          const photoData = canvas.toDataURL('image/jpeg');
+          
+          console.log('图片转换为 base64 成功');
+          processImageEnhancement(photoData);
+        } catch (error) {
+          console.error('图片处理失败:', error);
+          // 如果 canvas 转换失败，直接使用图片路径
+          processImageEnhancement(randomPhoto);
+        }
+      };
+      img.onerror = (error) => {
+        console.error('❌ 加载演示照片失败:', error);
+        console.error('尝试的路径:', randomPhoto);
+        alert('图片加载失败\n尝试的路径: ' + randomPhoto + '\n\n请刷新页面重试');
+        closeEffectModal();
+      };
+      
+      console.log('设置图片 src:', randomPhoto);
+      img.src = randomPhoto;
+    }
+
+    // 处理图像美化
+    function processImageEnhancement(photoDataUrl) {
+      console.log('开始处理图像美化...', '数据类型:', photoDataUrl.substring(0, 30) + '...');
+      
+      const img = new Image();
+      img.onload = () => {
+        console.log('原始图像加载成功，尺寸:', img.width, 'x', img.height);
+        
+        try {
+          // 创建 canvas
+          const canvas = document.getElementById('enhancedCanvas');
+          const ctx = canvas.getContext('2d');
+          
+          // 设置 canvas 尺寸
+          canvas.width = img.width;
+          canvas.height = img.height;
+          console.log('Canvas 尺寸已设置:', canvas.width, 'x', canvas.height);
+          
+          // 绘制原始图像
+          ctx.drawImage(img, 0, 0);
+          console.log('原始图像已绘制到 Canvas');
+          
+          // 获取图像数据
+          originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          console.log('获取图像数据成功，像素数:', originalImageData.data.length / 4);
+          
+          // 应用美化效果
+          enhancedImageData = applyEnhancementEffects(originalImageData);
+          console.log('美化效果应用完成');
+          
+          // 绘制美化后的图像
+          ctx.putImageData(enhancedImageData, 0, 0);
+          console.log('美化图像已绘制到 Canvas');
+          
+          // 设置原始图像
+          document.getElementById('originalImage').src = photoDataUrl;
+          console.log('原始图像已设置到 img 元素');
+          
+          // 生成改善说明
+          generateImprovementList();
+          console.log('改善说明列表已生成');
+          
+          // 显示对比界面
+          const loading = document.getElementById('effectLoading');
+          const comparison = document.getElementById('effectComparison');
+          
+          console.log('准备显示对比界面...');
+          console.log('- loading 元素:', loading ? '存在' : '不存在');
+          console.log('- comparison 元素:', comparison ? '存在' : '不存在');
+          
+          if (loading && comparison) {
+            loading.style.display = 'none';
+            comparison.style.display = 'block';
+            console.log('✓ 对比界面已设置为显示');
+            console.log('- loading display:', loading.style.display);
+            console.log('- comparison display:', comparison.style.display);
+          } else {
+            console.error('❌ 找不到必要的 DOM 元素！');
+            alert('界面元素缺失，请刷新页面重试');
+            return;
+          }
+          
+          // 初始化滑块
+          initComparisonSlider();
+          console.log('✓ 滑块初始化完成');
+          
+          console.log('🎉 ✅ 图像处理完成！界面应该已经显示');
+          
+          // 额外检查：强制显示模态框
+          const modal = document.getElementById('effectModal');
+          if (modal) {
+            modal.style.display = 'flex';
+            console.log('✓ 模态框已强制设置为显示');
+          }
+        } catch (error) {
+          console.error('图像处理过程出错:', error);
+          alert('图像处理失败: ' + error.message + '\n\n请查看控制台了解详情');
+          closeEffectModal();
+        }
+      };
+      
+      img.onerror = (error) => {
+        console.error('图像加载失败:', error);
+        console.error('尝试加载的 URL:', photoDataUrl.substring(0, 100));
+        alert('图像加载失败\n\n请确保:\n1. 图片文件存在\n2. 图片格式正确\n3. 路径设置正确');
+        closeEffectModal();
+      };
+      
+      img.src = photoDataUrl;
+      console.log('开始加载图像...');
+    }
+
+    // 应用美化效果
+    function applyEnhancementEffects(imageData) {
+      console.log('应用美化效果...', '图像尺寸:', imageData.width + 'x' + imageData.height);
+      
+      // 复制图像数据
+      const enhanced = new ImageData(
+        new Uint8ClampedArray(imageData.data),
+        imageData.width,
+        imageData.height
+      );
+      
+      const data = enhanced.data;
+      
+      // 根据报告中的问题应用不同的美化效果
+      const issues = report.issues || [];
+      console.log('检测到的问题数量:', issues.length);
+      
+      // 效果强度配置
+      let smoothStrength = 0;
+      let brightenStrength = 0;
+      let saturationAdjust = 0;
+      
+      issues.forEach(issue => {
+        const name = issue.name.toLowerCase();
+        const severity = issue.severity;
+        console.log(`- 问题: ${issue.name}, 严重程度: ${severity}`);
+        
+        // 根据问题类型调整参数
+        if (name.includes('细纹') || name.includes('皱纹')) {
+          smoothStrength += severity === 'high' ? 0.4 : severity === 'medium' ? 0.3 : 0.2;
+        }
+        
+        if (name.includes('肤色') || name.includes('暗沉') || name.includes('色斑')) {
+          brightenStrength += severity === 'high' ? 15 : severity === 'medium' ? 10 : 5;
+          saturationAdjust += 0.1;
+        }
+        
+        if (name.includes('毛孔')) {
+          smoothStrength += 0.25;
+        }
+      });
+      
+      // 限制强度范围
+      smoothStrength = Math.min(smoothStrength, 0.6);
+      brightenStrength = Math.min(brightenStrength, 25);
+      saturationAdjust = Math.min(saturationAdjust, 0.3);
+      
+      console.log('🎨 美化参数:', { 
+        smoothStrength: smoothStrength.toFixed(2), 
+        brightenStrength, 
+        saturationAdjust: saturationAdjust.toFixed(2) 
+      });
+      
+      // 应用美白提亮
+      if (brightenStrength > 0) {
+        console.log('✨ 应用提亮效果，强度:', brightenStrength);
+        for (let i = 0; i < data.length; i += 4) {
+          data[i] = Math.min(255, data[i] + brightenStrength);     // R
+          data[i + 1] = Math.min(255, data[i + 1] + brightenStrength); // G
+          data[i + 2] = Math.min(255, data[i + 2] + brightenStrength); // B
+        }
+        console.log('  ✓ 提亮完成');
+      }
+      
+      // 应用平滑磨皮（如果需要）
+      if (smoothStrength > 0) {
+        console.log('✨ 应用平滑磨皮，强度:', smoothStrength.toFixed(2));
+        // 简单的平滑算法（实际应用中可以使用高斯模糊等更复杂的算法）
+        const tempData = new Uint8ClampedArray(data);
+        const width = enhanced.width;
+        const height = enhanced.height;
+        
+        for (let y = 1; y < height - 1; y++) {
+          for (let x = 1; x < width - 1; x++) {
+            const idx = (y * width + x) * 4;
+            
+            // 3x3 平均值
+            let r = 0, g = 0, b = 0;
+            for (let dy = -1; dy <= 1; dy++) {
+              for (let dx = -1; dx <= 1; dx++) {
+                const i = ((y + dy) * width + (x + dx)) * 4;
+                r += tempData[i];
+                g += tempData[i + 1];
+                b += tempData[i + 2];
+              }
+            }
+            r /= 9;
+            g /= 9;
+            b /= 9;
+            
+            // 混合原始和平滑后的值
+            data[idx] = tempData[idx] * (1 - smoothStrength) + r * smoothStrength;
+            data[idx + 1] = tempData[idx + 1] * (1 - smoothStrength) + g * smoothStrength;
+            data[idx + 2] = tempData[idx + 2] * (1 - smoothStrength) + b * smoothStrength;
+          }
+        }
+        console.log('  ✓ 磨皮完成');
+      }
+      
+      // 应用饱和度调整
+      if (saturationAdjust > 0) {
+        console.log('✨ 应用饱和度调整，强度:', saturationAdjust.toFixed(2));
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          
+          // 计算灰度值
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+          
+          // 增加饱和度
+          data[i] = gray + (r - gray) * (1 + saturationAdjust);
+          data[i + 1] = gray + (g - gray) * (1 + saturationAdjust);
+          data[i + 2] = gray + (b - gray) * (1 + saturationAdjust);
+        }
+        console.log('  ✓ 饱和度调整完成');
+      }
+      
+      console.log('✅ 所有美化效果应用完成');
+      return enhanced;
+    }
+
+    // 生成改善说明列表
+    function generateImprovementList() {
+      const container = document.getElementById('improvementList');
+      container.innerHTML = '';
+      
+      const issues = report.issues || [];
+      
+      // 根据问题生成改善项
+      const improvements = [];
+      
+      issues.forEach(issue => {
+        const name = issue.name;
+        let improvementName = '';
+        let detail = '';
+        let percent = 0;
+        let icon = 'fa-check';
+        
+        if (name.includes('细纹') || name.includes('皱纹')) {
+          improvementName = '淡化细纹';
+          detail = '通过智能平滑算法减少细纹显现';
+          percent = issue.severity === 'high' ? 40 : issue.severity === 'medium' ? 35 : 25;
+          icon = 'fa-wave-square';
+        } else if (name.includes('肤色') || name.includes('色斑')) {
+          improvementName = '均匀肤色';
+          detail = '提亮暗沉区域，改善色素分布';
+          percent = issue.severity === 'high' ? 45 : issue.severity === 'medium' ? 35 : 28;
+          icon = 'fa-palette';
+        } else if (name.includes('毛孔')) {
+          improvementName = '收缩毛孔';
+          detail = '细化皮肤纹理，减少毛孔可见度';
+          percent = issue.severity === 'high' ? 38 : issue.severity === 'medium' ? 30 : 22;
+          icon = 'fa-circle-notch';
+        } else if (name.includes('暗沉')) {
+          improvementName = '提亮肤色';
+          detail = '增强面部光泽，改善整体气色';
+          percent = 32;
+          icon = 'fa-sun';
+        } else {
+          improvementName = '优化' + name;
+          detail = '针对性改善处理';
+          percent = 30;
+          icon = 'fa-check';
+        }
+        
+        improvements.push({ name: improvementName, detail, percent, icon });
+      });
+      
+      // 如果没有问题，添加默认改善项
+      if (improvements.length === 0) {
+        improvements.push(
+          { name: '整体提亮', detail: '提升面部光泽度', percent: 25, icon: 'fa-sun' },
+          { name: '肤质优化', detail: '细化皮肤纹理', percent: 20, icon: 'fa-spa' }
+        );
+      }
+      
+      // 渲染改善项
+      improvements.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'improvement-item';
+        div.innerHTML = `
+          <div class="improvement-icon">
+            <i class="fas ${item.icon}"></i>
+          </div>
+          <div class="improvement-content">
+            <div class="improvement-name">${item.name}</div>
+            <div class="improvement-detail">${item.detail}</div>
+          </div>
+          <div class="improvement-percent">+${item.percent}%</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // 初始化对比滑块
+    function initComparisonSlider() {
+      const slider = document.getElementById('comparisonSlider');
+      const enhancedContainer = document.getElementById('enhancedImageContainer');
+      const wrapper = slider.parentElement;
+      
+      let isDragging = false;
+      
+      function updateSlider(clientX) {
+        const rect = wrapper.getBoundingClientRect();
+        let x = clientX - rect.left;
+        x = Math.max(0, Math.min(x, rect.width));
+        
+        const percent = (x / rect.width) * 100;
+        
+        slider.style.left = percent + '%';
+        enhancedContainer.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      }
+      
+      slider.addEventListener('mousedown', () => {
+        isDragging = true;
+      });
+      
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          updateSlider(e.clientX);
+        }
+      });
+      
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+      
+      // 触摸支持
+      slider.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        e.preventDefault();
+      });
+      
+      document.addEventListener('touchmove', (e) => {
+        if (isDragging && e.touches.length > 0) {
+          updateSlider(e.touches[0].clientX);
+          e.preventDefault();
+        }
+      });
+      
+      document.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+      
+      // 点击直接跳转
+      wrapper.addEventListener('click', (e) => {
+        if (e.target !== slider && !slider.contains(e.target)) {
+          updateSlider(e.clientX);
+        }
+      });
+    }
+
+    // 关闭模态框
+    function closeEffectModal() {
+      const modal = document.getElementById('effectModal');
+      modal.style.display = 'none';
+    }
+
+    // 下载预期效果图
+    function downloadEffectImage() {
+      const canvas = document.getElementById('enhancedCanvas');
+      
+      // 创建下载链接
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `AI颜值管家-预期效果-${Date.now()}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 'image/jpeg', 0.95);
+    }
+
+    // 从效果预览咨询专家
+    function consultFromEffect() {
+      closeEffectModal();
+      consultExpert();
+    }
+
+    // 从效果预览预约治疗
+    function bookFromEffect() {
+      closeEffectModal();
+      bookAppointment();
     }
     
     // 页面加载时设置 CSS 路径
