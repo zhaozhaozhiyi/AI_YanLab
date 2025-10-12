@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美容社区 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 1.5rem 1rem;
+      border-radius: 0 0 20px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 1rem 0;
+      scrollbar-width: none;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-tab {
+      flex-shrink: 0;
+      padding: 0;
+      background: none;
+      color: #9ca3af;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .category-tab.active {
+      background: none;
+      color: #ec4899;
+      font-weight: 600;
+    }
+
+    .category-tab:hover {
+      color: #ec4899;
+    }
+
+    /* 瀑布流容器 */
+    .waterfall-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .article-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      break-inside: avoid;
+      margin-bottom: 0.5rem;
+    }
+
+    .article-card:active {
+      transform: scale(0.98);
+    }
+
+    .article-image {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    }
+
+    .article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .article-placeholder {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+    }
+
+    .article-placeholder i {
+      font-size: 2rem;
+      color: #ec4899;
+      opacity: 0.5;
+    }
+
+    .article-tag {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .hot-tag {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .article-content {
+      padding: 0.75rem;
+    }
+
+    .article-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .author-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-size: 0.7rem;
+      color: #6b7280;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      color: #9ca3af;
+      flex-shrink: 0;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .meta-item i {
+      font-size: 0.75rem;
+    }
+
+    .floating-button {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      z-index: 40;
+    }
+
+    .floating-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(236, 72, 153, 0.5);
+    }
+
+    .stats-bar {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 0.75rem;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 z-50 flex flex-row items-center justify-between" style="height: 56px;">
+    <!-- 左侧占位 -->
+    <div class="flex items-center gap-2 flex-shrink-0" style="width: 80px;">
+      <button onclick="goToNotifications()" class="relative w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
+        <i class="far fa-bell text-xl"></i>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+    </div>
+    
+    <!-- 中间标题 -->
+    <div class="flex-1 flex items-center justify-center">
+      <span class="text-xl font-bold text-gray-900">美容社区</span>
+    </div>
+    
+    <!-- 右侧搜索和用户 -->
+    <div class="flex items-center gap-2 flex-shrink-0" style="width: 80px; justify-content: flex-end;">
+      <button onclick="goToSearch()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
+        <i class="fas fa-search text-xl"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main style="padding-top: 56px; padding-bottom: 80px;">
+    
+
+
+    <!-- 分类标签 -->
+    <section class="max-w-4xl mx-auto px-4 sticky bg-gradient-to-b from-pink-50 to-transparent pt-2 pb-2 z-40" style="top: 56px;">
+      <div class="category-tabs" id="categoryTabs">
+        <div class="category-tab active" data-category="all" onclick="filterByCategory('all')">
+          推荐
+        </div>
+        <div class="category-tab" data-category="skincare" onclick="filterByCategory('skincare')">
+          护肤
+        </div>
+        <div class="category-tab" data-category="medical" onclick="filterByCategory('medical')">
+          医美
+        </div>
+        <div class="category-tab" data-category="makeup" onclick="filterByCategory('makeup')">
+          彩妆
+        </div>
+        <div class="category-tab" data-category="lifestyle" onclick="filterByCategory('lifestyle')">
+          生活
+        </div>
+        <div class="category-tab" data-category="qa" onclick="filterByCategory('qa')">
+          问答
+        </div>
+      </div>
+    </section>
+
+    <!-- 文章列表 -->
+    <section class="max-w-4xl mx-auto py-4">
+      <div id="articleList" class="waterfall-container">
+        <!-- 文章列表将通过JS动态加载 -->
+      </div>
+
+      <!-- 空状态 -->
+      <div id="emptyState" class="text-center py-12 px-4" style="display: none;">
+        <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+        <p class="text-gray-500 text-lg">暂无文章</p>
+        <p class="text-gray-400 text-sm mt-2">快来发布第一篇文章吧</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 浮动发布按钮 -->
+  <button class="floating-button" onclick="createArticle()">
+    <i class="fas fa-pen"></i>
+  </button>
+
+  <!-- 底部导航栏 -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+      <i class="fas fa-home text-xl mb-1"></i>
+      <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+      <i class="fas fa-camera text-xl mb-1"></i>
+      <span class="text-xs">评估</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+      <i class="fas fa-comments text-xl mb-1"></i>
+      <span class="text-xs">社区</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
+      <i class="fas fa-user text-xl mb-1"></i>
+      <span class="text-xs">我的</span>
+    </div>
+  </nav>
+
+  <!-- 共享工具 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/mock.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    let allArticles = [];
+    let currentCategory = 'all';
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      loadArticles();
+      updateStatistics();
+    });
+
+    // 加载文章列表
+    function loadArticles() {
+      allArticles = Storage.get('articles') || [];
+      
+      // 如果没有文章，创建一些示例文章
+      if (allArticles.length === 0) {
+        allArticles = generateSampleArticles();
+        Storage.set('articles', allArticles);
+      }
+
+      renderArticles();
+      updateStatistics();
+    }
+
+    // 生成示例文章
+    function generateSampleArticles() {
+      const categories = ['skincare', 'medical', 'makeup', 'lifestyle', 'qa'];
+      const titles = [
+        '春季护肤必知：如何选择适合自己的护肤品',
+        '医美小白入门：热玛吉vs超声刀，该如何选择？',
+        '2024年最流行的妆容趋势分析',
+        '抗衰老的秘密：从生活习惯开始',
+        '敏感肌如何正确护理？专家问答',
+        '激光祛斑效果如何？我的真实体验分享',
+        '平价好物推荐：这些护肤品真的好用',
+        '医美术后护理指南：让效果更持久',
+        '夏日防晒大作战！这些防晒霜值得入手',
+        '玻尿酸填充效果分享 终于拥有苹果肌',
+        '新手化妆教程 日常淡妆就这样画',
+        '早睡早起真的能让皮肤变好吗？',
+      ];
+
+      // 随机高度比例，模拟瀑布流效果
+      const heights = [250, 280, 300, 320, 260, 290, 310, 270, 285, 295, 305, 275];
+
+      return titles.map((title, index) => ({
+        id: index + 1,
+        title: title,
+        category: categories[index % categories.length],
+        author: index % 3 === 0 ? 'AI颜值管家' : index % 3 === 1 ? '美容达人' : '护肤专家',
+        authorAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face&auto=format&q=80',
+        image: `https://images.unsplash.com/photo-${1516000000000 + index * 1000000}?w=400&h=${heights[index]}&fit=crop&auto=format&q=80`,
+        imageHeight: heights[index],
+        views: Math.floor(Math.random() * 5000) + 500,
+        likes: Math.floor(Math.random() * 500) + 50,
+        comments: Math.floor(Math.random() * 100) + 10,
+        isHot: index < 2,
+        date: new Date(Date.now() - index * 86400000).toISOString()
+      }));
+    }
+
+    // 渲染文章列表
+    function renderArticles() {
+      const articleList = document.getElementById('articleList');
+      const emptyState = document.getElementById('emptyState');
+
+      let filteredArticles = allArticles;
+      if (currentCategory !== 'all') {
+        filteredArticles = allArticles.filter(article => article.category === currentCategory);
+      }
+
+      if (filteredArticles.length === 0) {
+        articleList.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      const categoryNames = {
+        'skincare': '护肤',
+        'medical': '医美',
+        'makeup': '彩妆',
+        'lifestyle': '生活',
+        'qa': '问答'
+      };
+
+      articleList.innerHTML = filteredArticles.map(article => `
+        <article class="article-card" onclick="viewArticle(${article.id})">
+          <div class="article-image" style="height: ${article.imageHeight || 250}px;">
+            ${article.image ? 
+              `<img src="${article.image}" alt="${article.title}" onerror="this.parentElement.innerHTML='<div class=\\'article-placeholder\\'><i class=\\'fas fa-image\\'></i></div>'">` :
+              `<div class="article-placeholder"><i class="fas fa-image"></i></div>`
+            }
+            <div class="article-tag">${categoryNames[article.category] || '未分类'}</div>
+            ${article.isHot ? '<div class="hot-tag"><i class="fas fa-fire"></i> 热</div>' : ''}
+          </div>
+          <div class="article-content">
+            <h3 class="article-title">${article.title}</h3>
+            <div class="article-footer">
+              <div class="article-author">
+                <img src="${article.authorAvatar}" alt="${article.author}" class="author-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'20\\' height=\\'20\\'%3E%3Crect fill=\\'%23ec4899\\' width=\\'20\\' height=\\'20\\'/%3E%3C/svg%3E'">
+                <span class="author-name">${article.author}</span>
+              </div>
+              <div class="article-meta">
+                <div class="meta-item">
+                  <i class="far fa-heart"></i>
+                  <span>${formatNumber(article.likes)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // 更新统计数据
+    function updateStatistics() {
+      document.getElementById('totalArticles').textContent = allArticles.length;
+      
+      const totalViews = allArticles.reduce((sum, article) => sum + (article.views || 0), 0);
+      document.getElementById('totalViews').textContent = formatNumber(totalViews);
+      
+      const totalLikes = allArticles.reduce((sum, article) => sum + (article.likes || 0), 0);
+      document.getElementById('totalLikes').textContent = formatNumber(totalLikes);
+    }
+
+    // 格式化数字
+    function formatNumber(num) {
+      if (num >= 10000) {
+        return (num / 10000).toFixed(1) + 'w';
+      } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'k';
+      }
+      return num.toString();
+    }
+
+    // 按分类筛选
+    function filterByCategory(category) {
+      currentCategory = category;
+      
+      // 更新标签状态
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelector(`[data-category="${category}"]`).classList.add('active');
+      
+      // 重新渲染列表
+      renderArticles();
+    }
+
+    // 查看文章
+    function viewArticle(id) {
+      // 这里可以跳转到文章详情页
+      alert(`文章详情功能即将上线\n文章ID: ${id}`);
+      // Router.navigate(`/web/pages/community/article.html?id=${id}`);
+    }
+
+    // 创建文章
+    function createArticle() {
+      alert('发布文章功能即将上线');
+      // Router.navigate('/web/pages/community/create.html');
+    }
+
+    // 导航函数
+    function goToHome() {
+      Router.navigate('/web/');
+    }
+
+    function goToAssessment() {
+      Router.navigate('/web/pages/assessment/index.html');
+    }
+
+    function goToCommunity() {
+      window.location.reload();
+    }
+
+    function goToProfile() {
+      Router.navigate('/web/pages/profile/index.html');
+    }
+
+    function goToNotifications() {
+      Router.navigate('/web/pages/profile/index.html');
+    }
+
+    function goToSearch() {
+      alert('搜索功能即将上线');
+      // Router.navigate('/web/pages/community/search.html');
+    }
+  </script>
+
+</body>
+</html>
+

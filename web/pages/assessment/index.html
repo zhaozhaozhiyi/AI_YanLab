@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI评估 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: #f9fafb;
+      min-height: 100vh;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 3rem 1rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 50px rgba(236, 72, 153, 0.2);
+      border-color: #ec4899;
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .icon-gradient-1 {
+      background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+    }
+
+    .icon-gradient-2 {
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    }
+
+    .icon-gradient-3 {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .icon-gradient-4 {
+      background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
+    }
+
+    .start-button {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      padding: 1.25rem 3rem;
+      border-radius: 50px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .start-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .history-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .history-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+    }
+
+    .score-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- 主内容区 -->
+  <main style="padding-bottom: 80px;">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="max-w-4xl mx-auto relative z-10">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-md rounded-full mb-4">
+            <i class="fas fa-camera text-5xl"></i>
+          </div>
+          <h1 class="text-3xl font-bold mb-3">AI面部评估</h1>
+          <p class="text-lg opacity-90">专业AI算法，3秒生成评估报告</p>
+        </div>
+
+        <!-- 统计数据 -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="totalAssessments">0</span>
+            <span class="stat-label">评估次数</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="avgScore">0</span>
+            <span class="stat-label">平均评分</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="lastScore">-</span>
+            <span class="stat-label">最近评分</span>
+          </div>
+        </div>
+
+        <!-- 开始评估按钮 -->
+        <div class="text-center mt-8">
+          <button class="start-button" onclick="startAssessment()">
+            <i class="fas fa-camera"></i>
+            <span>立即开始评估</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 功能介绍 -->
+    <section class="max-w-4xl mx-auto px-4 py-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">评估功能</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 功能卡片1 -->
+        <div class="feature-card" onclick="startAssessment()">
+          <div class="feature-icon icon-gradient-1">
+            <i class="fas fa-brain text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 text-center mb-2">AI智能分析</h3>
+          <p class="text-gray-600 text-center">采用先进的AI面部识别技术，全方位分析您的面部特征</p>
+        </div>
+
+        <!-- 功能卡片2 -->
+        <div class="feature-card" onclick="viewHistory()">
+          <div class="feature-icon icon-gradient-2">
+            <i class="fas fa-chart-line text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 text-center mb-2">专业报告</h3>
+          <p class="text-gray-600 text-center">生成详细的评估报告，提供针对性的改善建议</p>
+        </div>
+
+        <!-- 功能卡片3 -->
+        <div class="feature-card" onclick="startAssessment()">
+          <div class="feature-icon icon-gradient-3">
+            <i class="fas fa-shield-alt text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 text-center mb-2">隐私保护</h3>
+          <p class="text-gray-600 text-center">所有数据加密存储，严格保护您的个人隐私</p>
+        </div>
+
+        <!-- 功能卡片4 -->
+        <div class="feature-card" onclick="startAssessment()">
+          <div class="feature-icon icon-gradient-4">
+            <i class="fas fa-bolt text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 text-center mb-2">快速便捷</h3>
+          <p class="text-gray-600 text-center">3秒完成分析，随时随地轻松使用</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 历史记录 -->
+    <section class="max-w-4xl mx-auto px-4 py-4 pb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold text-gray-900">
+          <i class="fas fa-history mr-2 text-pink-500"></i>
+          评估历史
+        </h2>
+        <a href="/web/pages/profile/reports.html" class="text-sm text-pink-500 hover:text-pink-600">
+          查看全部 <i class="fas fa-chevron-right text-xs"></i>
+        </a>
+      </div>
+
+      <div id="historyList">
+        <div class="text-center py-12 text-gray-400">
+          <i class="fas fa-inbox text-5xl mb-4"></i>
+          <p class="text-lg">暂无评估记录</p>
+          <p class="text-sm mt-2">点击"立即开始评估"创建您的第一份报告</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部导航栏 -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+      <i class="fas fa-home text-xl mb-1"></i>
+      <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+      <i class="fas fa-camera text-xl mb-1"></i>
+      <span class="text-xs">评估</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToCommunity()">
+      <i class="fas fa-comments text-xl mb-1"></i>
+      <span class="text-xs">社区</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
+      <i class="fas fa-user text-xl mb-1"></i>
+      <span class="text-xs">我的</span>
+    </div>
+  </nav>
+
+  <!-- 共享工具 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      loadStatistics();
+      loadHistory();
+    });
+
+    // 加载统计数据
+    function loadStatistics() {
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      
+      // 评估次数
+      document.getElementById('totalAssessments').textContent = assessmentHistory.length;
+
+      // 平均评分
+      if (assessmentHistory.length > 0) {
+        const totalScore = assessmentHistory.reduce((sum, item) => sum + (item.score || 0), 0);
+        const avgScore = (totalScore / assessmentHistory.length).toFixed(1);
+        document.getElementById('avgScore').textContent = avgScore;
+
+        // 最近评分
+        const lastScore = assessmentHistory[assessmentHistory.length - 1].score || 0;
+        document.getElementById('lastScore').textContent = lastScore;
+      } else {
+        document.getElementById('avgScore').textContent = '0';
+        document.getElementById('lastScore').textContent = '-';
+      }
+    }
+
+    // 加载历史记录
+    function loadHistory() {
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      const historyList = document.getElementById('historyList');
+
+      if (assessmentHistory.length === 0) {
+        return;
+      }
+
+      // 显示最近3条记录
+      const recentHistory = assessmentHistory.slice(-3).reverse();
+      
+      historyList.innerHTML = recentHistory.map(item => `
+        <div class="history-card" onclick="viewReport(${item.id})">
+          <div class="flex items-center gap-4">
+            <div class="score-badge">${item.score || 0}</div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-gray-800 mb-1">面部综合评估报告</h3>
+              <p class="text-sm text-gray-500">${formatDate(item.date)}</p>
+            </div>
+            <i class="fas fa-chevron-right text-gray-400"></i>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 格式化日期
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const now = new Date();
+      const diff = now - date;
+      
+      if (diff < 3600000) {
+        const minutes = Math.floor(diff / 60000);
+        return minutes < 1 ? '刚刚' : `${minutes}分钟前`;
+      }
+      
+      if (diff < 86400000) {
+        const hours = Math.floor(diff / 3600000);
+        return `${hours}小时前`;
+      }
+      
+      if (diff < 604800000) {
+        const days = Math.floor(diff / 86400000);
+        return `${days}天前`;
+      }
+      
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+
+    // 开始评估
+    function startAssessment() {
+      Router.navigate('/web/pages/assessment/guide.html');
+    }
+
+    // 查看报告
+    function viewReport(id) {
+      Router.navigate(`/web/pages/assessment/report.html?id=${id}`);
+    }
+
+    // 查看历史
+    function viewHistory() {
+      Router.navigate('/web/pages/profile/reports.html');
+    }
+
+    // 导航函数
+    function goToHome() {
+      Router.navigate('/web/');
+    }
+
+    function goToAssessment() {
+      window.location.reload();
+    }
+
+    function goToCommunity() {
+      Router.navigate('/web/pages/community/index.html');
+    }
+
+    function goToProfile() {
+      Router.navigate('/web/pages/profile/index.html');
+    }
+
+    function goToNotifications() {
+      Router.navigate('/web/pages/profile/index.html');
+    }
+  </script>
+
+</body>
+</html>
+

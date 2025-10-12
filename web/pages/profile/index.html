@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人中心 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 2rem 1rem 3rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .avatar-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: #ec4899;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 10;
+    }
+
+    .stats-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: -2rem;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.15);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-item:hover {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+      transform: translateX(5px);
+    }
+
+    .menu-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    .icon-pink {
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      color: #ec4899;
+    }
+
+    .icon-purple {
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+      color: #8b5cf6;
+    }
+
+    .icon-blue {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      color: #3b82f6;
+    }
+
+    .icon-green {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #10b981;
+    }
+
+    .recent-report {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 1rem;
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .badge-new {
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      color: #ec4899;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 z-50 flex flex-row items-center justify-between" style="height: 56px;">
+    <!-- 左侧 Logo -->
+    <div class="flex items-center gap-2.5 flex-shrink-0">
+      <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-lg flex items-center justify-center">
+        <i class="fas fa-spa text-white text-xl"></i>
+      </div>
+      <span class="text-xl font-bold text-gray-900">个人中心</span>
+    </div>
+    
+    <!-- 右侧设置按钮 -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <button onclick="window.location.href='./edit.html'" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
+        <i class="fas fa-cog text-xl"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 主内容区包裹器 -->
+  <div style="padding-top: 56px; padding-bottom: 80px;">
+  
+  <!-- 头部用户信息 -->
+  <div class="profile-header">
+    <div class="max-w-md mx-auto px-4">
+      <!-- 用户头像和信息 -->
+      <div class="text-center relative z-10 py-4">
+        <div class="avatar-circle mx-auto mb-4">
+          <i class="fas fa-user"></i>
+        </div>
+        <h1 class="text-2xl font-bold mb-2" id="userName">AI颜值管家用户</h1>
+        <p class="text-white/80 text-sm" id="userPhone">138****8888</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 统计数据卡片 -->
+  <div class="max-w-md mx-auto px-4">
+    <div class="stats-card">
+      <div class="grid grid-cols-3 divide-x divide-gray-100">
+        <div class="stat-item">
+          <span class="stat-number" id="assessmentCount">0</span>
+          <span class="text-sm text-gray-600">评估次数</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="avgScore">0</span>
+          <span class="text-sm text-gray-600">平均评分</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" id="appointmentCount">0</span>
+          <span class="text-sm text-gray-600">预约记录</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 最近评估 -->
+    <div class="mt-6" id="recentReportSection" style="display: none;">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-gray-800">
+          <i class="fas fa-clock mr-2 text-pink-500"></i>
+          最近评估
+        </h2>
+        <a href="./reports.html" class="text-sm text-pink-500 hover:text-pink-600">
+          查看全部 <i class="fas fa-chevron-right text-xs"></i>
+        </a>
+      </div>
+      
+      <div class="recent-report cursor-pointer hover:shadow-lg transition" id="recentReport" onclick="viewReport()">
+        <div class="flex items-center gap-4">
+          <div class="score-badge" id="recentScore">0</div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-800 mb-1">面部综合评估报告</h3>
+            <p class="text-sm text-gray-500" id="recentDate">刚刚</p>
+          </div>
+          <div>
+            <span class="badge badge-new">最新</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 功能菜单 -->
+    <div class="mt-6">
+      <div class="menu-card mb-4">
+        <h3 class="text-sm font-semibold text-gray-500 mb-3 px-1">我的服务</h3>
+        
+        <div class="menu-item" onclick="window.location.href='./reports.html'">
+          <div class="menu-icon icon-pink">
+            <i class="fas fa-file-medical"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">我的评估报告</h4>
+            <p class="text-sm text-gray-500">查看历史评估记录</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+        
+        <div class="menu-item" onclick="window.location.href='./appointments.html'">
+          <div class="menu-icon icon-purple">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">我的预约</h4>
+            <p class="text-sm text-gray-500">查看预约记录</p>
+          </div>
+          <span class="badge badge-new" id="appointmentBadge" style="display: none;"></span>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+        
+        <div class="menu-item" onclick="alert('治疗计划功能即将上线')">
+          <div class="menu-icon icon-blue">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">我的治疗计划</h4>
+            <p class="text-sm text-gray-500">跟踪治疗进度</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+        
+        <div class="menu-item" onclick="window.location.href='./favorites.html'">
+          <div class="menu-icon icon-green">
+            <i class="fas fa-heart"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">我的收藏</h4>
+            <p class="text-sm text-gray-500">收藏的文章和案例</p>
+          </div>
+          <span class="badge badge-new" id="favoritesBadge" style="display: none;"></span>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+      </div>
+
+      <!-- 设置菜单 -->
+      <div class="menu-card mb-6">
+        <h3 class="text-sm font-semibold text-gray-500 mb-3 px-1">设置</h3>
+        
+        <div class="menu-item" onclick="window.location.href='./edit.html'">
+          <div class="menu-icon icon-pink">
+            <i class="fas fa-user-edit"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">个人资料</h4>
+            <p class="text-sm text-gray-500">编辑个人信息</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+        
+        <div class="menu-item" onclick="window.location.href='./settings.html'">
+          <div class="menu-icon icon-purple">
+            <i class="fas fa-cog"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">设置</h4>
+            <p class="text-sm text-gray-500">账户、通知、隐私设置</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+        
+        <div class="menu-item" onclick="showAbout()">
+          <div class="menu-icon icon-blue">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800">关于我们</h4>
+            <p class="text-sm text-gray-500">了解AI颜值管家</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+
+        <div class="menu-item" onclick="logout()">
+          <div class="menu-icon icon-pink">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800 text-pink-600">退出登录</h4>
+            <p class="text-sm text-gray-500">退出当前账号</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- 结束主内容区包裹器 -->
+
+  <!-- 底部导航栏 -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+      <i class="fas fa-home text-xl mb-1"></i>
+      <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+      <i class="fas fa-camera text-xl mb-1"></i>
+      <span class="text-xs">评估</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToCommunity()">
+      <i class="fas fa-comments text-xl mb-1"></i>
+      <span class="text-xs">社区</span>
+    </div>
+    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+      <i class="fas fa-user text-xl mb-1"></i>
+      <span class="text-xs">我的</span>
+    </div>
+  </nav>
+
+  <!-- 引入工具库 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    // 页面加载时初始化数据
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserInfo();
+      loadStatistics();
+      loadRecentReport();
+    });
+
+    // 加载用户信息
+    function loadUserInfo() {
+      const currentUser = Storage.get('currentUser');
+      if (currentUser) {
+        document.getElementById('userName').textContent = currentUser.name || 'AI颜值管家用户';
+        if (currentUser.phone) {
+          const phone = currentUser.phone;
+          document.getElementById('userPhone').textContent = 
+            phone.substring(0, 3) + '****' + phone.substring(7);
+        }
+      }
+    }
+
+    // 加载统计数据
+    function loadStatistics() {
+      // 评估次数
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      document.getElementById('assessmentCount').textContent = assessmentHistory.length;
+
+      // 平均评分
+      if (assessmentHistory.length > 0) {
+        const totalScore = assessmentHistory.reduce((sum, item) => sum + (item.score || 0), 0);
+        const avgScore = (totalScore / assessmentHistory.length).toFixed(1);
+        document.getElementById('avgScore').textContent = avgScore;
+      } else {
+        document.getElementById('avgScore').textContent = '0';
+      }
+
+      // 预约记录
+      const appointments = Storage.get('appointments') || [];
+      const appointmentCount = appointments.length;
+      document.getElementById('appointmentCount').textContent = appointmentCount;
+      
+      // 显示待确认预约数量
+      const pendingAppointments = appointments.filter(apt => apt.status === 'pending').length;
+      if (pendingAppointments > 0) {
+        const badge = document.getElementById('appointmentBadge');
+        badge.textContent = pendingAppointments;
+        badge.style.display = 'inline-block';
+      }
+
+      // 收藏数量
+      const favorites = Storage.get('favorites') || [];
+      if (favorites.length > 0) {
+        const badge = document.getElementById('favoritesBadge');
+        badge.textContent = favorites.length;
+        badge.style.display = 'inline-block';
+      }
+    }
+
+    // 加载最近的评估报告
+    function loadRecentReport() {
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      
+      if (assessmentHistory.length > 0) {
+        // 显示最近评估区域
+        document.getElementById('recentReportSection').style.display = 'block';
+        
+        // 获取最近的一次评估
+        const recent = assessmentHistory[assessmentHistory.length - 1];
+        
+        // 更新显示
+        document.getElementById('recentScore').textContent = recent.score || 0;
+        document.getElementById('recentDate').textContent = formatDate(recent.date);
+      }
+    }
+
+    // 格式化日期
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const now = new Date();
+      const diff = now - date;
+      
+      // 小于1小时
+      if (diff < 3600000) {
+        const minutes = Math.floor(diff / 60000);
+        return minutes < 1 ? '刚刚' : `${minutes}分钟前`;
+      }
+      
+      // 小于1天
+      if (diff < 86400000) {
+        const hours = Math.floor(diff / 3600000);
+        return `${hours}小时前`;
+      }
+      
+      // 小于7天
+      if (diff < 604800000) {
+        const days = Math.floor(diff / 86400000);
+        return `${days}天前`;
+      }
+      
+      // 其他情况显示具体日期
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+
+    // 查看报告
+    function viewReport() {
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      if (assessmentHistory.length > 0) {
+        const recent = assessmentHistory[assessmentHistory.length - 1];
+        window.location.href = `/web/pages/assessment/report.html?id=${recent.id}`;
+      }
+    }
+
+    // 显示关于我们
+    function showAbout() {
+      alert('AI颜值管家 v2.1\n\n您的专属AI颜值顾问平台\n\n提供专业的面部评估和个性化治疗方案');
+    }
+
+    // 退出登录
+    function logout() {
+      if (confirm('确定要退出登录吗？')) {
+        Storage.remove('currentUser');
+        window.location.href = '/web/pages/auth/login.html';
+      }
+    }
+
+    // 导航函数
+    function goToHome() {
+      Router.navigate('/web/');
+    }
+
+    function goToAssessment() {
+      Router.navigate('/web/pages/assessment/index.html');
+    }
+
+    function goToCommunity() {
+      Router.navigate('/web/pages/community/index.html');
+    }
+
+    function goToProfile() {
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的评估报告 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 1rem 1rem 2rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .trend-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: -1.5rem;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.15);
+    }
+
+    .report-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .report-card:hover {
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .score-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    .score-excellent {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .score-good {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .score-normal {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .score-poor {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .badge-new {
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      color: #ec4899;
+    }
+
+    .badge-improve {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      color: #059669;
+    }
+
+    .badge-decline {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #dc2626;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: #ec4899;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .filter-tab {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-tab.active {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      border-color: #ec4899;
+      color: white;
+    }
+
+    .trend-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .trend-up {
+      color: #059669;
+    }
+
+    .trend-down {
+      color: #dc2626;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <div class="max-w-md mx-auto px-4 relative z-10">
+      <div class="flex items-center justify-between mb-4">
+        <button onclick="window.history.back()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-arrow-left text-xl"></i>
+        </button>
+        <h1 class="text-xl font-bold">我的评估报告</h1>
+        <button onclick="showFilterMenu()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-filter text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto px-4">
+    <!-- 评分趋势卡片 -->
+    <div class="trend-card" id="trendCard" style="display: none;">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-gray-800">
+          <i class="fas fa-chart-line mr-2 text-pink-500"></i>
+          评分趋势
+        </h2>
+        <div class="trend-indicator trend-up" id="trendIndicator">
+          <i class="fas fa-arrow-up"></i>
+          <span id="trendText">+2.5</span>
+        </div>
+      </div>
+
+      <!-- 统计数据 -->
+      <div class="grid grid-cols-3 gap-4 mb-4">
+        <div class="stat-box">
+          <div class="stat-value" id="totalReports">0</div>
+          <div class="stat-label">总评估</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="avgScore">0</div>
+          <div class="stat-label">平均分</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="latestScore">0</div>
+          <div class="stat-label">最新分</div>
+        </div>
+      </div>
+
+      <!-- 趋势图表 -->
+      <div class="mt-4">
+        <canvas id="trendChart" height="150"></canvas>
+      </div>
+    </div>
+
+    <!-- 筛选标签 -->
+    <div class="mt-6">
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterReports('all')" data-filter="all">
+          全部
+        </button>
+        <button class="filter-tab" onclick="filterReports('thisMonth')" data-filter="thisMonth">
+          本月
+        </button>
+        <button class="filter-tab" onclick="filterReports('lastMonth')" data-filter="lastMonth">
+          上月
+        </button>
+        <button class="filter-tab" onclick="filterReports('last3Months')" data-filter="last3Months">
+          近三个月
+        </button>
+      </div>
+    </div>
+
+    <!-- 报告列表 -->
+    <div class="mt-4 mb-6" id="reportsList">
+      <!-- 报告卡片将通过 JS 动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-icon">
+        <i class="fas fa-file-medical"></i>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">还没有评估报告</h3>
+      <p class="text-gray-500 mb-6">完成首次免费评估，了解您的颜值状况</p>
+      <button 
+        onclick="window.location.href='/web/pages/assessment/guide.html'"
+        class="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
+        立即开始评估
+      </button>
+    </div>
+  </div>
+
+  <!-- 引入工具库 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    let allReports = [];
+    let currentFilter = 'all';
+    let trendChart = null;
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      loadReports();
+    });
+
+    // 加载报告列表
+    function loadReports() {
+      const assessmentHistory = Storage.get('assessmentHistory') || [];
+      
+      if (assessmentHistory.length === 0) {
+        showEmptyState();
+        return;
+      }
+
+      // 按日期倒序排序
+      allReports = assessmentHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      // 显示趋势卡片
+      document.getElementById('trendCard').style.display = 'block';
+      
+      // 更新统计数据
+      updateStatistics();
+      
+      // 绘制趋势图
+      drawTrendChart();
+      
+      // 显示报告列表
+      filterReports('all');
+    }
+
+    // 更新统计数据
+    function updateStatistics() {
+      const total = allReports.length;
+      document.getElementById('totalReports').textContent = total;
+
+      if (total > 0) {
+        // 平均分
+        const totalScore = allReports.reduce((sum, item) => sum + (item.score || 0), 0);
+        const avgScore = (totalScore / total).toFixed(1);
+        document.getElementById('avgScore').textContent = avgScore;
+
+        // 最新分
+        document.getElementById('latestScore').textContent = allReports[0].score || 0;
+
+        // 趋势（对比最新和最旧）
+        if (total > 1) {
+          const latestScore = allReports[0].score || 0;
+          const oldestScore = allReports[total - 1].score || 0;
+          const diff = latestScore - oldestScore;
+          
+          const trendIndicator = document.getElementById('trendIndicator');
+          const trendText = document.getElementById('trendText');
+          
+          if (diff > 0) {
+            trendIndicator.className = 'trend-indicator trend-up';
+            trendText.textContent = `+${diff.toFixed(1)}`;
+            trendIndicator.innerHTML = `<i class="fas fa-arrow-up"></i><span>${trendText.textContent}</span>`;
+          } else if (diff < 0) {
+            trendIndicator.className = 'trend-indicator trend-down';
+            trendText.textContent = diff.toFixed(1);
+            trendIndicator.innerHTML = `<i class="fas fa-arrow-down"></i><span>${trendText.textContent}</span>`;
+          } else {
+            trendIndicator.className = 'trend-indicator';
+            trendText.textContent = '0.0';
+            trendIndicator.innerHTML = `<i class="fas fa-minus"></i><span>${trendText.textContent}</span>`;
+          }
+        }
+      }
+    }
+
+    // 绘制趋势图表
+    function drawTrendChart() {
+      const ctx = document.getElementById('trendChart');
+      if (!ctx) return;
+
+      // 倒序（最早的在左边）
+      const chartData = [...allReports].reverse();
+      
+      // 只显示最近10次
+      const displayData = chartData.slice(-10);
+      
+      const labels = displayData.map((item, index) => `第${index + 1}次`);
+      const scores = displayData.map(item => item.score || 0);
+
+      // 销毁旧图表
+      if (trendChart) {
+        trendChart.destroy();
+      }
+
+      trendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '评分',
+            data: scores,
+            borderColor: 'rgb(236, 72, 153)',
+            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: 'rgb(236, 72, 153)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  return '评分: ' + context.parsed.y;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                stepSize: 20
+              },
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // 筛选报告
+    function filterReports(filter) {
+      currentFilter = filter;
+      
+      // 更新标签样式
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        if (tab.dataset.filter === filter) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // 筛选数据
+      let filteredReports = allReports;
+      const now = new Date();
+      
+      if (filter === 'thisMonth') {
+        filteredReports = allReports.filter(item => {
+          const date = new Date(item.date);
+          return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+        });
+      } else if (filter === 'lastMonth') {
+        const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        filteredReports = allReports.filter(item => {
+          const date = new Date(item.date);
+          return date.getMonth() === lastMonth.getMonth() && date.getFullYear() === lastMonth.getFullYear();
+        });
+      } else if (filter === 'last3Months') {
+        const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+        filteredReports = allReports.filter(item => new Date(item.date) >= threeMonthsAgo);
+      }
+
+      // 渲染报告列表
+      renderReports(filteredReports);
+    }
+
+    // 渲染报告列表
+    function renderReports(reports) {
+      const container = document.getElementById('reportsList');
+      
+      if (reports.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-gray-500">
+            <i class="fas fa-inbox text-4xl mb-2"></i>
+            <p>该时间段内没有评估记录</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = reports.map((report, index) => {
+        const isNew = index === 0 && currentFilter === 'all';
+        const scoreClass = getScoreClass(report.score);
+        const badge = getBadge(report, index);
+        
+        return `
+          <div class="report-card" onclick="viewReport('${report.id}')">
+            <div class="flex items-center gap-4">
+              <div class="score-circle ${scoreClass}">
+                ${report.score || 0}
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-semibold text-gray-800">面部综合评估</h3>
+                  ${badge}
+                </div>
+                <p class="text-sm text-gray-500 mb-2">
+                  <i class="far fa-clock mr-1"></i>
+                  ${formatDateTime(report.date)}
+                </p>
+                <div class="flex gap-2 text-xs">
+                  ${report.topProblems ? report.topProblems.slice(0, 3).map(p => 
+                    `<span class="px-2 py-1 bg-gray-100 text-gray-600 rounded">${p}</span>`
+                  ).join('') : ''}
+                </div>
+              </div>
+              <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 获取评分样式类
+    function getScoreClass(score) {
+      if (score >= 90) return 'score-excellent';
+      if (score >= 75) return 'score-good';
+      if (score >= 60) return 'score-normal';
+      return 'score-poor';
+    }
+
+    // 获取标签
+    function getBadge(report, index) {
+      if (index === 0 && currentFilter === 'all') {
+        return '<span class="badge badge-new">最新</span>';
+      }
+      
+      // 对比前一次的评分变化
+      if (index < allReports.length - 1) {
+        const prevScore = allReports[index + 1].score || 0;
+        const currentScore = report.score || 0;
+        const diff = currentScore - prevScore;
+        
+        if (diff > 2) {
+          return '<span class="badge badge-improve">进步</span>';
+        } else if (diff < -2) {
+          return '<span class="badge badge-decline">下降</span>';
+        }
+      }
+      
+      return '';
+    }
+
+    // 格式化日期时间
+    function formatDateTime(dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      
+      return `${year}年${month}月${day}日 ${hours}:${minutes}`;
+    }
+
+    // 显示空状态
+    function showEmptyState() {
+      document.getElementById('emptyState').style.display = 'block';
+      document.getElementById('reportsList').style.display = 'none';
+    }
+
+    // 查看报告详情
+    function viewReport(reportId) {
+      window.location.href = `/web/pages/assessment/report.html?id=${reportId}`;
+    }
+
+    // 显示筛选菜单
+    function showFilterMenu() {
+      alert('筛选功能：\n- 全部：显示所有评估记录\n- 本月：本月的评估\n- 上月：上个月的评估\n- 近三个月：最近90天的评估');
+    }
+  </script>
+</body>
+</html>
+

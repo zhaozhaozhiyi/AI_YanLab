@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的收藏 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 1rem 1rem 2rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .filter-tab {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-tab.active {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      border-color: #ec4899;
+      color: white;
+    }
+
+    .favorite-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .favorite-card:hover {
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .favorite-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+    }
+
+    .favorite-content {
+      padding: 1rem;
+    }
+
+    .favorite-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .favorite-description {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .favorite-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .favorite-actions {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 10;
+    }
+
+    .favorite-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .favorite-btn:hover {
+      transform: scale(1.1);
+      background: white;
+    }
+
+    .favorite-btn.active {
+      color: #ec4899;
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      color: #ec4899;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: #ec4899;
+    }
+
+    .case-card {
+      display: flex;
+      gap: 1rem;
+      background: white;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .case-card:hover {
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .case-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+    }
+
+    .case-content {
+      flex: 1;
+    }
+
+    .case-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .case-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .case-tag {
+      padding: 0.125rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <div class="max-w-md mx-auto px-4 relative z-10">
+      <div class="flex items-center justify-between mb-4">
+        <button onclick="window.history.back()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-arrow-left text-xl"></i>
+        </button>
+        <h1 class="text-xl font-bold">我的收藏</h1>
+        <button onclick="showManageOptions()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-ellipsis-v text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto px-4" style="margin-top: -1rem;">
+    <!-- 筛选标签 -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterFavorites('all')" data-filter="all">
+        全部 <span id="countAll">(0)</span>
+      </button>
+      <button class="filter-tab" onclick="filterFavorites('article')" data-filter="article">
+        文章 <span id="countArticle">(0)</span>
+      </button>
+      <button class="filter-tab" onclick="filterFavorites('case')" data-filter="case">
+        案例 <span id="countCase">(0)</span>
+      </button>
+      <button class="filter-tab" onclick="filterFavorites('video')" data-filter="video">
+        视频 <span id="countVideo">(0)</span>
+      </button>
+    </div>
+
+    <!-- 收藏列表 -->
+    <div id="favoritesList">
+      <!-- 动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-icon">
+        <i class="fas fa-heart"></i>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">还没有收藏内容</h3>
+      <p class="text-gray-500 mb-6">收藏感兴趣的文章和案例，随时查看</p>
+      <button 
+        onclick="window.location.href='/web/pages/community/index.html'"
+        class="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
+        去发现
+      </button>
+    </div>
+  </div>
+
+  <!-- 引入工具库 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    let allFavorites = [];
+    let currentFilter = 'all';
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      loadFavorites();
+    });
+
+    // 加载收藏内容
+    function loadFavorites() {
+      // 从存储中获取收藏
+      allFavorites = Storage.get('favorites') || [];
+      
+      if (allFavorites.length === 0) {
+        // 生成演示数据
+        allFavorites = generateDemoFavorites();
+      }
+      
+      updateCounts();
+      filterFavorites('all');
+    }
+
+    // 生成演示收藏数据
+    function generateDemoFavorites() {
+      return [
+        {
+          id: 'FAV_001',
+          type: 'article',
+          title: '秋冬季节如何做好面部保养',
+          description: '随着天气转凉，皮肤容易出现干燥、敏感等问题。本文为您详细介绍秋冬季节的面部护理要点...',
+          image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=300&fit=crop',
+          category: '护肤知识',
+          author: 'AI颜值管家',
+          date: '2024-10-10',
+          views: 1258,
+          likes: 89
+        },
+        {
+          id: 'FAV_002',
+          type: 'case',
+          title: '30岁女性面部综合抗衰案例',
+          description: '客户年龄30岁，主要问题：法令纹、眼角细纹、面部松弛。治疗方案：肉毒素+玻尿酸...',
+          image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=300&fit=crop',
+          tags: ['肉毒素', '玻尿酸', '抗衰老'],
+          beforeAfter: true,
+          date: '2024-10-08',
+          views: 2456
+        },
+        {
+          id: 'FAV_003',
+          type: 'article',
+          title: '肉毒素注射的最佳时机和注意事项',
+          description: '肉毒素注射是目前最流行的抗衰老项目之一，但什么时候开始注射，需要注意什么...',
+          image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=300&fit=crop',
+          category: '医美科普',
+          author: '王医生',
+          date: '2024-10-05',
+          views: 3420,
+          likes: 156
+        },
+        {
+          id: 'FAV_004',
+          type: 'video',
+          title: '玻尿酸填充全过程揭秘',
+          description: '跟随镜头，了解玻尿酸填充的完整流程，从术前准备到术后护理...',
+          image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop',
+          category: '视频教程',
+          duration: '8:32',
+          date: '2024-10-03',
+          views: 5678
+        },
+        {
+          id: 'FAV_005',
+          type: 'case',
+          title: '色斑淡化真人案例分享',
+          description: '35岁女性，多年色斑困扰。通过激光+美白方案，显著改善肤色...',
+          image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&h=300&fit=crop',
+          tags: ['激光', '美白', '色斑'],
+          beforeAfter: true,
+          date: '2024-10-01',
+          views: 1890
+        }
+      ];
+    }
+
+    // 更新计数
+    function updateCounts() {
+      const counts = {
+        all: allFavorites.length,
+        article: allFavorites.filter(f => f.type === 'article').length,
+        case: allFavorites.filter(f => f.type === 'case').length,
+        video: allFavorites.filter(f => f.type === 'video').length
+      };
+
+      document.getElementById('countAll').textContent = `(${counts.all})`;
+      document.getElementById('countArticle').textContent = `(${counts.article})`;
+      document.getElementById('countCase').textContent = `(${counts.case})`;
+      document.getElementById('countVideo').textContent = `(${counts.video})`;
+    }
+
+    // 筛选收藏
+    function filterFavorites(filter) {
+      currentFilter = filter;
+      
+      // 更新标签样式
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        if (tab.dataset.filter === filter) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // 筛选数据
+      let filteredFavorites = allFavorites;
+      if (filter !== 'all') {
+        filteredFavorites = allFavorites.filter(f => f.type === filter);
+      }
+
+      // 渲染列表
+      renderFavorites(filteredFavorites);
+    }
+
+    // 渲染收藏列表
+    function renderFavorites(favorites) {
+      const container = document.getElementById('favoritesList');
+      const emptyState = document.getElementById('emptyState');
+      
+      if (favorites.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      container.style.display = 'block';
+      emptyState.style.display = 'none';
+
+      container.innerHTML = favorites.map(fav => {
+        if (fav.type === 'case') {
+          return renderCaseCard(fav);
+        } else {
+          return renderArticleCard(fav);
+        }
+      }).join('');
+    }
+
+    // 渲染文章卡片
+    function renderArticleCard(fav) {
+      const typeIcon = fav.type === 'video' ? 'fa-play-circle' : 'fa-file-alt';
+      const typeName = fav.type === 'video' ? '视频' : '文章';
+      
+      return `
+        <div class="favorite-card" onclick="viewContent('${fav.id}')">
+          <div class="favorite-actions">
+            <button class="favorite-btn active" onclick="event.stopPropagation(); removeFavorite('${fav.id}')">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+          
+          <img src="${fav.image}" alt="${fav.title}" class="favorite-image">
+          
+          <div class="favorite-content">
+            <span class="category-badge">
+              <i class="fas ${typeIcon} mr-1"></i>
+              ${fav.category || typeName}
+            </span>
+            
+            <h3 class="favorite-title">${fav.title}</h3>
+            <p class="favorite-description">${fav.description}</p>
+            
+            <div class="favorite-meta">
+              <span>
+                <i class="far fa-eye mr-1"></i>
+                ${fav.views} 次浏览
+              </span>
+              <span>
+                ${fav.duration || formatDate(fav.date)}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 渲染案例卡片
+    function renderCaseCard(fav) {
+      return `
+        <div class="case-card" onclick="viewContent('${fav.id}')">
+          <div class="favorite-actions" style="top: 0.5rem; right: 0.5rem;">
+            <button class="favorite-btn active" onclick="event.stopPropagation(); removeFavorite('${fav.id}')">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+          
+          <img src="${fav.image}" alt="${fav.title}" class="case-image">
+          
+          <div class="case-content">
+            <h3 class="case-title">${fav.title}</h3>
+            
+            <div class="case-tags">
+              ${fav.tags.map(tag => `<span class="case-tag">${tag}</span>`).join('')}
+            </div>
+            
+            <div class="favorite-meta">
+              <span>
+                <i class="far fa-eye mr-1"></i>
+                ${fav.views}
+              </span>
+              <span>${formatDate(fav.date)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 格式化日期
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const now = new Date();
+      const diff = now - date;
+      const days = Math.floor(diff / 86400000);
+      
+      if (days === 0) return '今天';
+      if (days === 1) return '昨天';
+      if (days < 7) return `${days}天前`;
+      
+      return `${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+
+    // 查看内容
+    function viewContent(id) {
+      const content = allFavorites.find(f => f.id === id);
+      if (content) {
+        if (content.type === 'article') {
+          window.location.href = `/web/pages/community/article.html?id=${id}`;
+        } else if (content.type === 'case') {
+          window.location.href = `/web/pages/community/case.html?id=${id}`;
+        } else if (content.type === 'video') {
+          window.location.href = `/web/pages/community/video.html?id=${id}`;
+        }
+      }
+    }
+
+    // 取消收藏
+    function removeFavorite(id) {
+      if (confirm('确定要取消收藏吗？')) {
+        allFavorites = allFavorites.filter(f => f.id !== id);
+        Storage.set('favorites', allFavorites);
+        updateCounts();
+        filterFavorites(currentFilter);
+        
+        // 显示提示
+        showToast('已取消收藏');
+      }
+    }
+
+    // 显示管理选项
+    function showManageOptions() {
+      alert('管理选项：\n\n- 批量删除\n- 批量分享\n- 导出收藏\n\n功能开发中...');
+    }
+
+    // 显示提示
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-size: 14px;
+        z-index: 1000;
+      `;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
+

@@ -522,6 +522,31 @@
 
     // 加载报告数据
     function loadReport() {
+      // 检查 URL 参数中是否有 reportId
+      const urlParams = new URLSearchParams(window.location.search);
+      const reportId = urlParams.get('id');
+      
+      if (reportId) {
+        // 从评估历史中查找指定的报告
+        const assessmentHistory = Storage.get('assessmentHistory') || [];
+        const historicalReport = assessmentHistory.find(item => item.id === reportId);
+        
+        if (historicalReport) {
+          console.log('加载历史报告:', reportId);
+          // 从存储中获取完整报告数据
+          report = Storage.get('report_' + reportId);
+          
+          if (!report) {
+            // 如果没有完整报告，从历史记录重建
+            report = rebuildReportFromHistory(historicalReport);
+          }
+          return;
+        } else {
+          console.warn('未找到指定的报告:', reportId);
+        }
+      }
+      
+      // 尝试加载当前报告
       report = Storage.get('currentReport');
       
       if (!report) {
@@ -531,6 +556,73 @@
         report.isTestData = true; // 标记为测试数据
         Storage.set('currentReport', report);
       }
+    }
+
+    // 从历史记录重建完整报告
+    function rebuildReportFromHistory(historyItem) {
+      // 如果历史记录中包含完整报告数据，直接使用
+      if (historyItem.fullReport) {
+        return historyItem.fullReport;
+      }
+      
+      // 否则根据历史记录生成报告
+      const reportId = historyItem.id;
+      const score = historyItem.score || 0;
+      
+      return {
+        id: reportId,
+        assessmentId: historyItem.assessmentId || reportId,
+        userId: historyItem.userId || 'USER_DEFAULT',
+        createdAt: new Date(historyItem.date).getTime(),
+        overallScore: score,
+        ageScore: Math.max(0, score - Math.floor(Math.random() * 10)),
+        skinScore: Math.max(0, score - Math.floor(Math.random() * 10)),
+        faceScore: Math.max(0, score + Math.floor(Math.random() * 10)),
+        estimatedAge: historyItem.estimatedAge || 30,
+        actualAge: historyItem.actualAge || 32,
+        issues: historyItem.issues || generateDefaultIssues(),
+        strengths: historyItem.strengths || ['整体轮廓匀称', '肤质细腻'],
+        recommendations: historyItem.recommendations || generateDefaultRecommendations(),
+        topProblems: historyItem.topProblems || ['细纹', '肤色不均'],
+        photos: historyItem.photos || []
+      };
+    }
+
+    // 生成默认问题列表
+    function generateDefaultIssues() {
+      return [
+        {
+          id: 1,
+          name: '细纹与皱纹',
+          severity: 'medium',
+          score: 72,
+          areas: ['眼周', '额头'],
+          description: '在眼周和额头区域发现轻度细纹。',
+          suggestions: ['使用含视黄醇的眼霜', '定期进行补水护理']
+        },
+        {
+          id: 2,
+          name: '肤色不均',
+          severity: 'low',
+          score: 78,
+          areas: ['面颊'],
+          description: '面部肤色整体均匀，局部略有色差。',
+          suggestions: ['使用美白精华液', '注意防晒保护']
+        }
+      ];
+    }
+
+    // 生成默认建议列表
+    function generateDefaultRecommendations() {
+      return [
+        {
+          title: '抗衰老基础护理',
+          priority: 'high',
+          treatments: ['肉毒素注射', '玻尿酸填充'],
+          estimatedCost: '5,000-15,000元',
+          duration: '3-6个月'
+        }
+      ];
     }
 
     // 生成测试报告数据

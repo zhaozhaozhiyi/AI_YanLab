@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的预约 - AI颜值管家</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="/web/assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      min-height: 100vh;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      color: white;
+      padding: 1rem 1rem 2rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+
+    .filter-tab {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-tab.active {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      border-color: #ec4899;
+      color: white;
+    }
+
+    .appointment-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .appointment-card:hover {
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .appointment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .appointment-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .appointment-subtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+    }
+
+    .status-confirmed {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      color: #1e40af;
+    }
+
+    .status-completed {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      color: #065f46;
+    }
+
+    .status-cancelled {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #991b1b;
+    }
+
+    .appointment-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .info-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-pink {
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      color: #ec4899;
+    }
+
+    .icon-purple {
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+      color: #8b5cf6;
+    }
+
+    .icon-blue {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      color: #3b82f6;
+    }
+
+    .icon-green {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #10b981;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-bottom: 0.125rem;
+    }
+
+    .info-value {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .appointment-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: white;
+      box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #6b7280;
+      border: 2px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: #ec4899;
+    }
+
+    .doctor-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f9fafb;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .doctor-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .doctor-details {
+      flex: 1;
+    }
+
+    .doctor-name {
+      font-weight: 600;
+      color: #1f2937;
+      font-size: 0.9375rem;
+    }
+
+    .doctor-title {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <div class="max-w-md mx-auto px-4 relative z-10">
+      <div class="flex items-center justify-between mb-4">
+        <button onclick="window.history.back()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-arrow-left text-xl"></i>
+        </button>
+        <h1 class="text-xl font-bold">我的预约</h1>
+        <button onclick="showFilterOptions()" class="text-white hover:opacity-80 transition">
+          <i class="fas fa-sliders-h text-xl"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-md mx-auto px-4" style="margin-top: -1rem;">
+    <!-- 筛选标签 -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterAppointments('all')" data-filter="all">
+        全部
+      </button>
+      <button class="filter-tab" onclick="filterAppointments('pending')" data-filter="pending">
+        待确认
+      </button>
+      <button class="filter-tab" onclick="filterAppointments('confirmed')" data-filter="confirmed">
+        已确认
+      </button>
+      <button class="filter-tab" onclick="filterAppointments('completed')" data-filter="completed">
+        已完成
+      </button>
+      <button class="filter-tab" onclick="filterAppointments('cancelled')" data-filter="cancelled">
+        已取消
+      </button>
+    </div>
+
+    <!-- 预约列表 -->
+    <div id="appointmentsList">
+      <!-- 动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-icon">
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">还没有预约记录</h3>
+      <p class="text-gray-500 mb-6">预约专家咨询，获取专业治疗建议</p>
+      <button 
+        onclick="window.location.href='/web/pages/booking/experts.html'"
+        class="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
+        立即预约
+      </button>
+    </div>
+  </div>
+
+  <!-- 引入工具库 -->
+  <script src="/shared/storage.js"></script>
+  <script src="/shared/utils.js"></script>
+  <script src="/shared/router.js"></script>
+
+  <script>
+    let allAppointments = [];
+    let currentFilter = 'all';
+
+    // 页面加载时初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      loadAppointments();
+    });
+
+    // 加载预约记录
+    function loadAppointments() {
+      // 从存储中获取预约记录
+      allAppointments = Storage.get('appointments') || [];
+      
+      if (allAppointments.length === 0) {
+        // 如果没有真实数据，生成演示数据
+        allAppointments = generateDemoAppointments();
+      }
+      
+      filterAppointments('all');
+    }
+
+    // 生成演示预约数据
+    function generateDemoAppointments() {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      const nextWeek = new Date(now);
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      
+      const lastWeek = new Date(now);
+      lastWeek.setDate(lastWeek.getDate() - 7);
+
+      return [
+        {
+          id: 'APT_001',
+          doctorName: '王美丽',
+          doctorTitle: '主任医师 · 抗衰专家',
+          serviceName: '面部抗衰咨询',
+          date: tomorrow.toISOString(),
+          time: '14:00',
+          duration: '30分钟',
+          location: '北京朝阳门诊部',
+          room: '3楼咨询室',
+          status: 'confirmed',
+          price: '免费',
+          note: '请提前15分钟到达'
+        },
+        {
+          id: 'APT_002',
+          doctorName: '李明',
+          doctorTitle: '副主任医师 · 注射美容',
+          serviceName: '肉毒素注射治疗',
+          date: nextWeek.toISOString(),
+          time: '10:30',
+          duration: '45分钟',
+          location: '北京朝阳门诊部',
+          room: '2楼治疗室',
+          status: 'pending',
+          price: '¥3,800',
+          note: ''
+        },
+        {
+          id: 'APT_003',
+          doctorName: '张医生',
+          doctorTitle: '主治医师 · 皮肤管理',
+          serviceName: '皮肤深度清洁',
+          date: lastWeek.toISOString(),
+          time: '15:00',
+          duration: '60分钟',
+          location: '北京朝阳门诊部',
+          room: '4楼美肤中心',
+          status: 'completed',
+          price: '¥1,200',
+          note: ''
+        }
+      ];
+    }
+
+    // 筛选预约
+    function filterAppointments(filter) {
+      currentFilter = filter;
+      
+      // 更新标签样式
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        if (tab.dataset.filter === filter) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // 筛选数据
+      let filteredAppointments = allAppointments;
+      if (filter !== 'all') {
+        filteredAppointments = allAppointments.filter(apt => apt.status === filter);
+      }
+
+      // 渲染列表
+      renderAppointments(filteredAppointments);
+    }
+
+    // 渲染预约列表
+    function renderAppointments(appointments) {
+      const container = document.getElementById('appointmentsList');
+      const emptyState = document.getElementById('emptyState');
+      
+      if (appointments.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      container.style.display = 'block';
+      emptyState.style.display = 'none';
+
+      container.innerHTML = appointments.map(apt => {
+        const statusClass = `status-${apt.status}`;
+        const statusText = getStatusText(apt.status);
+        const dateStr = formatDate(apt.date);
+        
+        return `
+          <div class="appointment-card" onclick="viewAppointment('${apt.id}')">
+            <!-- 医生信息 -->
+            <div class="doctor-info">
+              <div class="doctor-avatar">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <div class="doctor-details">
+                <div class="doctor-name">${apt.doctorName}</div>
+                <div class="doctor-title">${apt.doctorTitle}</div>
+              </div>
+              <span class="status-badge ${statusClass}">${statusText}</span>
+            </div>
+
+            <!-- 预约信息 -->
+            <div class="appointment-title">${apt.serviceName}</div>
+            
+            <div class="appointment-info">
+              <div class="info-item">
+                <div class="info-icon icon-pink">
+                  <i class="far fa-calendar"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">日期</div>
+                  <div class="info-value">${dateStr}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon icon-purple">
+                  <i class="far fa-clock"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">时间</div>
+                  <div class="info-value">${apt.time}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon icon-blue">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">地点</div>
+                  <div class="info-value">${apt.location}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon icon-green">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">费用</div>
+                  <div class="info-value">${apt.price}</div>
+                </div>
+              </div>
+            </div>
+
+            ${apt.note ? `
+              <div style="padding: 0.75rem; background: #fffbeb; border-radius: 8px; margin-top: 0.5rem;">
+                <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+                <span class="text-sm text-yellow-800">${apt.note}</span>
+              </div>
+            ` : ''}
+
+            <!-- 操作按钮 -->
+            ${renderActions(apt)}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 渲染操作按钮
+    function renderActions(apt) {
+      if (apt.status === 'pending') {
+        return `
+          <div class="appointment-actions">
+            <button class="action-btn btn-secondary" onclick="event.stopPropagation(); cancelAppointment('${apt.id}')">
+              取消预约
+            </button>
+            <button class="action-btn btn-primary" onclick="event.stopPropagation(); confirmAppointment('${apt.id}')">
+              确认预约
+            </button>
+          </div>
+        `;
+      } else if (apt.status === 'confirmed') {
+        return `
+          <div class="appointment-actions">
+            <button class="action-btn btn-secondary" onclick="event.stopPropagation(); rescheduleAppointment('${apt.id}')">
+              改期
+            </button>
+            <button class="action-btn btn-primary" onclick="event.stopPropagation(); getDirections('${apt.id}')">
+              查看路线
+            </button>
+          </div>
+        `;
+      } else if (apt.status === 'completed') {
+        return `
+          <div class="appointment-actions">
+            <button class="action-btn btn-secondary" onclick="event.stopPropagation(); rateDoctor('${apt.id}')">
+              评价医生
+            </button>
+            <button class="action-btn btn-primary" onclick="event.stopPropagation(); bookAgain('${apt.id}')">
+              再次预约
+            </button>
+          </div>
+        `;
+      }
+      return '';
+    }
+
+    // 获取状态文本
+    function getStatusText(status) {
+      const texts = {
+        pending: '待确认',
+        confirmed: '已确认',
+        completed: '已完成',
+        cancelled: '已取消'
+      };
+      return texts[status] || status;
+    }
+
+    // 格式化日期
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const weekDay = weekDays[date.getDay()];
+      
+      return `${month}月${day}日 ${weekDay}`;
+    }
+
+    // 查看预约详情
+    function viewAppointment(id) {
+      alert(`查看预约详情：${id}\n\n功能开发中...`);
+    }
+
+    // 确认预约
+    function confirmAppointment(id) {
+      if (confirm('确认此预约？')) {
+        alert('预约已确认！\n\n我们会提前通过短信提醒您。');
+        // 这里应该更新预约状态
+        loadAppointments();
+      }
+    }
+
+    // 取消预约
+    function cancelAppointment(id) {
+      if (confirm('确定要取消预约吗？')) {
+        alert('预约已取消');
+        loadAppointments();
+      }
+    }
+
+    // 改期
+    function rescheduleAppointment(id) {
+      alert('改期功能开发中...\n\n您可以联系客服修改预约时间。');
+    }
+
+    // 查看路线
+    function getDirections(id) {
+      alert('导航功能开发中...\n\n将为您打开地图导航。');
+    }
+
+    // 评价医生
+    function rateDoctor(id) {
+      alert('评价功能开发中...\n\n您的反馈对我们很重要！');
+    }
+
+    // 再次预约
+    function bookAgain(id) {
+      window.location.href = '/web/pages/booking/experts.html';
+    }
+
+    // 显示筛选选项
+    function showFilterOptions() {
+      alert('筛选选项：\n\n- 全部：显示所有预约\n- 待确认：等待确认的预约\n- 已确认：已确认的预约\n- 已完成：已完成的预约\n- 已取消：已取消的预约');
+    }
+  </script>
+</body>
+</html>
+

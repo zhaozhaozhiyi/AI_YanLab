@@ -483,7 +483,7 @@
     
     .hero-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
       background: #f8fafc;
     }
     
@@ -1328,7 +1328,7 @@
 
   <!-- 底部导航栏 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
       <i class="fas fa-home text-xl mb-1"></i>
       <span class="text-xs">首页</span>
     </div>
@@ -1341,7 +1341,7 @@
       <span class="text-xs">社区</span>
     </div>
     <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
-      <i class="far fa-user text-xl mb-1"></i>
+      <i class="fas fa-user text-xl mb-1"></i>
       <span class="text-xs">我的</span>
     </div>
   </nav>
@@ -1589,8 +1589,12 @@
     }
 
     // 页面跳转函数
+    function goToHome() {
+      window.location.reload();
+    }
+
     function goToAssessment() {
-      Router.navigate('/web/pages/assessment/guide.html');
+      Router.navigate('/web/pages/assessment/index.html');
     }
 
     function goToChat() {
