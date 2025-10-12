@@ -343,6 +343,335 @@
       flex-shrink: 0;
     }
 
+    /* 建议区块样式 - 卡片分区式 */
+    .recommendation-section {
+      margin-bottom: 2rem;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .recommendation-section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 绿色区块 - 生活方式 */
+    .green-section {
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+      border: 2px solid #d1fae5;
+    }
+
+    /* 蓝色区块 - 日常护理 */
+    .blue-section {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 2px solid #bfdbfe;
+    }
+
+    /* 粉色区块 - 医美治疗 */
+    .pink-section {
+      background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+      border: 2px solid #fbcfe8;
+    }
+
+    /* 区块头部 */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .section-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      /* flex: 1; */
+    }
+
+    .section-emoji {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .section-heading {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .cost-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .green-badge {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .blue-badge {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .pink-badge {
+      background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    /* 建议网格 */
+    .recommendation-grid {
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .recommendation-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    /* 生活方式建议卡片 */
+    .lifestyle-card {
+      background: white;
+      border: 2px solid #d1fae5;
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lifestyle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    }
+
+    .lifestyle-card:hover {
+      border-color: #10b981;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+    }
+
+    .lifestyle-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .lifestyle-icon {
+      font-size: 2rem;
+    }
+
+    .lifestyle-title {
+      flex: 1;
+    }
+
+    .lifestyle-title h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .lifestyle-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .lifestyle-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .difficulty-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .difficulty-easy {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .difficulty-medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .difficulty-hard {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .effectiveness-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .effectiveness-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      min-width: 80px;
+    }
+
+    .effectiveness-track {
+      flex: 1;
+      height: 8px;
+      background: #f3f4f6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .effectiveness-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    .effectiveness-value {
+      font-weight: 700;
+      color: #10b981;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .suggestion-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .suggestion-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .suggestion-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    .lifestyle-tips {
+      background: #ecfdf5;
+      border-left: 3px solid #10b981;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #065f46;
+      display: flex;
+      align-items: start;
+      gap: 0.5rem;
+    }
+
+    .lifestyle-tips i {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* 日常护理卡片（蓝色系） */
+    .skincare-card {
+      background: white;
+      border: 2px solid #dbeafe;
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skincare-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .skincare-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+    }
+
+    /* 医美卡片（粉紫色系） */
+    .medical-card {
+      background: white;
+      border: 2px solid #fce7f3;
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .medical-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #ec4899 0%, #db2777 100%);
+    }
+
+    .medical-card:hover {
+      border-color: #ec4899;
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -841,17 +1170,68 @@
       </div>
     </div>
 
-    <!-- 改善建议 -->
+    <!-- 改善建议 - 卡片分区式 -->
     <div class="report-section fade-in-up" style="animation-delay: 0.4s;">
       <h2 class="section-title">
         <span class="section-icon">
           <i class="fas fa-lightbulb"></i>
         </span>
-        个性化改善建议
+        个性化改善方案
       </h2>
       
-      <div id="recommendationsContainer">
-        <!-- 建议卡片将通过JavaScript动态生成 -->
+      <p class="text-gray-600 mb-6 text-center">
+        我们为您准备了多维度的改善方案，从日常生活到专业治疗，全方位呵护您的美丽
+      </p>
+
+      <!-- 生活方式建议区块 -->
+      <div class="recommendation-section green-section">
+        <div class="section-header green-header">
+          <div class="section-header-left">
+            <span class="section-emoji">🌱</span>
+            <div>
+              <h3 class="section-heading">健康生活方式</h3>
+              <p class="section-subtitle">从日常习惯开始，内外兼修，持久改善</p>
+            </div>
+          </div>
+          <span class="cost-badge green-badge">零成本 · 建议优先尝试</span>
+        </div>
+        <div id="lifestyleRecommendations" class="recommendation-grid">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 日常护理建议区块 -->
+      <div class="recommendation-section blue-section">
+        <div class="section-header blue-header">
+          <div class="section-header-left">
+            <span class="section-emoji">💎</span>
+            <div>
+              <h3 class="section-heading">日常护理升级</h3>
+              <p class="section-subtitle">科学护肤，温和改善，安全有效</p>
+            </div>
+          </div>
+          <span class="cost-badge blue-badge">低成本 · 性价比高</span>
+        </div>
+        <div id="skincareRecommendations" class="recommendation-grid">
+          <!-- 动态生成 -->
+        </div>
+      </div>
+
+      <!-- 医美治疗建议区块 -->
+      <div class="recommendation-section pink-section">
+        <div class="section-header pink-header">
+          <div class="section-header-left">
+            <span class="section-emoji">🏥</span>
+            <div>
+              <h3 class="section-heading">专业医美方案</h3>
+              <p class="section-subtitle">快速见效，针对性强，需专业指导</p>
+            </div>
+          </div>
+          <span class="cost-badge pink-badge">专业级 · 快速见效</span>
+        </div>
+        <div id="medicalRecommendations" class="recommendation-grid">
+          <!-- 动态生成 -->
+        </div>
       </div>
     </div>
 
@@ -1444,45 +1824,432 @@
       });
     }
 
-    // 渲染改善建议
+    // 渲染改善建议 - 多维度版本
     function renderRecommendations() {
-      const container = document.getElementById('recommendationsContainer');
+      console.log('渲染多维度建议...');
       
-      report.recommendations.forEach(rec => {
-        const card = document.createElement('div');
-        card.className = 'recommendation-card';
+      // 生成建议数据
+      const recommendations = generateMultiDimensionRecommendations();
+      
+      // 渲染生活方式建议
+      renderLifestyleRecommendations(recommendations.lifestyle);
+      
+      // 渲染日常护理建议
+      renderSkincareRecommendations(recommendations.skincare);
+      
+      // 渲染医美建议
+      renderMedicalRecommendations(recommendations.medical);
+    }
+
+    // 生成多维度建议数据
+    function generateMultiDimensionRecommendations() {
+      const issues = report.issues || [];
+      
+      return {
+        lifestyle: generateLifestyleRecommendations(issues),
+        skincare: generateSkincareRecommendations(issues),
+        medical: generateMedicalRecommendations(issues)
+      };
+    }
+
+    // 生成生活方式建议
+    function generateLifestyleRecommendations(issues) {
+      const recommendations = [];
+      
+      // 基础建议（适用所有人）
+      recommendations.push({
+        type: 'sleep',
+        icon: '😴',
+        title: '优质睡眠方案',
+        targetIssues: ['细纹', '暗沉', '黑眼圈'],
+        difficulty: 'medium',
+        effectiveness: 80,
+        suggestions: [
+          '每晚23:00前入睡，保证7-8小时睡眠',
+          '睡前1小时避免使用电子设备',
+          '保持卧室黑暗、安静、凉爽（18-22℃）',
+          '使用丝绸枕套，减少面部摩擦'
+        ],
+        tips: '良好的睡眠是最佳的天然护肤品，坚持规律作息2-3周即可看到改善'
+      });
+      
+      // 根据问题添加针对性建议
+      const hasWrinkles = issues.some(i => i.name.includes('细纹') || i.name.includes('皱纹'));
+      const hasSkinIssues = issues.some(i => i.name.includes('肤色') || i.name.includes('暗沉') || i.name.includes('色斑'));
+      const hasPores = issues.some(i => i.name.includes('毛孔'));
+      
+      if (hasWrinkles || hasSkinIssues) {
+        recommendations.push({
+          type: 'diet',
+          icon: '🥗',
+          title: '抗氧化饮食方案',
+          targetIssues: ['细纹', '肤色', '衰老'],
+          difficulty: 'easy',
+          effectiveness: 75,
+          suggestions: [
+            '每日摄入富含维生素C的食物（橙子、猕猴桃、西兰花）',
+            '补充优质蛋白质和胶原蛋白（深海鱼、鸡蛋、豆类）',
+            '每天饮水2000ml以上，保持皮肤水分',
+            '减少糖分和加工食品，避免糖化反应',
+            '多吃富含Omega-3的食物（三文鱼、坚果、亚麻籽）'
+          ],
+          tips: '饮食改变需要耐心，通常3个月左右可以看到肤质明显改善'
+        });
+      }
+      
+      if (hasWrinkles) {
+        recommendations.push({
+          type: 'exercise',
+          icon: '💪',
+          title: '面部抗衰运动',
+          targetIssues: ['松弛', '轮廓', '细纹'],
+          difficulty: 'easy',
+          effectiveness: 65,
+          suggestions: [
+            '每日5分钟面部瑜伽（提拉眼周、抚平额头）',
+            '每周3-4次有氧运动，促进血液循环',
+            '颈部拉伸运动，预防颈纹',
+            '咀嚼肌放松按摩，改善面部轮廓'
+          ],
+          tips: '面部运动需要温和进行，避免过度拉扯皮肤，建议对镜练习'
+        });
+      }
+      
+      recommendations.push({
+        type: 'emotion',
+        icon: '🧘',
+        title: '压力与情绪管理',
+        targetIssues: ['暗沉', '细纹', '肤质'],
+        difficulty: 'medium',
+        effectiveness: 70,
+        suggestions: [
+          '每日10-15分钟冥想或深呼吸练习',
+          '保持规律作息，避免昼夜颠倒',
+          '培养兴趣爱好，释放工作压力',
+          '适当社交活动，保持心情愉悦',
+          '避免长时间皱眉或过度表情'
+        ],
+        tips: '长期压力会加速衰老，学会情绪管理对皮肤健康至关重要'
+      });
+      
+      if (hasPores) {
+        recommendations.push({
+          type: 'habit',
+          icon: '🌿',
+          title: '日常护肤习惯',
+          targetIssues: ['毛孔', '油脂', '痘痘'],
+          difficulty: 'easy',
+          effectiveness: 72,
+          suggestions: [
+            '早晚温水洗脸，避免热水刺激',
+            '不要频繁触摸面部',
+            '定期更换枕套和毛巾',
+            '避免熬夜和高糖饮食',
+            '每周1-2次深层清洁面膜'
+          ],
+          tips: '毛孔问题70%源于清洁不当和生活习惯，改善习惯是根本'
+        });
+      }
+      
+      return recommendations;
+    }
+
+    // 生成日常护理建议
+    function generateSkincareRecommendations(issues) {
+      const recommendations = [];
+      
+      issues.forEach(issue => {
+        const name = issue.name.toLowerCase();
         
-        const priorityClass = `priority-${rec.priority}`;
+        if (name.includes('细纹') || name.includes('皱纹')) {
+          recommendations.push({
+            title: '抗皱精华组合',
+            targetIssues: [issue.name],
+            products: ['视黄醇精华液', '玻色因抗皱霜', '修护眼霜'],
+            usage: '早晚使用，建议从低浓度开始建立耐受',
+            estimatedCost: '500-1500元/月',
+            duration: '持续使用3-6个月见效',
+            effectiveness: 75
+          });
+        }
+        
+        if (name.includes('肤色') || name.includes('暗沉') || name.includes('色斑')) {
+          recommendations.push({
+            title: '美白提亮方案',
+            targetIssues: [issue.name],
+            products: ['烟酰胺精华', '维C美白精华', '防晒霜SPF50+'],
+            usage: '早上维C+防晒，晚上烟酰胺',
+            estimatedCost: '400-1200元/月',
+            duration: '2-4个月可见效',
+            effectiveness: 78
+          });
+        }
+        
+        if (name.includes('毛孔')) {
+          recommendations.push({
+            title: '毛孔收敛护理',
+            targetIssues: [issue.name],
+            products: ['水杨酸精华', '烟酰胺爽肤水', '清洁面膜'],
+            usage: '每周2-3次酸类，搭配每日保湿',
+            estimatedCost: '300-800元/月',
+            duration: '1-3个月改善',
+            effectiveness: 70
+          });
+        }
+      });
+      
+      // 添加基础护理
+      recommendations.push({
+        title: '基础保湿修护',
+        targetIssues: ['所有肤质'],
+        products: ['温和洁面', '保湿精华', '修护面霜'],
+        usage: '早晚基础护肤步骤',
+        estimatedCost: '300-600元/月',
+        duration: '持续使用',
+        effectiveness: 80
+      });
+      
+      return recommendations;
+    }
+
+    // 生成医美建议
+    function generateMedicalRecommendations(issues) {
+      const recommendations = [];
+      
+      issues.forEach(issue => {
+        const name = issue.name.toLowerCase();
+        const severity = issue.severity;
+        
+        if (name.includes('细纹') || name.includes('皱纹')) {
+          recommendations.push({
+            priority: severity === 'high' ? 'high' : 'medium',
+            title: '抗皱除皱治疗',
+            treatments: ['肉毒素注射', '玻尿酸填充', '热玛吉'],
+            targetAreas: issue.areas || ['面部'],
+            estimatedCost: '5000-15000元',
+            duration: '3-6个月维持',
+            effectiveness: 90,
+            risks: '轻微肿胀，恢复期3-7天'
+          });
+        }
+        
+        if (name.includes('肤色') || name.includes('色斑')) {
+          recommendations.push({
+            priority: 'medium',
+            title: '美白嫩肤治疗',
+            treatments: ['光子嫩肤', '皮秒激光', '水光针'],
+            targetAreas: issue.areas || ['全脸'],
+            estimatedCost: '3000-10000元',
+            duration: '1-3个月见效',
+            effectiveness: 85,
+            risks: '轻微泛红，恢复期1-3天'
+          });
+        }
+        
+        if (name.includes('毛孔')) {
+          recommendations.push({
+            priority: 'medium',
+            title: '毛孔收缩治疗',
+            treatments: ['点阵激光', '光子嫩肤', '果酸焕肤'],
+            targetAreas: issue.areas || ['T区'],
+            estimatedCost: '2000-8000元',
+            duration: '3-5次疗程',
+            effectiveness: 80,
+            risks: '轻微脱皮，恢复期3-5天'
+          });
+        }
+      });
+      
+      // 如果没有严重问题，添加预防性治疗
+      if (recommendations.length === 0) {
+        recommendations.push({
+          priority: 'medium',
+          title: '预防性抗衰护理',
+          treatments: ['水光针', '轻医美面部护理'],
+          targetAreas: ['全脸'],
+          estimatedCost: '2000-5000元',
+          duration: '每3-6个月',
+          effectiveness: 75,
+          risks: '几乎无风险，当天恢复'
+        });
+      }
+      
+      return recommendations;
+    }
+
+    // 渲染生活方式建议
+    function renderLifestyleRecommendations(items) {
+      const container = document.getElementById('lifestyleRecommendations');
+      
+      items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'lifestyle-card';
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        const difficultyText = {
+          'easy': '容易',
+          'medium': '适中',
+          'hard': '困难'
+        }[item.difficulty];
+        
+        card.innerHTML = `
+          <div class="lifestyle-header">
+            <div class="lifestyle-icon">${item.icon}</div>
+            <div class="lifestyle-title">
+              <h4>${item.title}</h4>
+              <div class="lifestyle-meta">
+                <span>
+                  <i class="fas fa-bullseye"></i>
+                  ${item.targetIssues.join('、')}
+                </span>
+              </div>
+            </div>
+            <span class="difficulty-badge difficulty-${item.difficulty}">
+              ${difficultyText}
+            </span>
+          </div>
+          
+          <div class="effectiveness-bar">
+            <span class="effectiveness-label">有效性</span>
+            <div class="effectiveness-track">
+              <div class="effectiveness-fill" style="width: ${item.effectiveness}%"></div>
+            </div>
+            <span class="effectiveness-value">${item.effectiveness}%</span>
+          </div>
+          
+          <ul class="suggestion-list">
+            ${item.suggestions.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+          
+          <div class="lifestyle-tips">
+            <i class="fas fa-lightbulb"></i>
+            <span>${item.tips}</span>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 渲染日常护理建议
+    function renderSkincareRecommendations(items) {
+      const container = document.getElementById('skincareRecommendations');
+      
+      items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'skincare-card';
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        card.innerHTML = `
+          <h4 class="text-lg font-semibold text-gray-800 mb-2">${item.title}</h4>
+          
+          <div class="mb-3">
+            <div class="text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-crosshairs text-blue-500 mr-1"></i>
+              针对问题：
+            </div>
+            <div>
+              ${item.targetIssues.map(t => `<span class="tag" style="background: #dbeafe; color: #1e40af; border-color: #bfdbfe;">${t}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <div class="text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-flask text-blue-500 mr-1"></i>
+              推荐产品：
+            </div>
+            <ul class="text-sm text-gray-600 space-y-1">
+              ${item.products.map(p => `<li>• ${p}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="effectiveness-bar" style="margin-bottom: 1rem;">
+            <span class="effectiveness-label">有效性</span>
+            <div class="effectiveness-track">
+              <div class="effectiveness-fill" style="width: ${item.effectiveness}%; background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);"></div>
+            </div>
+            <span class="effectiveness-value" style="color: #3b82f6;">${item.effectiveness}%</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="text-gray-600">预估费用</div>
+              <div class="font-semibold text-gray-800">${item.estimatedCost}</div>
+            </div>
+            <div>
+              <div class="text-gray-600">见效时间</div>
+              <div class="font-semibold text-gray-800">${item.duration}</div>
+            </div>
+          </div>
+          
+          <div class="mt-3 p-2 bg-blue-50 rounded-lg text-sm text-blue-800">
+            <i class="fas fa-info-circle mr-1"></i>
+            ${item.usage}
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 渲染医美建议
+    function renderMedicalRecommendations(items) {
+      const container = document.getElementById('medicalRecommendations');
+      
+      items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'medical-card';
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        const priorityClass = `priority-${item.priority}`;
         const priorityText = {
           'high': '优先推荐',
           'medium': '建议考虑'
-        }[rec.priority];
+        }[item.priority];
         
         card.innerHTML = `
           <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-semibold text-gray-800">${rec.title}</h3>
+            <h4 class="text-lg font-semibold text-gray-800">${item.title}</h4>
             <span class="priority-badge ${priorityClass}">${priorityText}</span>
           </div>
           
           <div class="mb-3">
             <div class="text-sm font-semibold text-gray-700 mb-2">
               <i class="fas fa-syringe text-pink-500 mr-1"></i>
-              推荐治疗项目：
+              治疗项目：
             </div>
             <div>
-              ${rec.treatments.map(t => `<span class="tag">${t}</span>`).join('')}
+              ${item.treatments.map(t => `<span class="tag">${t}</span>`).join('')}
             </div>
           </div>
           
-          <div class="grid grid-cols-2 gap-4 text-sm">
+          <div class="effectiveness-bar" style="margin-bottom: 1rem;">
+            <span class="effectiveness-label">有效性</span>
+            <div class="effectiveness-track">
+              <div class="effectiveness-fill" style="width: ${item.effectiveness}%"></div>
+            </div>
+            <span class="effectiveness-value">${item.effectiveness}%</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 text-sm mb-3">
             <div>
               <div class="text-gray-600">预估费用</div>
-              <div class="font-semibold text-gray-800">${rec.estimatedCost}</div>
+              <div class="font-semibold text-gray-800">${item.estimatedCost}</div>
             </div>
             <div>
-              <div class="text-gray-600">建议周期</div>
-              <div class="font-semibold text-gray-800">${rec.duration}</div>
+              <div class="text-gray-600">维持时间</div>
+              <div class="font-semibold text-gray-800">${item.duration}</div>
             </div>
+          </div>
+          
+          <div class="text-sm text-gray-600 mb-2">
+            <i class="fas fa-map-marker-alt text-pink-500 mr-1"></i>
+            <strong>治疗区域：</strong> ${item.targetAreas.join('、')}
+          </div>
+          
+          <div class="p-2 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-800">
+            <i class="fas fa-exclamation-triangle mr-1"></i>
+            ${item.risks}
           </div>
         `;
         
@@ -2047,4 +2814,5 @@
   </script>
 </body>
 </html>
+
 

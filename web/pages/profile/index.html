@@ -211,28 +211,18 @@
 </head>
 <body>
   <!-- 顶部导航栏 -->
-  <nav class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 z-50 flex flex-row items-center justify-between" style="height: 56px;">
-    <!-- 左侧 Logo -->
-    <div class="flex items-center gap-2.5 flex-shrink-0">
-      <div class="w-10 h-10 bg-gradient-to-br from-primary-400 to-secondary-400 rounded-lg flex items-center justify-center">
-        <i class="fas fa-spa text-white text-xl"></i>
-      </div>
-      <span class="text-xl font-bold text-gray-900">个人中心</span>
-    </div>
-    
-    <!-- 右侧设置按钮 -->
-    <div class="flex items-center gap-3 flex-shrink-0">
-      <button onclick="window.location.href='./edit.html'" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-primary-400 transition-colors">
-        <i class="fas fa-cog text-xl"></i>
-      </button>
-    </div>
+  <nav class="fixed top-4 left-4 right-4 bg-white rounded-2xl shadow-sm border border-gray-100 px-5 z-50 flex flex-row items-center justify-between" style="height: 52px;">
+    <h1 class="text-base font-semibold text-gray-900">个人中心</h1>
+    <button onclick="window.location.href='./edit.html'" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-pink-500 hover:bg-pink-50 rounded-lg transition-all">
+      <i class="fas fa-cog"></i>
+    </button>
   </nav>
 
   <!-- 主内容区包裹器 -->
-  <div style="padding-top: 56px; padding-bottom: 80px;">
+  <div style=" padding-bottom: 80px;">
   
   <!-- 头部用户信息 -->
-  <div class="profile-header">
+  <div class="profile-header" style="padding-top: 84px;">
     <div class="max-w-md mx-auto px-4">
       <!-- 用户头像和信息 -->
       <div class="text-center relative z-10 py-4">
