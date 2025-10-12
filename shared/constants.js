@@ -98,7 +98,7 @@ const Constants = {
   ],
   
   /**
-   * 底部导航栏
+   * 底部导航栏（使用绝对路径，配合 Router.toRelativePath() 使用）
    */
   TAB_BAR: [
     { name: '首页', icon: 'fa-home', url: '/web/index.html' },
@@ -106,5 +106,16 @@ const Constants = {
     { name: '社区', icon: 'fa-comments', url: '/web/pages/community/index.html' },
     { name: '我的', icon: 'fa-user', url: '/web/pages/profile/index.html' },
   ],
+  
+  /**
+   * 获取转换为相对路径的底部导航栏
+   * @returns {Array} 导航栏数组（路径已转换为相对路径）
+   */
+  getTabBar() {
+    return this.TAB_BAR.map(item => ({
+      ...item,
+      url: Router.toRelativePath(item.url)
+    }));
+  },
 };
 

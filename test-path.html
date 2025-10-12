@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路径转换测试</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #FF6B9D;
+      padding-bottom: 10px;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-item {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f9f9f9;
+      border-left: 3px solid #6B66FF;
+    }
+    .result {
+      color: #10B981;
+      font-weight: bold;
+    }
+    .current {
+      color: #666;
+      font-size: 14px;
+    }
+    button {
+      background: #FF6B9D;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #ff5089;
+    }
+    .code {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 路径转换测试工具</h1>
+  
+  <div class="test-section">
+    <h2>📍 当前页面信息</h2>
+    <div class="current">
+      <strong>完整URL：</strong><span id="fullUrl"></span><br>
+      <strong>路径名：</strong><span id="pathname"></span><br>
+      <strong>计算深度：</strong><span id="depth"></span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>🔄 路径转换测试</h2>
+    <div id="testResults"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>🎯 实际跳转测试</h2>
+    <p>点击按钮测试实际跳转（会真的跳转页面）：</p>
+    <button onclick="testNavigate('/web/index.html')">跳转到前台首页</button>
+    <button onclick="testNavigate('/web/pages/assessment/guide.html')">跳转到评估引导页</button>
+    <button onclick="testNavigate('/web/pages/profile/index.html')">跳转到个人中心</button>
+  </div>
+
+  <div class="test-section">
+    <h2>📝 Router.toRelativePath() 代码</h2>
+    <div class="code">
+// 将绝对路径转换为相对路径
+Router.toRelativePath('/web/index.html')
+
+// 示例：
+// 当前在 /web/pages/auth/login.html
+// 转换 /web/index.html
+// 结果：../../index.html
+    </div>
+  </div>
+
+  <script src="./shared/router.js"></script>
+  <script>
+    // 显示当前页面信息
+    document.getElementById('fullUrl').textContent = window.location.href;
+    document.getElementById('pathname').textContent = window.location.pathname;
+    
+    const currentParts = window.location.pathname.split('/').filter(p => p);
+    const currentDirs = currentParts.slice(0, -1);
+    const currentDepth = currentDirs.length;
+    document.getElementById('depth').textContent = `${currentDepth} 级 (${currentDirs.join('/')})`;
+
+    // 测试路径转换
+    const testCases = [
+      '/web/index.html',
+      '/web/pages/assessment/guide.html',
+      '/web/pages/auth/login.html',
+      '/web/pages/profile/index.html',
+      '/web/pages/community/index.html',
+      '/admin/login.html',
+      '/admin/index.html',
+      '/index.html',
+      './relative.html',
+      '../another.html'
+    ];
+
+    const resultsDiv = document.getElementById('testResults');
+    testCases.forEach(testPath => {
+      const result = Router.toRelativePath(testPath);
+      const item = document.createElement('div');
+      item.className = 'test-item';
+      item.innerHTML = `
+        <div><strong>输入：</strong>${testPath}</div>
+        <div class="result"><strong>输出：</strong>${result}</div>
+      `;
+      resultsDiv.appendChild(item);
+    });
+
+    // 测试跳转
+    function testNavigate(path) {
+      if (confirm(`确定要跳转到 ${path} 吗？\n转换后的相对路径：${Router.toRelativePath(path)}`)) {
+        Router.navigate(path);
+      }
+    }
+  </script>
+</body>
+</html>
+
