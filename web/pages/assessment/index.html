@@ -290,10 +290,58 @@
     </div>
   </nav>
 
-  <!-- 路径配置 -->
-  <script src="/shared/path-config.js"></script>
-
   <script>
+    // 内联路径配置 - 避免加载问题
+    window.PathConfig = {
+      getBasePath() {
+        const hostname = window.location.hostname;
+        const pathname = window.location.pathname;
+        
+        if (hostname.includes('github.io')) {
+          const pathParts = pathname.split('/').filter(p => p);
+          if (pathParts.length > 0) {
+            return '/' + pathParts[0];
+          }
+        }
+        return '';
+      },
+      
+      getAssetPath(relativePath) {
+        if (!relativePath) return '';
+        if (!relativePath.startsWith('/')) {
+          relativePath = '/' + relativePath;
+        }
+        return this.getBasePath() + relativePath;
+      },
+      
+      async loadScript(src) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = this.getAssetPath(src);
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      },
+      
+      async loadSharedScripts() {
+        const scripts = [
+          '/shared/storage.js',
+          '/shared/utils.js',
+          '/shared/constants.js',
+          '/shared/router.js'
+        ];
+        
+        for (const script of scripts) {
+          try {
+            await this.loadScript(script);
+          } catch (error) {
+            console.warn(`Failed to load ${script}:`, error);
+          }
+        }
+      }
+    };
+
     // 动态加载共享脚本
     document.addEventListener('DOMContentLoaded', async function() {
       try {
