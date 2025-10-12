@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航功能测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+        .nav-test {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .nav-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover { background: #218838; }
+        .nav-button:disabled { background: #6c757d; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>🧭 导航功能测试</h1>
+    
+    <div class="test-section info">
+        <h3>📋 测试说明</h3>
+        <p>这个页面用于测试导航功能在GitHub Pages环境下的工作状态。点击下面的导航按钮测试页面跳转功能。</p>
+    </div>
+
+    <div class="test-section">
+        <h3>📍 当前环境信息</h3>
+        <div id="envInfo">检测中...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🧭 导航测试</h3>
+        <div class="nav-test">
+            <button class="nav-button" onclick="testNavigation('home')">首页</button>
+            <button class="nav-button" onclick="testNavigation('assessment')">评估</button>
+            <button class="nav-button" onclick="testNavigation('community')">社区</button>
+            <button class="nav-button" onclick="testNavigation('profile')">我的</button>
+        </div>
+        <p><strong>注意：</strong>点击按钮会尝试跳转，如果跳转失败会在日志中显示错误信息。</p>
+    </div>
+
+    <div class="test-section">
+        <h3>📝 导航日志</h3>
+        <div id="navLog" class="log">导航日志将显示在这里...\n</div>
+        <button onclick="clearLog()">清空日志</button>
+    </div>
+
+    <script>
+        // 内联路径配置
+        window.PathConfig = {
+            getBasePath() {
+                const hostname = window.location.hostname;
+                const pathname = window.location.pathname;
+                
+                if (hostname.includes('github.io')) {
+                    const pathParts = pathname.split('/').filter(p => p);
+                    if (pathParts.length > 0) {
+                        return '/' + pathParts[0];
+                    }
+                }
+                return '';
+            },
+            
+            getAssetPath(relativePath) {
+                if (!relativePath) return '';
+                if (!relativePath.startsWith('/')) {
+                    relativePath = '/' + relativePath;
+                }
+                return this.getBasePath() + relativePath;
+            },
+            
+            getPagePath(absolutePath) {
+                if (!absolutePath) return '';
+                
+                // 如果已经是相对路径，直接返回
+                if (!absolutePath.startsWith('/')) {
+                    return absolutePath;
+                }
+                
+                // 获取当前页面的路径
+                const currentPath = window.location.pathname;
+                const currentParts = currentPath.split('/').filter(p => p);
+                
+                // 去掉文件名，只保留目录部分
+                const currentDirs = currentParts.slice(0, -1);
+                const currentDepth = currentDirs.length;
+                
+                // 构建相对路径：根据深度添加 ../
+                let relativePath = '';
+                if (currentDepth === 0) {
+                    relativePath = './';
+                } else {
+                    relativePath = '../'.repeat(currentDepth);
+                }
+                
+                // 目标路径（去掉开头的 /）
+                const targetPath = absolutePath.substring(1);
+                
+                return relativePath + targetPath;
+            }
+        };
+
+        let logElement = document.getElementById('navLog');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}\n`;
+            logElement.textContent += logMessage;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            logElement.textContent = '日志已清空\n';
+        }
+
+        function testNavigation(type) {
+            log(`🧭 测试导航: ${type}`);
+            
+            let targetPath = '';
+            let expectedUrl = '';
+            
+            switch(type) {
+                case 'home':
+                    targetPath = PathConfig.getPagePath('/web/index.html');
+                    expectedUrl = '/web/index.html';
+                    break;
+                case 'assessment':
+                    targetPath = PathConfig.getPagePath('/web/pages/assessment/index.html');
+                    expectedUrl = '/web/pages/assessment/index.html';
+                    break;
+                case 'community':
+                    targetPath = PathConfig.getPagePath('/web/pages/community/index.html');
+                    expectedUrl = '/web/pages/community/index.html';
+                    break;
+                case 'profile':
+                    targetPath = PathConfig.getPagePath('/web/pages/profile/index.html');
+                    expectedUrl = '/web/pages/profile/index.html';
+                    break;
+                default:
+                    log(`❌ 未知的导航类型: ${type}`);
+                    return;
+            }
+            
+            log(`📁 目标路径: ${targetPath}`);
+            log(`🔗 期望URL: ${expectedUrl}`);
+            
+            // 测试路径生成
+            if (targetPath) {
+                log(`✅ 路径生成成功: ${targetPath}`);
+                
+                // 显示实际跳转（注释掉以避免实际跳转）
+                // window.location.href = targetPath;
+                log(`🚀 准备跳转到: ${targetPath}`);
+                log(`💡 提示: 实际环境中会执行跳转`);
+                
+            } else {
+                log(`❌ 路径生成失败`);
+            }
+        }
+
+        // 环境检测
+        function detectEnvironment() {
+            log('🔍 开始环境检测...');
+            
+            const env = {
+                hostname: window.location.hostname,
+                pathname: window.location.pathname,
+                basePath: PathConfig.getBasePath()
+            };
+            
+            const envInfo = document.getElementById('envInfo');
+            envInfo.innerHTML = `
+                <p><strong>主机名:</strong> ${env.hostname}</p>
+                <p><strong>当前路径:</strong> ${env.pathname}</p>
+                <p><strong>基础路径:</strong> ${env.basePath || '(空)'}</p>
+                <p><strong>环境类型:</strong> ${env.hostname.includes('github.io') ? 'GitHub Pages' : '本地/其他'}</p>
+            `;
+            
+            log(`✅ 环境检测完成: ${env.hostname.includes('github.io') ? 'GitHub Pages' : '本地/其他'} 环境`);
+            if (env.basePath) {
+                log(`📁 基础路径: ${env.basePath}`);
+            }
+        }
+
+        // 页面加载完成后自动检测环境
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 导航测试页面已加载');
+            detectEnvironment();
+        });
+    </script>
+</body>
+</html>

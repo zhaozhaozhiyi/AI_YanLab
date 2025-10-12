@@ -254,7 +254,7 @@
           <i class="fas fa-history mr-2 text-pink-500"></i>
           评估历史
         </h2>
-        <a href="./pages/profile/reports.html" class="text-sm text-pink-500 hover:text-pink-600">
+        <a href="../profile/reports.html" class="text-sm text-pink-500 hover:text-pink-600">
           查看全部 <i class="fas fa-chevron-right text-xs"></i>
         </a>
       </div>
@@ -312,6 +312,36 @@
           relativePath = '/' + relativePath;
         }
         return this.getBasePath() + relativePath;
+      },
+      
+      getPagePath(absolutePath) {
+        if (!absolutePath) return '';
+        
+        // 如果已经是相对路径，直接返回
+        if (!absolutePath.startsWith('/')) {
+          return absolutePath;
+        }
+        
+        // 获取当前页面的路径
+        const currentPath = window.location.pathname;
+        const currentParts = currentPath.split('/').filter(p => p);
+        
+        // 去掉文件名，只保留目录部分
+        const currentDirs = currentParts.slice(0, -1);
+        const currentDepth = currentDirs.length;
+        
+        // 构建相对路径：根据深度添加 ../
+        let relativePath = '';
+        if (currentDepth === 0) {
+          relativePath = './';
+        } else {
+          relativePath = '../'.repeat(currentDepth);
+        }
+        
+        // 目标路径（去掉开头的 /）
+        const targetPath = absolutePath.substring(1);
+        
+        return relativePath + targetPath;
       },
       
       async loadScript(src) {
@@ -436,27 +466,27 @@
     // 开始评估
     function startAssessment() {
       if (window.Router) {
-        Router.navigate('./pages/assessment/guide.html');
+        Router.navigate('./guide.html');
       } else {
-        window.location.href = './pages/assessment/guide.html';
+        window.location.href = './guide.html';
       }
     }
 
     // 查看报告
     function viewReport(id) {
       if (window.Router) {
-        Router.navigate(`./pages/assessment/report.html?id=${id}`);
+        Router.navigate(`./report.html?id=${id}`);
       } else {
-        window.location.href = `./pages/assessment/report.html?id=${id}`;
+        window.location.href = `./report.html?id=${id}`;
       }
     }
 
     // 查看历史
     function viewHistory() {
       if (window.Router) {
-        Router.navigate('./pages/profile/reports.html');
+        Router.navigate('../profile/reports.html');
       } else {
-        window.location.href = './pages/profile/reports.html';
+        window.location.href = '../profile/reports.html';
       }
     }
 
@@ -490,7 +520,11 @@
     }
 
     function goToNotifications() {
-      Router.navigate('./pages/profile/index.html');
+      if (window.Router) {
+        Router.navigate('../profile/index.html');
+      } else {
+        window.location.href = '../profile/index.html';
+      }
     }
   </script>
 
