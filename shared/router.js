@@ -47,6 +47,19 @@ const Router = {
   },
   
   /**
+   * 获取静态资源路径（用于 img、css、js 等）
+   * @param {string} assetPath - 资源相对路径（如 'assets/images/logo.png'）
+   * @param {string} module - 模块名（'web' 或 'admin'）
+   * @returns {string} 转换后的资源路径
+   */
+  getAssetPath(assetPath, module = 'web') {
+    // 构建绝对路径
+    const absolutePath = `/${module}/${assetPath}`;
+    // 转换为相对路径
+    return this.toRelativePath(absolutePath);
+  },
+  
+  /**
    * 获取URL参数
    * @param {string} name - 参数名
    * @returns {string|null} 参数值
@@ -78,7 +91,13 @@ const Router = {
     // 自动转换绝对路径为相对路径
     const relativePath = this.toRelativePath(url);
     const query = new URLSearchParams(params).toString();
-    const fullUrl = query ? `${relativePath}?${query}` : relativePath;
+    let fullUrl = query ? `${relativePath}?${query}` : relativePath;
+    
+    // URL标准化：确保目录访问以斜杠结尾
+    if (fullUrl === '/web' || fullUrl === '/web/index.html') {
+      fullUrl = '/web/';
+    }
+    
     window.location.href = fullUrl;
   },
   
@@ -91,7 +110,13 @@ const Router = {
     // 自动转换绝对路径为相对路径
     const relativePath = this.toRelativePath(url);
     const query = new URLSearchParams(params).toString();
-    const fullUrl = query ? `${relativePath}?${query}` : relativePath;
+    let fullUrl = query ? `${relativePath}?${query}` : relativePath;
+    
+    // URL标准化：确保目录访问以斜杠结尾
+    if (fullUrl === '/web' || fullUrl === '/web/index.html') {
+      fullUrl = '/web/';
+    }
+    
     window.location.replace(fullUrl);
   },
   

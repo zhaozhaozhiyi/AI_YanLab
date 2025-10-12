@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="/web/assets/css/base.css">
   
   <style>
     body {
@@ -285,7 +285,7 @@
           id: 'USER_' + Date.now(),
           phone: phone,
           nickname: '用户' + phone.substr(-4),
-          avatar: './assets/images/avatars/default.jpg',
+          avatar: '/web/assets/images/avatars/default.jpg',
           loginTime: Date.now(),
           type: 'user'
         };
@@ -308,7 +308,7 @@
       const user = {
         id: 'USER_WX_' + Date.now(),
         nickname: '微信用户',
-        avatar: './assets/images/avatars/default.jpg',
+        avatar: '/web/assets/images/avatars/default.jpg',
         loginTime: Date.now(),
         type: 'wechat'
       };
@@ -329,7 +329,7 @@
       const user = {
         id: 'GUEST_' + Date.now(),
         nickname: '游客',
-        avatar: './assets/images/avatars/default.jpg',
+        avatar: '/web/assets/images/avatars/default.jpg',
         loginTime: Date.now(),
         type: 'guest'
       };

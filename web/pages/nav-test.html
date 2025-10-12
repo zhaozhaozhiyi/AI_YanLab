@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导航测试页面</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #FF6B9D;
+      margin-top: 0;
+    }
+    .nav-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    button {
+      background: #FF6B9D;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #ff5089;
+      transform: translateY(-2px);
+    }
+    .current-page {
+      background: #6B66FF;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      color: white;
+    }
+    .path-info {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 四大模块导航测试</h1>
+    
+    <div class="current-page">
+      <strong>📍 当前页面：</strong><span id="currentPage"></span><br>
+      <strong>📊 路径深度：</strong><span id="pathDepth"></span>
+    </div>
+    
+    <div class="path-info">
+      <strong>路径信息：</strong><br>
+      完整URL: <span id="fullUrl"></span><br>
+      路径名: <span id="pathname"></span>
+    </div>
+    
+    <h2>🎯 导航测试按钮</h2>
+    <div class="nav-buttons">
+      <button onclick="testGoToHome()">🏠 首页</button>
+      <button onclick="testGoToAssessment()">📸 评估</button>
+      <button onclick="testGoToCommunity()">💬 社区</button>
+      <button onclick="testGoToProfile()">👤 我的</button>
+    </div>
+    
+    <h2>🔍 路径转换测试</h2>
+    <div id="pathTests"></div>
+  </div>
+
+  <script src="/shared/router.js"></script>
+  <script>
+    // 显示当前页面信息
+    document.getElementById('currentPage').textContent = window.location.pathname;
+    document.getElementById('fullUrl').textContent = window.location.href;
+    document.getElementById('pathname').textContent = window.location.pathname;
+    
+    const currentParts = window.location.pathname.split('/').filter(p => p);
+    const currentDirs = currentParts.slice(0, -1);
+    const currentDepth = currentDirs.length;
+    document.getElementById('pathDepth').textContent = `${currentDepth} 级`;
+
+    // 测试路径转换
+    const testPaths = [
+      { path: '/web/index.html', desc: '首页' },
+      { path: '/web/pages/assessment/index.html', desc: '评估页' },
+      { path: '/web/pages/community/index.html', desc: '社区页' },
+      { path: '/web/pages/profile/index.html', desc: '个人页' }
+    ];
+
+    const testsDiv = document.getElementById('pathTests');
+    testPaths.forEach(test => {
+      const result = Router.toRelativePath(test.path);
+      const div = document.createElement('div');
+      div.style.cssText = 'background: white; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 4px solid #10B981;';
+      div.innerHTML = `
+        <strong>${test.desc}</strong><br>
+        绝对路径: <code>${test.path}</code><br>
+        <span style="color: #10B981;">相对路径: ${result}</span>
+      `;
+      testsDiv.appendChild(div);
+    });
+
+    // 测试导航函数
+    function testGoToHome() {
+      console.log('测试跳转到首页...');
+      const path = Router.toRelativePath('/web/index.html');
+      console.log('转换后的路径:', path);
+      if (confirm(`即将跳转到首页\n路径: ${path}\n确定跳转吗？`)) {
+        Router.navigate('/web/index.html');
+      }
+    }
+
+    function testGoToAssessment() {
+      console.log('测试跳转到评估页...');
+      const path = Router.toRelativePath('/web/pages/assessment/index.html');
+      console.log('转换后的路径:', path);
+      if (confirm(`即将跳转到评估页\n路径: ${path}\n确定跳转吗？`)) {
+        Router.navigate('/web/pages/assessment/index.html');
+      }
+    }
+
+    function testGoToCommunity() {
+      console.log('测试跳转到社区页...');
+      const path = Router.toRelativePath('/web/pages/community/index.html');
+      console.log('转换后的路径:', path);
+      if (confirm(`即将跳转到社区页\n路径: ${path}\n确定跳转吗？`)) {
+        Router.navigate('/web/pages/community/index.html');
+      }
+    }
+
+    function testGoToProfile() {
+      console.log('测试跳转到个人页...');
+      const path = Router.toRelativePath('/web/pages/profile/index.html');
+      console.log('转换后的路径:', path);
+      if (confirm(`即将跳转到个人页\n路径: ${path}\n确定跳转吗？`)) {
+        Router.navigate('/web/pages/profile/index.html');
+      }
+    }
+  </script>
+</body>
+</html>

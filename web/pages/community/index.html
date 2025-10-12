@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="/web/assets/css/base.css">
   
   <style>
     body {
@@ -381,7 +381,6 @@
     // 页面加载时初始化
     document.addEventListener('DOMContentLoaded', function() {
       loadArticles();
-      updateStatistics();
     });
 
     // 加载文章列表
@@ -395,7 +394,6 @@
       }
 
       renderArticles();
-      updateStatistics();
     }
 
     // 生成示例文章
@@ -540,19 +538,19 @@
 
     // 导航函数
     function goToHome() {
-      Router.navigate('/web/');
+      Router.navigate('/web/index.html');
     }
 
     function goToAssessment() {
-      Router.navigate('./pages/assessment/index.html');
+      Router.navigate('/web/pages/assessment/index.html');
     }
 
     function goToCommunity() {
-      window.location.reload();
+      window.location.reload(); // 社区页不需要跳转，直接刷新
     }
 
     function goToProfile() {
-      Router.navigate('./pages/profile/index.html');
+      Router.navigate('/web/pages/profile/index.html');
     }
 
     function goToNotifications() {
