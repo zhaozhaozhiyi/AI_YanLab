@@ -449,7 +449,7 @@
       
       // 跳转到报告页面
       setTimeout(() => {
-        Router.navigate('./report.html');
+        Router.navigate('/web/pages/assessment/report.html');
       }, 1500);
     }
 
@@ -558,7 +558,7 @@
       const assessment = Storage.get('currentAssessment');
       if (!assessment) {
         alert('未找到评估数据');
-        Router.navigate('./guide.html');
+        Router.navigate('/web/pages/assessment/guide.html');
         return;
       }
       

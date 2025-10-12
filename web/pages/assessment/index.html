@@ -35,17 +35,16 @@
       getPath(path) {
         if (!path) return '';
         if (!path.startsWith('/')) path = '/' + path;
-        let currentPath = window.location.pathname;
+        
         const basePath = this.getBasePath();
-        if (basePath && currentPath.startsWith(basePath)) {
-          currentPath = currentPath.substring(basePath.length);
+        
+        // 在 GitHub Pages/Gitee Pages 环境，添加 basePath 前缀
+        if (basePath) {
+          return basePath + path;
         }
-        const currentParts = currentPath.split('/').filter(p => p);
-        const currentDirs = currentParts.slice(0, -1);
-        const currentDepth = currentDirs.length;
-        const targetPath = path.substring(1);
-        let relativePath = currentDepth === 0 ? './' : '../'.repeat(currentDepth);
-        return relativePath + targetPath;
+        
+        // 在本地环境，直接返回绝对路径
+        return path;
       }
     };
   </script>
