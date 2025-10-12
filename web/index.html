@@ -1348,18 +1348,29 @@
 
   <!-- 页面脚本 -->
   <script>
-    // 内联路径配置 - 避免加载问题
+    // 内联路径配置 - 支持本地和 GitHub Pages 环境
     window.PathConfig = {
       getBasePath() {
         const hostname = window.location.hostname;
         const pathname = window.location.pathname;
         
+        // GitHub Pages 环境
         if (hostname.includes('github.io')) {
           const pathParts = pathname.split('/').filter(p => p);
-          if (pathParts.length > 0) {
+          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
             return '/' + pathParts[0];
           }
         }
+        
+        // Gitee Pages 环境
+        if (hostname.includes('gitee.io')) {
+          const pathParts = pathname.split('/').filter(p => p);
+          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+            return '/' + pathParts[0];
+          }
+        }
+        
+        // 本地环境
         return '';
       },
       
@@ -1379,15 +1390,21 @@
           return absolutePath;
         }
         
-        // 获取当前页面的路径
-        const currentPath = window.location.pathname;
-        const currentParts = currentPath.split('/').filter(p => p);
+        // 获取当前页面路径
+        let currentPath = window.location.pathname;
         
-        // 去掉文件名，只保留目录部分
+        // 去掉 base path
+        const basePath = this.getBasePath();
+        if (basePath && currentPath.startsWith(basePath)) {
+          currentPath = currentPath.substring(basePath.length);
+        }
+        
+        // 计算当前页面的目录深度
+        const currentParts = currentPath.split('/').filter(p => p);
         const currentDirs = currentParts.slice(0, -1);
         const currentDepth = currentDirs.length;
         
-        // 构建相对路径：根据深度添加 ../
+        // 构建相对路径
         let relativePath = '';
         if (currentDepth === 0) {
           relativePath = './';
@@ -1426,8 +1443,28 @@
             console.warn(`Failed to load ${script}:`, error);
           }
         }
+      },
+      
+      // 获取环境信息
+      getEnvironmentInfo() {
+        return {
+          basePath: this.getBasePath(),
+          hostname: window.location.hostname,
+          pathname: window.location.pathname,
+          fullUrl: window.location.href,
+          isGitHubPages: window.location.hostname.includes('github.io'),
+          isGiteePages: window.location.hostname.includes('gitee.io'),
+          isLocal: ['localhost', '127.0.0.1'].includes(window.location.hostname) ||
+                   window.location.hostname.includes('192.168.') ||
+                   window.location.hostname.includes('10.')
+        };
       }
     };
+    
+    // 本地环境输出调试信息
+    if (['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+      console.log('🔧 PathConfig Environment:', window.PathConfig.getEnvironmentInfo());
+    }
 
     // 动态加载共享脚本
     document.addEventListener('DOMContentLoaded', async function() {

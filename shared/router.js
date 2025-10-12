@@ -1,11 +1,53 @@
 /**
  * 路由工具
  * 处理页面跳转和URL参数
+ * 支持本地和 GitHub Pages 环境
  */
 const Router = {
   
   /**
-   * 将绝对路径转换为相对路径
+   * 检测部署环境并返回 base path
+   * @returns {string} base path (例如: '/AI_YanLab' 或 '')
+   */
+  getBasePath() {
+    const hostname = window.location.hostname;
+    const pathname = window.location.pathname;
+    
+    // GitHub Pages 环境检测
+    if (hostname.includes('github.io')) {
+      const pathParts = pathname.split('/').filter(p => p);
+      if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+        return '/' + pathParts[0]; // 例如: /AI_YanLab
+      }
+    }
+    
+    // Gitee Pages 环境检测
+    if (hostname.includes('gitee.io')) {
+      const pathParts = pathname.split('/').filter(p => p);
+      if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+        return '/' + pathParts[0];
+      }
+    }
+    
+    // 本地环境
+    return '';
+  },
+  
+  /**
+   * 获取资源的绝对路径（带 base path）
+   * @param {string} path - 相对于项目根目录的路径（如 '/web/assets/css/base.css'）
+   * @returns {string} 完整路径
+   */
+  getAbsolutePath(path) {
+    if (!path) return '';
+    if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+    return this.getBasePath() + path;
+  },
+  
+  /**
+   * 将绝对路径转换为相对于当前页面的路径
    * @param {string} absolutePath - 绝对路径（如 '/web/index.html'）
    * @returns {string} 相对路径
    */
@@ -16,7 +58,13 @@ const Router = {
     }
     
     // 获取当前页面的路径（去掉域名和参数）
-    const currentPath = window.location.pathname;
+    let currentPath = window.location.pathname;
+    
+    // 去掉 GitHub Pages 的 base path
+    const basePath = this.getBasePath();
+    if (basePath && currentPath.startsWith(basePath)) {
+      currentPath = currentPath.substring(basePath.length);
+    }
     
     // 计算当前页面的目录深度
     // 例如：/web/pages/auth/login.html -> ['web', 'pages', 'auth', 'login.html']
@@ -173,5 +221,31 @@ const Router = {
     Storage.remove('currentAdmin');
     this.navigate('/admin/login.html');
   },
+  
+  /**
+   * 获取环境信息（用于调试）
+   */
+  getEnvironmentInfo() {
+    return {
+      basePath: this.getBasePath(),
+      hostname: window.location.hostname,
+      pathname: window.location.pathname,
+      fullUrl: window.location.href,
+      isGitHubPages: window.location.hostname.includes('github.io'),
+      isGiteePages: window.location.hostname.includes('gitee.io'),
+      isLocal: window.location.hostname === 'localhost' || 
+               window.location.hostname === '127.0.0.1' ||
+               window.location.hostname.includes('192.168.') ||
+               window.location.hostname.includes('10.')
+    };
+  }
 };
+
+// 在控制台输出环境信息（开发时使用）
+if (typeof window !== 'undefined' && window.location) {
+  const hostname = window.location.hostname;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    console.log('🚀 Router Environment:', Router.getEnvironmentInfo());
+  }
+}
 
