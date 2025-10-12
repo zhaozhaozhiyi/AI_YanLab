@@ -1158,7 +1158,7 @@
             <p class="hero-description">
               AI面部评估 · 专家在线咨询 · 个性化治疗方案
             </p>
-            <button onclick="goToAssessment()" class="hero-button">
+            <button onclick="goToAssessmentGuide()" class="hero-button">
               <i class="fas fa-camera"></i>
               <span>立即免费评估</span>
             </button>
@@ -1189,7 +1189,7 @@
         <div class="features-grid">
           
           <!-- 功能卡片1 -->
-          <div class="feature-card feature-card-1" onclick="goToAssessment()">
+          <div class="feature-card feature-card-1" onclick="goToAssessmentGuide()">
             <div class="feature-card-inner">
               <div class="feature-icon-wrapper">
                 <div class="feature-icon feature-icon-1">
@@ -1689,6 +1689,14 @@
         Router.navigate('./pages/assessment/index.html');
       } else {
         window.location.href = './pages/assessment/index.html';
+      }
+    }
+
+    function goToAssessmentGuide() {
+      if (window.Router) {
+        Router.navigate('./pages/assessment/guide.html');
+      } else {
+        window.location.href = './pages/assessment/guide.html';
       }
     }
 

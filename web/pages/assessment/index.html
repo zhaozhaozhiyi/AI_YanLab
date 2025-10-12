@@ -195,7 +195,7 @@
 
         <!-- 开始评估按钮 -->
         <div class="text-center mt-8">
-          <button class="start-button" onclick="startAssessment()">
+          <button class="start-button" onclick="window.location.href='./assessment/guide.html'">
             <i class="fas fa-camera"></i>
             <span>立即开始评估</span>
           </button>
@@ -209,7 +209,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         <!-- 功能卡片1 -->
-        <div class="feature-card" onclick="startAssessment()">
+        <div class="feature-card" onclick="window.location.href='./guide.html'">
           <div class="feature-icon icon-gradient-1">
             <i class="fas fa-brain text-white"></i>
           </div>
@@ -227,7 +227,7 @@
         </div>
 
         <!-- 功能卡片3 -->
-        <div class="feature-card" onclick="startAssessment()">
+        <div class="feature-card" onclick="window.location.href='./guide.html'">
           <div class="feature-icon icon-gradient-3">
             <i class="fas fa-shield-alt text-white"></i>
           </div>
@@ -236,7 +236,7 @@
         </div>
 
         <!-- 功能卡片4 -->
-        <div class="feature-card" onclick="startAssessment()">
+        <div class="feature-card" onclick="window.location.href='./guide.html'">
           <div class="feature-icon icon-gradient-4">
             <i class="fas fa-bolt text-white"></i>
           </div>
@@ -465,38 +465,26 @@
 
     // 开始评估
     function startAssessment() {
-      if (window.Router) {
-        Router.navigate('./guide.html');
-      } else {
-        window.location.href = './guide.html';
-      }
+      // 直接使用相对路径，更加可靠
+      window.location.href = './guide.html';
     }
 
     // 查看报告
     function viewReport(id) {
-      if (window.Router) {
-        Router.navigate(`./report.html?id=${id}`);
-      } else {
-        window.location.href = `./report.html?id=${id}`;
-      }
+      // 直接使用相对路径
+      window.location.href = `./report.html?id=${id}`;
     }
 
     // 查看历史
     function viewHistory() {
-      if (window.Router) {
-        Router.navigate('../profile/reports.html');
-      } else {
-        window.location.href = '../profile/reports.html';
-      }
+      // 直接使用相对路径
+      window.location.href = '../profile/reports.html';
     }
 
     // 导航函数
     function goToHome() {
-      if (window.Router) {
-        Router.navigate('/web/index.html');
-      } else {
-        window.location.href = PathConfig.getPagePath('/web/index.html');
-      }
+      // 跳转到web目录下的首页
+      window.location.href = '../../web/index.html';
     }
 
     function goToAssessment() {
@@ -504,27 +492,18 @@
     }
 
     function goToCommunity() {
-      if (window.Router) {
-        Router.navigate('/web/pages/community/index.html');
-      } else {
-        window.location.href = PathConfig.getPagePath('/web/pages/community/index.html');
-      }
+      // 使用绝对路径确保正确跳转
+      window.location.href = '/web/pages/community/index.html';
     }
 
     function goToProfile() {
-      if (window.Router) {
-        Router.navigate('/web/pages/profile/index.html');
-      } else {
-        window.location.href = PathConfig.getPagePath('/web/pages/profile/index.html');
-      }
+      // 使用绝对路径确保正确跳转
+      window.location.href = '/web/pages/profile/index.html';
     }
 
     function goToNotifications() {
-      if (window.Router) {
-        Router.navigate('../profile/index.html');
-      } else {
-        window.location.href = '../profile/index.html';
-      }
+      // 使用绝对路径确保正确跳转
+      window.location.href = '/web/pages/profile/index.html';
     }
   </script>
 

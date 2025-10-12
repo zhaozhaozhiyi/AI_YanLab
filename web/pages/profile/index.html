@@ -509,15 +509,18 @@
 
     // 导航函数
     function goToHome() {
-      Router.navigate('/web/index.html');
+      // 跳转到web目录下的首页
+      window.location.href = '../../web/index.html';
     }
 
     function goToAssessment() {
-      Router.navigate('/web/pages/assessment/index.html');
+      // 使用绝对路径确保正确跳转
+      window.location.href = '/web/pages/assessment/index.html';
     }
 
     function goToCommunity() {
-      Router.navigate('/web/pages/community/index.html');
+      // 使用绝对路径确保正确跳转
+      window.location.href = '/web/pages/community/index.html';
     }
 
     function goToProfile() {
