@@ -659,7 +659,20 @@
     // ==================== 页面加载和初始化 ====================
     
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('拍照引导页已加载');
+      console.log('📄 拍照引导页已加载');
+      
+      // 检查依赖是否加载
+      console.log('🔍 检查依赖加载状态:');
+      console.log('  - Storage:', typeof Storage !== 'undefined' ? '✅' : '❌');
+      console.log('  - Router:', typeof Router !== 'undefined' ? '✅' : '❌');
+      console.log('  - PathHelper:', typeof PathHelper !== 'undefined' ? '✅' : '❌');
+      
+      if (typeof Storage === 'undefined') {
+        console.error('❌ Storage 未加载，请检查 storage.js 文件路径');
+      }
+      if (typeof Router === 'undefined') {
+        console.error('❌ Router 未加载，请检查 router.js 文件路径');
+      }
       
       // 检查是否是登录后返回
       checkLoginReturn();

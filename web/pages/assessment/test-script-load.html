@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>脚本加载测试</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .success {
+      background: #4caf50;
+      color: white;
+    }
+    .error {
+      background: #f44336;
+      color: white;
+    }
+    h1 {
+      color: #333;
+    }
+    h2 {
+      color: #666;
+      font-size: 18px;
+    }
+    pre {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      border-left: 4px solid #2196f3;
+    }
+    button {
+      background: #2196f3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #1976d2;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 脚本加载测试页面</h1>
+  
+  <div class="test-box">
+    <h2>环境信息</h2>
+    <pre id="envInfo">加载中...</pre>
+  </div>
+  
+  <div class="test-box">
+    <h2>路径配置测试</h2>
+    <div id="pathHelperStatus">检查中...</div>
+  </div>
+  
+  <div class="test-box">
+    <h2>共享脚本加载状态</h2>
+    <div id="scriptsStatus">检查中...</div>
+  </div>
+  
+  <div class="test-box">
+    <h2>Storage 功能测试</h2>
+    <button onclick="testStorage()">测试 Storage</button>
+    <div id="storageResult" style="margin-top: 10px;"></div>
+  </div>
+  
+  <div class="test-box">
+    <h2>Router 功能测试</h2>
+    <button onclick="testRouter()">测试 Router</button>
+    <div id="routerResult" style="margin-top: 10px;"></div>
+  </div>
+
+  <!-- 路径配置 -->
+  <script>
+    // 内联路径配置
+    window.PathHelper = {
+      getBasePath() {
+        const hostname = window.location.hostname;
+        const pathname = window.location.pathname;
+        if (hostname.includes('github.io')) {
+          const pathParts = pathname.split('/').filter(p => p);
+          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+            return '/' + pathParts[0];
+          }
+        }
+        if (hostname.includes('gitee.io')) {
+          const pathParts = pathname.split('/').filter(p => p);
+          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+            return '/' + pathParts[0];
+          }
+        }
+        return '';
+      },
+      getPath(path) {
+        if (!path) return '';
+        if (!path.startsWith('/')) path = '/' + path;
+        let currentPath = window.location.pathname;
+        const basePath = this.getBasePath();
+        if (basePath && currentPath.startsWith(basePath)) {
+          currentPath = currentPath.substring(basePath.length);
+        }
+        const currentParts = currentPath.split('/').filter(p => p);
+        const currentDirs = currentParts.slice(0, -1);
+        const currentDepth = currentDirs.length;
+        const targetPath = path.substring(1);
+        let relativePath = currentDepth === 0 ? './' : '../'.repeat(currentDepth);
+        return relativePath + targetPath;
+      }
+    };
+  </script>
+
+  <!-- 加载共享脚本 -->
+  <script src="../../../shared/storage.js"></script>
+  <script src="../../../shared/utils.js"></script>
+  <script src="../../../shared/router.js"></script>
+
+  <script>
+    // 显示环境信息
+    function showEnvironmentInfo() {
+      const info = {
+        'URL': window.location.href,
+        'Hostname': window.location.hostname,
+        'Pathname': window.location.pathname,
+        'Base Path': PathHelper.getBasePath(),
+        'Is GitHub Pages': window.location.hostname.includes('github.io'),
+        'Is Gitee Pages': window.location.hostname.includes('gitee.io'),
+        'Is Local': ['localhost', '127.0.0.1'].includes(window.location.hostname)
+      };
+      
+      document.getElementById('envInfo').textContent = JSON.stringify(info, null, 2);
+    }
+
+    // 检查 PathHelper
+    function checkPathHelper() {
+      const container = document.getElementById('pathHelperStatus');
+      if (typeof PathHelper !== 'undefined') {
+        container.innerHTML = '<span class="status success">✅ 已加载</span><br><br>' +
+          '<strong>测试路径转换:</strong><br>' +
+          '<pre>' +
+          'getPath("/web/assets/css/base.css"):\n' +
+          PathHelper.getPath('/web/assets/css/base.css') + '\n\n' +
+          'getPath("/shared/storage.js"):\n' +
+          PathHelper.getPath('/shared/storage.js') +
+          '</pre>';
+      } else {
+        container.innerHTML = '<span class="status error">❌ 未加载</span>';
+      }
+    }
+
+    // 检查共享脚本
+    function checkScripts() {
+      const container = document.getElementById('scriptsStatus');
+      const results = [];
+      
+      // 检查 Storage
+      if (typeof Storage !== 'undefined') {
+        results.push('Storage <span class="status success">✅</span>');
+      } else {
+        results.push('Storage <span class="status error">❌</span>');
+      }
+      
+      // 检查 Router
+      if (typeof Router !== 'undefined') {
+        results.push('Router <span class="status success">✅</span>');
+      } else {
+        results.push('Router <span class="status error">❌</span>');
+      }
+      
+      container.innerHTML = results.join('<br>');
+    }
+
+    // 测试 Storage
+    function testStorage() {
+      const resultDiv = document.getElementById('storageResult');
+      try {
+        if (typeof Storage === 'undefined') {
+          resultDiv.innerHTML = '<span class="status error">❌ Storage 未加载</span>';
+          return;
+        }
+        
+        // 测试存储
+        Storage.set('test_key', { value: 'test_value', timestamp: Date.now() });
+        const retrieved = Storage.get('test_key');
+        Storage.remove('test_key');
+        
+        if (retrieved && retrieved.value === 'test_value') {
+          resultDiv.innerHTML = '<span class="status success">✅ Storage 工作正常</span><br>' +
+            '<pre>' + JSON.stringify(retrieved, null, 2) + '</pre>';
+        } else {
+          resultDiv.innerHTML = '<span class="status error">❌ Storage 测试失败</span>';
+        }
+      } catch (error) {
+        resultDiv.innerHTML = '<span class="status error">❌ 错误: ' + error.message + '</span>';
+      }
+    }
+
+    // 测试 Router
+    function testRouter() {
+      const resultDiv = document.getElementById('routerResult');
+      try {
+        if (typeof Router === 'undefined') {
+          resultDiv.innerHTML = '<span class="status error">❌ Router 未加载</span>';
+          return;
+        }
+        
+        const envInfo = Router.getEnvironmentInfo();
+        const testPath = Router.toRelativePath('/web/index.html');
+        
+        resultDiv.innerHTML = '<span class="status success">✅ Router 工作正常</span><br><br>' +
+          '<strong>环境信息:</strong><br>' +
+          '<pre>' + JSON.stringify(envInfo, null, 2) + '</pre>' +
+          '<strong>路径转换测试:</strong><br>' +
+          '<pre>toRelativePath("/web/index.html"):\n' + testPath + '</pre>';
+      } catch (error) {
+        resultDiv.innerHTML = '<span class="status error">❌ 错误: ' + error.message + '</span>';
+      }
+    }
+
+    // 页面加载完成后执行检查
+    window.addEventListener('DOMContentLoaded', function() {
+      showEnvironmentInfo();
+      checkPathHelper();
+      checkScripts();
+      
+      // 在控制台输出详细信息
+      console.log('=== 脚本加载测试 ===');
+      console.log('PathHelper:', typeof PathHelper !== 'undefined' ? '✅' : '❌');
+      console.log('Storage:', typeof Storage !== 'undefined' ? '✅' : '❌');
+      console.log('Router:', typeof Router !== 'undefined' ? '✅' : '❌');
+      console.log('====================');
+    });
+  </script>
+</body>
+</html>
+

@@ -7,7 +7,23 @@
 </head>
 <body>
     <script>
-        window.location.href = 'web/index.html';
+        // 智能重定向 - 支持本地和 GitHub Pages 环境
+        (function() {
+            const hostname = window.location.hostname;
+            const pathname = window.location.pathname;
+            
+            // 获取 base path
+            let basePath = '';
+            if (hostname.includes('github.io') || hostname.includes('gitee.io')) {
+                const pathParts = pathname.split('/').filter(p => p);
+                if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+                    basePath = '/' + pathParts[0];
+                }
+            }
+            
+            // 重定向到 web/index.html
+            window.location.href = basePath + '/web/index.html';
+        })();
     </script>
 </body>
 </html>
