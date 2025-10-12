@@ -254,7 +254,7 @@
           <i class="fas fa-history mr-2 text-pink-500"></i>
           评估历史
         </h2>
-        <a href="/web/pages/profile/reports.html" class="text-sm text-pink-500 hover:text-pink-600">
+        <a href="./pages/profile/reports.html" class="text-sm text-pink-500 hover:text-pink-600">
           查看全部 <i class="fas fa-chevron-right text-xs"></i>
         </a>
       </div>
@@ -376,17 +376,17 @@
 
     // 开始评估
     function startAssessment() {
-      Router.navigate('/web/pages/assessment/guide.html');
+      Router.navigate('./pages/assessment/guide.html');
     }
 
     // 查看报告
     function viewReport(id) {
-      Router.navigate(`/web/pages/assessment/report.html?id=${id}`);
+      Router.navigate(`./pages/assessment/report.html?id=${id}`);
     }
 
     // 查看历史
     function viewHistory() {
-      Router.navigate('/web/pages/profile/reports.html');
+      Router.navigate('./pages/profile/reports.html');
     }
 
     // 导航函数
@@ -399,15 +399,15 @@
     }
 
     function goToCommunity() {
-      Router.navigate('/web/pages/community/index.html');
+      Router.navigate('./pages/community/index.html');
     }
 
     function goToProfile() {
-      Router.navigate('/web/pages/profile/index.html');
+      Router.navigate('./pages/profile/index.html');
     }
 
     function goToNotifications() {
-      Router.navigate('/web/pages/profile/index.html');
+      Router.navigate('./pages/profile/index.html');
     }
   </script>
 

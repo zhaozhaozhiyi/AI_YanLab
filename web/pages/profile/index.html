@@ -490,7 +490,7 @@
       const assessmentHistory = Storage.get('assessmentHistory') || [];
       if (assessmentHistory.length > 0) {
         const recent = assessmentHistory[assessmentHistory.length - 1];
-        window.location.href = `/web/pages/assessment/report.html?id=${recent.id}`;
+        window.location.href = `./pages/assessment/report.html?id=${recent.id}`;
       }
     }
 
@@ -503,7 +503,7 @@
     function logout() {
       if (confirm('确定要退出登录吗？')) {
         Storage.remove('currentUser');
-        window.location.href = '/web/pages/auth/login.html';
+        window.location.href = './pages/auth/login.html';
       }
     }
 
@@ -513,11 +513,11 @@
     }
 
     function goToAssessment() {
-      Router.navigate('/web/pages/assessment/index.html');
+      Router.navigate('./pages/assessment/index.html');
     }
 
     function goToCommunity() {
-      Router.navigate('/web/pages/community/index.html');
+      Router.navigate('./pages/community/index.html');
     }
 
     function goToProfile() {

@@ -327,7 +327,7 @@
       // 检查登录状态
       if (!Storage.get('currentUser')) {
         if (confirm('拍照评估需要登录，是否前往登录页面？')) {
-          Router.navigate('/web/pages/auth/login.html');
+          Router.navigate('./pages/auth/login.html');
           return;
         }
       }

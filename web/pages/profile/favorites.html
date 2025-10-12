@@ -284,7 +284,7 @@
       <h3 class="text-xl font-bold text-gray-800 mb-2">还没有收藏内容</h3>
       <p class="text-gray-500 mb-6">收藏感兴趣的文章和案例，随时查看</p>
       <button 
-        onclick="window.location.href='/web/pages/community/index.html'"
+        onclick="window.location.href='./pages/community/index.html'"
         class="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
         去发现
       </button>
@@ -531,11 +531,11 @@
       const content = allFavorites.find(f => f.id === id);
       if (content) {
         if (content.type === 'article') {
-          window.location.href = `/web/pages/community/article.html?id=${id}`;
+          window.location.href = `./pages/community/article.html?id=${id}`;
         } else if (content.type === 'case') {
-          window.location.href = `/web/pages/community/case.html?id=${id}`;
+          window.location.href = `./pages/community/case.html?id=${id}`;
         } else if (content.type === 'video') {
-          window.location.href = `/web/pages/community/video.html?id=${id}`;
+          window.location.href = `./pages/community/video.html?id=${id}`;
         }
       }
     }
