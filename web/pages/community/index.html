@@ -389,22 +389,22 @@
 
   <!-- 底部导航栏 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+    <a href="../../index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-home text-xl mb-1"></i>
       <span class="text-xs">首页</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+    </a>
+    <a href="../assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-camera text-xl mb-1"></i>
       <span class="text-xs">评估</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+    </a>
+    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
       <i class="fas fa-comments text-xl mb-1"></i>
       <span class="text-xs">社区</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
+    </a>
+    <a href="../profile/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-user text-xl mb-1"></i>
       <span class="text-xs">我的</span>
-    </div>
+    </a>
   </nav>
 
   <script>
@@ -666,21 +666,8 @@
     }
 
     // 导航函数 - 使用 PathHelper 支持 GitHub Pages
-    function goToHome() {
-      window.location.href = PathHelper.getPath('/web/index.html');
-    }
-
-    function goToAssessment() {
-      window.location.href = PathHelper.getPath('/web/pages/assessment/index.html');
-    }
-
-    function goToCommunity() {
-      window.location.reload(); // 社区页不需要跳转，直接刷新
-    }
-
-    function goToProfile() {
-      window.location.href = PathHelper.getPath('/web/pages/profile/index.html');
-    }
+    // 这些导航函数已废弃，现在使用a标签直接跳转
+    // 保留是为了兼容旧代码
 
     function goToNotifications() {
       window.location.href = PathHelper.getPath('/web/pages/profile/index.html');

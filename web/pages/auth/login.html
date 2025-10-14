@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="/web/assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
   
   <style>
     body {
@@ -226,9 +226,9 @@
   </div>
 
   <!-- 引入共享脚本 -->
-  <script src="/shared/router.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/storage.js"></script>
+  <script src="../../../shared/router.js"></script>
+  <script src="../../../shared/utils.js"></script>
+  <script src="../../../shared/storage.js"></script>
 
   <script>
     let countdown = 0;
@@ -297,7 +297,7 @@
         if (returnUrl) {
           window.location.href = returnUrl;
         } else {
-          Router.navigate('/web/index.html');
+          window.location.href = '../../index.html';
         }
       }, 1000);
     }
@@ -320,7 +320,7 @@
       if (returnUrl) {
         window.location.href = returnUrl;
       } else {
-        Router.navigate('/web/index.html');
+        window.location.href = '../../index.html';
       }
     }
 
@@ -341,7 +341,7 @@
       if (returnUrl) {
         window.location.href = returnUrl;
       } else {
-        Router.navigate('/web/index.html');
+        window.location.href = '../../index.html';
       }
     }
 
@@ -354,7 +354,7 @@
         if (returnUrl) {
           window.location.href = returnUrl;
         } else {
-          Router.navigate('/web/index.html');
+          window.location.href = '../../index.html';
         }
       }
     });

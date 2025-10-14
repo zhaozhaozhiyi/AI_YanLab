@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="/web/assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
   
   <style>
     body {
@@ -283,18 +283,18 @@
       </div>
       <h3 class="text-xl font-bold text-gray-800 mb-2">还没有收藏内容</h3>
       <p class="text-gray-500 mb-6">收藏感兴趣的文章和案例，随时查看</p>
-      <button 
-        onclick="window.location.href='./pages/community/index.html'"
-        class="px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
+      <a 
+        href="../community/index.html"
+        class="inline-block px-8 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition">
         去发现
-      </button>
+      </a>
     </div>
   </div>
 
   <!-- 引入工具库 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/router.js"></script>
+  <script src="../../../shared/storage.js"></script>
+  <script src="../../../shared/utils.js"></script>
+  <script src="../../../shared/router.js"></script>
 
   <script>
     let allFavorites = [];

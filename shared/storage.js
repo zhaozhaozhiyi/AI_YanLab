@@ -2,7 +2,7 @@
  * localStorage 封装工具
  * 统一数据存储管理
  */
-const Storage = {
+window.Storage = {
   prefix: 'aibeauty_',
   
   /**
@@ -66,4 +66,7 @@ const Storage = {
       .map(key => key.replace(this.prefix, ''));
   }
 };
+
+// 为了兼容性，也创建一个全局变量
+const Storage = window.Storage;
 

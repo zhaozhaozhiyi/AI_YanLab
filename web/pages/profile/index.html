@@ -213,9 +213,9 @@
   <!-- 顶部导航栏 -->
   <nav class="fixed top-4 left-4 right-4 bg-white rounded-2xl shadow-sm border border-gray-100 px-5 z-50 flex flex-row items-center justify-between" style="height: 52px;">
     <h1 class="text-base font-semibold text-gray-900">个人中心</h1>
-    <button onclick="window.location.href='./edit.html'" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-pink-500 hover:bg-pink-50 rounded-lg transition-all">
+    <a href="./edit.html" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-pink-500 hover:bg-pink-50 rounded-lg transition-all">
       <i class="fas fa-cog"></i>
-    </button>
+    </a>
   </nav>
 
   <!-- 主内容区包裹器 -->
@@ -285,7 +285,7 @@
       <div class="menu-card mb-4">
         <h3 class="text-sm font-semibold text-gray-500 mb-3 px-1">我的服务</h3>
         
-        <div class="menu-item" onclick="window.location.href='./reports.html'">
+        <a href="./reports.html" class="menu-item">
           <div class="menu-icon icon-pink">
             <i class="fas fa-file-medical"></i>
           </div>
@@ -294,9 +294,9 @@
             <p class="text-sm text-gray-500">查看历史评估记录</p>
           </div>
           <i class="fas fa-chevron-right text-gray-400"></i>
-        </div>
+        </a>
         
-        <div class="menu-item" onclick="window.location.href='./appointments.html'">
+        <a href="./appointments.html" class="menu-item">
           <div class="menu-icon icon-purple">
             <i class="fas fa-calendar-check"></i>
           </div>
@@ -306,7 +306,7 @@
           </div>
           <span class="badge badge-new" id="appointmentBadge" style="display: none;"></span>
           <i class="fas fa-chevron-right text-gray-400"></i>
-        </div>
+        </a>
         
         <div class="menu-item" onclick="alert('治疗计划功能即将上线')">
           <div class="menu-icon icon-blue">
@@ -319,7 +319,7 @@
           <i class="fas fa-chevron-right text-gray-400"></i>
         </div>
         
-        <div class="menu-item" onclick="window.location.href='./favorites.html'">
+        <a href="./favorites.html" class="menu-item">
           <div class="menu-icon icon-green">
             <i class="fas fa-heart"></i>
           </div>
@@ -329,14 +329,14 @@
           </div>
           <span class="badge badge-new" id="favoritesBadge" style="display: none;"></span>
           <i class="fas fa-chevron-right text-gray-400"></i>
-        </div>
+        </a>
       </div>
 
       <!-- 设置菜单 -->
       <div class="menu-card mb-6">
         <h3 class="text-sm font-semibold text-gray-500 mb-3 px-1">设置</h3>
         
-        <div class="menu-item" onclick="window.location.href='./edit.html'">
+        <a href="./edit.html" class="menu-item">
           <div class="menu-icon icon-pink">
             <i class="fas fa-user-edit"></i>
           </div>
@@ -345,9 +345,9 @@
             <p class="text-sm text-gray-500">编辑个人信息</p>
           </div>
           <i class="fas fa-chevron-right text-gray-400"></i>
-        </div>
+        </a>
         
-        <div class="menu-item" onclick="window.location.href='./settings.html'">
+        <a href="./settings.html" class="menu-item">
           <div class="menu-icon icon-purple">
             <i class="fas fa-cog"></i>
           </div>
@@ -356,7 +356,7 @@
             <p class="text-sm text-gray-500">账户、通知、隐私设置</p>
           </div>
           <i class="fas fa-chevron-right text-gray-400"></i>
-        </div>
+        </a>
         
         <div class="menu-item" onclick="showAbout()">
           <div class="menu-icon icon-blue">
@@ -388,28 +388,28 @@
 
   <!-- 底部导航栏 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+    <a href="../../index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-home text-xl mb-1"></i>
       <span class="text-xs">首页</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+    </a>
+    <a href="../assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-camera text-xl mb-1"></i>
       <span class="text-xs">评估</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToCommunity()">
+    </a>
+    <a href="../community/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-comments text-xl mb-1"></i>
       <span class="text-xs">社区</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="window.location.reload()">
+    </a>
+    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
       <i class="fas fa-user text-xl mb-1"></i>
       <span class="text-xs">我的</span>
-    </div>
+    </a>
   </nav>
 
   <!-- 引入工具库 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/router.js"></script>
+  <script src="../../../shared/storage.js"></script>
+  <script src="../../../shared/utils.js"></script>
+  <script src="../../../shared/router.js"></script>
 
   <script>
     // 页面加载时初始化数据
@@ -537,21 +537,8 @@
     }
 
     // 导航函数 - 使用 PathHelper 支持 GitHub Pages
-    function goToHome() {
-      window.location.href = PathHelper.getPath('/web/index.html');
-    }
-
-    function goToAssessment() {
-      window.location.href = PathHelper.getPath('/web/pages/assessment/index.html');
-    }
-
-    function goToCommunity() {
-      window.location.href = PathHelper.getPath('/web/pages/community/index.html');
-    }
-
-    function goToProfile() {
-      window.location.reload(); // 个人页不需要跳转，直接刷新
-    }
+    // 这些导航函数已废弃，现在使用a标签直接跳转
+    // 保留是为了兼容旧代码
     
     // 页面加载时设置 CSS 路径
     document.addEventListener('DOMContentLoaded', function() {

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="/web/assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
   
   <style>
     body {
@@ -251,7 +251,7 @@
         </h2>
       </div>
       
-      <div class="settings-item" onclick="window.location.href='./edit.html'">
+      <a href="./edit.html" class="settings-item">
         <div class="settings-item-left">
           <div class="settings-icon icon-pink">
             <i class="fas fa-user-edit"></i>
@@ -262,7 +262,7 @@
           </div>
         </div>
         <i class="fas fa-chevron-right text-gray-400"></i>
-      </div>
+      </a>
 
       <div class="settings-item" onclick="changePhone()">
         <div class="settings-item-left">
@@ -533,9 +533,9 @@
   </div>
 
   <!-- 引入工具库 -->
-  <script src="/shared/storage.js"></script>
-  <script src="/shared/utils.js"></script>
-  <script src="/shared/router.js"></script>
+  <script src="../../../shared/storage.js"></script>
+  <script src="../../../shared/utils.js"></script>
+  <script src="../../../shared/router.js"></script>
 
   <script>
     // 设置状态

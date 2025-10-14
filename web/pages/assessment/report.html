@@ -1079,10 +1079,10 @@
     <div class="header-decoration" style="width: 150px; height: 150px; bottom: -50px; right: -30px;"></div>
     
     <div class="max-w-4xl mx-auto relative z-10">
-      <button onclick="Router.navigate('/web/index.html')" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <a href="../../index.html" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity inline-flex">
         <i class="fas fa-home"></i>
         <span>返回首页</span>
-      </button>
+      </a>
       <div class="text-center">
         <div class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-2" id="statusBadge">
           <i class="fas fa-check-circle mr-1"></i>
@@ -1261,10 +1261,10 @@
         <span>这是演示数据</span>
       </div>
       <p class="text-amber-600 mb-3">当前显示的是示例报告，如需获取真实的评估报告，请完成完整的评估流程。</p>
-      <button onclick="Router.navigate('/web/pages/assessment/guide.html')" class="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all">
+      <a href="./guide.html" class="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all">
         <i class="fas fa-camera"></i>
         <span>开始真实评估</span>
-      </button>
+      </a>
     </div>
 
     <!-- 免责声明 -->
@@ -2275,17 +2275,14 @@
 
     // 咨询专家
     function consultExpert() {
-      Router.navigate('/web/pages/chat/detail.html', { 
-        reportId: report.id,
-        context: 'report_consult'
-      });
+      const reportId = report.id;
+      window.location.href = `../chat/detail.html?reportId=${reportId}&context=report_consult`;
     }
 
     // 预约治疗
     function bookAppointment() {
-      Router.navigate('/web/pages/booking/experts.html', {
-        reportId: report.id
-      });
+      const reportId = report.id;
+      window.location.href = `../booking/experts.html?reportId=${reportId}`;
     }
 
     // 分享报告

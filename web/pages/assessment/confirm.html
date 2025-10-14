@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="/web/assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
   
   <style>
     body {
@@ -304,7 +304,7 @@
       
       if (photos.length === 0) {
         alert('未找到照片数据，请重新拍摄');
-        Router.navigate('/web/pages/assessment/guide.html');
+        window.location.href = './guide.html';
       }
     }
 
@@ -362,7 +362,7 @@
         Storage.set('capturedPhotos', photos);
         
         // 返回拍照页面
-        Router.navigate('/web/pages/assessment/camera.html');
+        window.location.href = './camera.html';
       }
     }
 
@@ -373,7 +373,7 @@
         Storage.remove('capturedPhotos');
         
         // 返回拍照引导页
-        Router.navigate('/web/pages/assessment/guide.html');
+        window.location.href = './guide.html';
       }
     }
 
@@ -405,7 +405,7 @@
         });
         
         // 跳转到评估等待页
-        Router.navigate('/web/pages/assessment/waiting.html');
+        window.location.href = './waiting.html';
         
       } catch (error) {
         console.error('提交失败:', error);

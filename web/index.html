@@ -1538,22 +1538,22 @@
 
   <!-- 底部导航栏 -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <div class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors cursor-pointer py-2" onclick="goToHome()">
+    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
       <i class="fas fa-home text-xl mb-1"></i>
       <span class="text-xs">首页</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToAssessment()">
+    </a>
+    <a href="./pages/assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-camera text-xl mb-1"></i>
       <span class="text-xs">评估</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToCommunity()">
+    </a>
+    <a href="./pages/community/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-comments text-xl mb-1"></i>
       <span class="text-xs">社区</span>
-    </div>
-    <div class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors cursor-pointer py-2" onclick="goToProfile()">
+    </a>
+    <a href="./pages/profile/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
       <i class="fas fa-user text-xl mb-1"></i>
       <span class="text-xs">我的</span>
-    </div>
+    </a>
   </nav>
 
   <!-- 页面脚本 -->
@@ -1631,9 +1631,16 @@
       async loadScript(src) {
         return new Promise((resolve, reject) => {
           const script = document.createElement('script');
-          script.src = this.getAssetPath(src);
-          script.onload = resolve;
-          script.onerror = reject;
+          const scriptPath = this.getPagePath(src);
+          script.src = scriptPath;
+          script.onload = () => {
+            console.log('✅ Loaded script:', scriptPath);
+            resolve();
+          };
+          script.onerror = (error) => {
+            console.error('❌ Failed to load script:', scriptPath, error);
+            reject(error);
+          };
           document.head.appendChild(script);
         });
       },
@@ -1646,12 +1653,20 @@
           '/shared/router.js'
         ];
         
+        let successCount = 0;
         for (const script of scripts) {
           try {
             await this.loadScript(script);
+            successCount++;
           } catch (error) {
-            console.warn(`Failed to load ${script}:`, error);
+            console.warn(`⚠️ Failed to load ${script}:`, error);
           }
+        }
+        
+        if (successCount === 0) {
+          console.error('❌ No shared scripts loaded successfully');
+        } else {
+          console.log(`✅ Loaded ${successCount}/${scripts.length} shared scripts`);
         }
       },
       
@@ -1676,14 +1691,63 @@
       console.log('🔧 PathConfig Environment:', window.PathConfig.getEnvironmentInfo());
     }
 
+    // 后备 Storage 实现（如果外部脚本加载失败时使用）
+    if (typeof Storage.get !== 'function') {
+      window.Storage = {
+        prefix: 'aibeauty_',
+        set(key, value) {
+          try {
+            localStorage.setItem(this.prefix + key, JSON.stringify(value));
+            return true;
+          } catch (e) {
+            console.error('Storage set error:', e);
+            return false;
+          }
+        },
+        get(key) {
+          try {
+            const item = localStorage.getItem(this.prefix + key);
+            return item ? JSON.parse(item) : null;
+          } catch (e) {
+            console.error('Storage get error:', e);
+            return null;
+          }
+        },
+        remove(key) {
+          localStorage.removeItem(this.prefix + key);
+        },
+        clear() {
+          const keys = Object.keys(localStorage);
+          keys.forEach(key => {
+            if (key.startsWith(this.prefix)) {
+              localStorage.removeItem(key);
+            }
+          });
+        },
+        keys() {
+          const keys = Object.keys(localStorage);
+          return keys
+            .filter(key => key.startsWith(this.prefix))
+            .map(key => key.replace(this.prefix, ''));
+        }
+      };
+      console.log('✅ Using fallback Storage implementation');
+    }
+
     // 动态加载共享脚本
     document.addEventListener('DOMContentLoaded', async function() {
       try {
         await PathConfig.loadSharedScripts();
+        
+        // 验证关键对象是否加载成功
+        if (typeof Storage.get === 'function') {
+          console.log('✅ Storage loaded successfully');
+        }
+        
         // 脚本加载完成后初始化页面
         initPage();
       } catch (error) {
-        console.error('Failed to load shared scripts:', error);
+        console.error('❌ Failed to load shared scripts:', error);
         // 即使脚本加载失败，也尝试初始化页面
         initPage();
       }
@@ -1908,8 +1972,16 @@
 
     // 渲染文章列表
     function renderArticles() {
-      const articles = Storage.get('articles') || [];
       const articleList = document.getElementById('articleList');
+      
+      // 检查自定义 Storage 对象是否已加载（注意：Storage 是浏览器内置接口，需检查 get 方法）
+      if (typeof Storage.get !== 'function') {
+        console.warn('⚠️ Custom Storage not loaded yet, using empty articles');
+        articleList.innerHTML = '<div class="empty-state"><p>暂无文章</p></div>';
+        return;
+      }
+      
+      const articles = Storage.get('articles') || [];
       
       if (articles.length === 0) {
         articleList.innerHTML = '<div class="empty-state"><p>暂无文章</p></div>';
@@ -1951,57 +2023,19 @@
       `).join('');
     }
 
-    // 页面跳转函数
-    function goToHome() {
-      window.location.reload(); // 首页不需要跳转，直接刷新
-    }
-
-    function goToAssessment() {
-      if (window.Router) {
-        Router.navigate('./pages/assessment/index.html');
-      } else {
-        window.location.href = './pages/assessment/index.html';
-      }
-    }
-
+    // 页面跳转函数 - 保留用于页面内按钮跳转
+    // 底部导航栏已改用a标签直接跳转
+    
     function goToAssessmentGuide() {
-      if (window.Router) {
-        Router.navigate('./pages/assessment/guide.html');
-      } else {
-        window.location.href = './pages/assessment/guide.html';
-      }
+      window.location.href = './pages/assessment/guide.html';
     }
 
     function goToChat() {
-      if (window.Router) {
-        Router.navigate('./pages/chat/detail.html');
-      } else {
-        window.location.href = './pages/chat/detail.html';
-      }
-    }
-
-    function goToCommunity() {
-      if (window.Router) {
-        Router.navigate('./pages/community/index.html');
-      } else {
-        window.location.href = './pages/community/index.html';
-      }
-    }
-
-    function goToProfile() {
-      if (window.Router) {
-        Router.navigate('./pages/profile/index.html');
-      } else {
-        window.location.href = './pages/profile/index.html';
-      }
+      window.location.href = './pages/chat/detail.html';
     }
 
     function goToBooking() {
-      if (window.Router) {
-        Router.navigate('./pages/booking/experts.html');
-      } else {
-        window.location.href = './pages/booking/experts.html';
-      }
+      window.location.href = './pages/booking/experts.html';
     }
 
     function goToArticle(id) {

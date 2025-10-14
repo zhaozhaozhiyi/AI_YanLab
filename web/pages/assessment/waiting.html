@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- 自定义样式 -->
-  <link rel="stylesheet" href="/web/assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
   
   <style>
     html, body {
@@ -358,8 +358,8 @@
         温馨提示
       </h3>
       <p class="tip-text">
-        评估过程通常需要30-60秒，我们的AI系统正在分析数百个面部特征点，
-        为您提供最准确的评估结果。请耐心等待...
+        评估过程通常需要10-15秒，我们的AI系统正在快速分析数百个面部特征点，
+        为您提供最准确的评估结果。请稍候...
       </p>
     </div>
   </div>
@@ -374,7 +374,7 @@
     let currentStep = 0;
     let progress = 0;
     const totalSteps = 4;
-    const totalTime = 45000; // 45秒完成评估
+    const totalTime = 12000; // 12秒快速完成评估
     const stepTime = totalTime / totalSteps;
 
     // 步骤描述
@@ -456,7 +456,7 @@
       
       // 跳转到报告页面
       setTimeout(() => {
-        Router.navigate('/web/pages/assessment/report.html');
+        window.location.href = './report.html';
       }, 1500);
     }
 
@@ -565,7 +565,7 @@
       const assessment = Storage.get('currentAssessment');
       if (!assessment) {
         alert('未找到评估数据');
-        Router.navigate('/web/pages/assessment/guide.html');
+        window.location.href = './guide.html';
         return;
       }
       

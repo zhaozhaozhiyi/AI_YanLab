@@ -618,11 +618,11 @@
     // 跳转到登录页
     function goToLogin() {
       // 保存返回路径，登录成功后自动返回
-      Storage.set('returnUrl', '/web/pages/assessment/guide.html');
+      Storage.set('returnUrl', window.location.pathname);
       Storage.set('returnAction', 'startCamera'); // 标记返回后的操作
       
-      // 跳转到登录页（使用绝对路径）
-      Router.navigate('/web/pages/auth/login.html');
+      // 跳转到登录页
+      window.location.href = '../auth/login.html';
     }
 
     // 游客继续体验
@@ -652,8 +652,8 @@
         isGuest: isGuest
       });
       
-      // 使用绝对路径导航
-      Router.navigate('/web/pages/assessment/camera.html');
+      // 跳转到拍照页面
+      window.location.href = './camera.html';
     }
 
     // ==================== 页面加载和初始化 ====================
