@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>评估报告（测试版-面相分析）- AI颜值管家</title>
+  <title>评估报告 - AI颜值管家</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -1070,364 +1070,6 @@
         justify-content: center;
       }
     }
-
-    /* ============ 锚点导航样式 ============ */
-    .nav-tabs {
-      display: flex;
-      gap: 0.5rem;
-      background: white;
-      padding: 0.75rem;
-      border-radius: 50px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      position: sticky;
-      top: 2rem;
-      z-index: 100;
-      margin-top: 2rem;
-      margin-bottom: 2.5rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-    }
-
-    .nav-tabs::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
-
-    .nav-tab {
-      flex: 1;
-      min-width: 120px;
-      padding: 0.875rem 1.5rem;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: transparent;
-      color: #6b7280;
-      border: none;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-tab:hover {
-      background: #f9fafb;
-      color: #ec4899;
-    }
-
-    .nav-tab.active {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-      color: white;
-      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-    }
-
-    /* 平板端适配 */
-    @media (max-width: 1024px) {
-      .nav-tabs {
-        padding: 0.75rem;
-        gap: 0.5rem;
-      }
-
-      .nav-tab {
-        padding: 0.875rem 1.25rem;
-        font-size: 0.9rem;
-        min-width: 110px;
-      }
-    }
-
-    /* 移动端适配 */
-    @media (max-width: 768px) {
-      .nav-tabs {
-        padding: 0.5rem;
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-        border-radius: 20px;
-        gap: 0.375rem;
-        top: 1rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-tab {
-        padding: 0.75rem 1rem;
-        font-size: 0.8rem;
-        min-width: 0;
-        border-radius: 15px;
-        flex: 1;
-        font-weight: 500;
-      }
-    }
-
-    /* 小屏手机适配 */
-    @media (max-width: 480px) {
-      .nav-tabs {
-        padding: 0.375rem;
-        gap: 0.25rem;
-        border-radius: 15px;
-        margin-top: 0.75rem;
-        margin-bottom: 1rem;
-      }
-
-      .nav-tab {
-        padding: 0.625rem 0.75rem;
-        font-size: 0.75rem;
-        min-width: 0;
-        border-radius: 12px;
-        flex: 1;
-        font-weight: 500;
-      }
-    }
-
-    /* 超小屏适配 */
-    @media (max-width: 360px) {
-      .nav-tabs {
-        padding: 0.25rem;
-        gap: 0.125rem;
-        border-radius: 12px;
-      }
-
-      .nav-tab {
-        padding: 0.5rem 0.625rem;
-        font-size: 0.7rem;
-        min-width: 0;
-        border-radius: 10px;
-        flex: 1;
-        font-weight: 500;
-      }
-    }
-
-    /* 面相分析专属样式 */
-    .fortune-section {
-      scroll-margin-top: 100px;
-      margin-top: 2rem;
-    }
-
-    .fortune-card {
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-      transition: all 0.3s ease;
-    }
-
-    .fortune-card:hover {
-      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.15);
-      transform: translateY(-2px);
-    }
-
-    .fortune-title {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .fortune-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .fortune-badge {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #fef3f5 0%, #f3e8ff 100%);
-      border: 2px solid #e9d5ff;
-      color: #7c3aed;
-    }
-
-    .feature-grid {
-      display: grid;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .feature-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .feature-item {
-      background: linear-gradient(135deg, #faf5ff 0%, #fef3f5 100%);
-      border: 2px solid #e9d5ff;
-      border-radius: 16px;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .feature-item:hover {
-      border-color: #8b5cf6;
-      transform: translateX(5px);
-      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
-    }
-
-    .feature-emoji {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    .feature-label {
-      font-weight: 600;
-      color: #6b7280;
-      font-size: 0.875rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .feature-value {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: #1f2937;
-    }
-
-    .fortune-stars {
-      display: flex;
-      gap: 0.25rem;
-      margin-top: 0.5rem;
-    }
-
-    .fortune-star {
-      color: #fbbf24;
-      font-size: 1.25rem;
-    }
-
-    .fortune-star.empty {
-      color: #d1d5db;
-    }
-
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-      margin-top: 1.5rem;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(180deg, #8b5cf6 0%, #ec4899 100%);
-      border-radius: 3px;
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: 1.5rem;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2.4rem;
-      top: 0.5rem;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: white;
-      border: 3px solid #8b5cf6;
-    }
-
-    .timeline-age {
-      font-weight: 700;
-      color: #8b5cf6;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .timeline-desc {
-      color: #4b5563;
-      font-size: 0.95rem;
-    }
-
-    .advice-list {
-      list-style: none;
-      padding: 0;
-      margin-top: 1rem;
-    }
-
-    .advice-item {
-      padding: 0.75rem 1rem;
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
-      border-left: 4px solid #ec4899;
-      border-radius: 8px;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: start;
-      gap: 0.75rem;
-    }
-
-    .advice-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 0.875rem;
-    }
-
-    /* 平滑滚动 */
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* ============ 浮动分享按钮样式 ============ */
-    .floating-share-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 3.5rem;
-      height: 3.5rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      color: white;
-      font-size: 1.2rem;
-    }
-
-    .floating-share-btn:hover {
-      transform: translateY(-2px) scale(1.1);
-      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
-    }
-
-    .floating-share-btn:active {
-      transform: translateY(0) scale(0.95);
-    }
-
-    /* 移动端适配 */
-    @media (max-width: 768px) {
-      .floating-share-btn {
-        bottom: 1.5rem;
-        right: 1.5rem;
-        width: 3rem;
-        height: 3rem;
-        font-size: 1rem;
-      }
-    }
   </style>
 </head>
 <body>
@@ -1454,21 +1096,6 @@
 
   <!-- 主要内容 -->
   <div class="max-w-4xl mx-auto px-4 pb-8">
-    <!-- 锚点导航标签 -->
-    <div class="nav-tabs">
-      <button class="nav-tab active" onclick="scrollToSection('assessment-result')">
-        📊 评估结果
-      </button>
-      <button class="nav-tab" onclick="scrollToSection('fortune-reading')">
-        🔮 面相分析
-      </button>
-      <button class="nav-tab" onclick="scrollToSection('expected-effect')">
-        ✨ 预期效果
-      </button>
-    </div>
-
-    <!-- 评估结果区块 -->
-    <div id="assessment-result" class="fortune-section">
     <!-- 总体评分卡片 -->
     <div class="score-card fade-in-up">
       <div class="text-center mb-6">
@@ -1607,114 +1234,66 @@
         </div>
       </div>
     </div>
+
+    <!-- 操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-4 my-8">
+      <button onclick="consultExpert()" class="action-button secondary-button flex-1">
+        <i class="fas fa-comment-medical"></i>
+        <span>咨询专家</span>
+      </button>
+      <button onclick="showExpectedEffect()" class="action-button primary-button flex-1">
+        <i class="fas fa-magic"></i>
+        <span>查看预期效果</span>
+      </button>
+      <button onclick="bookAppointment()" class="action-button secondary-button flex-1">
+        <i class="fas fa-calendar-check"></i>
+        <span>预约治疗</span>
+      </button>
+      <button onclick="shareReport()" class="action-button secondary-button">
+        <i class="fas fa-share-alt"></i>
+      </button>
     </div>
-    <!-- 评估结果区块结束 -->
 
-    <!-- 面相分析区块 -->
-    <div id="fortune-reading" class="fortune-section">
-      <!-- 面相总评 -->
-      <div class="fortune-card fade-in-up">
-        <div class="fortune-title">
-          <div class="fortune-icon">
-            🔮
-          </div>
-          <div class="flex-1">
-            <h2 class="text-2xl font-bold text-gray-800">您的面相解读</h2>
-            <p class="text-gray-600">基于中华传统相学智慧分析</p>
-          </div>
-          <span class="fortune-badge" id="fortuneType">福气之相</span>
-    </div>
-
-        <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
-          <p class="text-xl font-semibold text-gray-800 mb-2" id="fortuneSummary">
-            天庭饱满，地阁方圆，五官端正，气色红润
-          </p>
-          <p class="text-gray-600" id="fortuneDescription">
-            面相整体呈现吉祥之象，预示着贵人运旺、事业有成之相。额头开阔代表智慧聪颖，眉眼有神象征贵人相助，鼻梁挺拔预示财运亨通。
-          </p>
+    <!-- 测试数据提示 -->
+    <div id="testDataNotice" class="text-center text-sm mt-8 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg" style="display: none;">
+      <div class="flex items-center justify-center gap-2 text-amber-700 font-semibold mb-2">
+        <i class="fas fa-flask"></i>
+        <span>这是演示数据</span>
       </div>
-      </div>
-
-      <!-- 五官特征解析 -->
-      <div class="fortune-card fade-in-up" style="animation-delay: 0.1s;">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-eye mr-2" style="color: #8b5cf6;"></i>
-          五官特征解析
-        </h3>
-        
-        <div class="feature-grid" id="facialFeaturesGrid">
-          <!-- 动态生成 -->
-        </div>
-      </div>
-
-      <!-- 运势分析 -->
-      <div class="fortune-card fade-in-up" style="animation-delay: 0.2s;">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-chart-line mr-2" style="color: #8b5cf6;"></i>
-          四维运势评估
-        </h3>
-        
-        <div class="feature-grid" id="fortuneAnalysisGrid">
-          <!-- 动态生成 -->
-        </div>
-      </div>
-
-      <!-- 流年运势 -->
-      <div class="fortune-card fade-in-up" style="animation-delay: 0.3s;">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-hourglass-half mr-2" style="color: #8b5cf6;"></i>
-          流年运势时间线
-        </h3>
-        
-        <p class="text-gray-600 mb-4">根据面相流年图分析，您在不同年龄段的运势走向：</p>
-        
-        <div class="timeline" id="fortuneTimeline">
-          <!-- 动态生成 -->
-        </div>
-      </div>
-
-      <!-- 开运建议 -->
-      <div class="fortune-card fade-in-up" style="animation-delay: 0.4s;">
-        <h3 class="text-xl font-bold text-gray-800 mb-4">
-          <i class="fas fa-gem mr-2" style="color: #8b5cf6;"></i>
-          开运改善建议
-        </h3>
-        
-        <p class="text-gray-600 mb-3">根据面相特征，为您提供以下开运建议：</p>
-        
-        <ul class="advice-list" id="luckyAdviceList">
-          <!-- 动态生成 -->
-        </ul>
+      <p class="text-amber-600 mb-3">当前显示的是示例报告，如需获取真实的评估报告，请完成完整的评估流程。</p>
+      <a href="./guide.html" class="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all">
+        <i class="fas fa-camera"></i>
+        <span>开始真实评估</span>
+      </a>
     </div>
 
     <!-- 免责声明 -->
-      <div class="text-center text-sm text-gray-500 mt-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg">
+    <div class="text-center text-sm text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
       <i class="fas fa-info-circle mr-1"></i>
-        面相分析基于传统相学理论，仅供娱乐参考，不构成任何专业建议。人生命运掌握在自己手中，积极努力才是成功的关键。
+      本报告仅供参考，具体治疗方案请咨询专业医师
     </div>
   </div>
-    <!-- 面相分析区块结束 -->
 
-    <!-- 预期效果区块 -->
-    <div id="expected-effect" class="fortune-section">
-      <div class="fortune-card fade-in-up">
-        <div class="fortune-title">
-          <div class="fortune-icon" style="background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);">
-            ✨
-          </div>
-          <div class="flex-1">
-            <h2 class="text-2xl font-bold text-gray-800">AI预期效果预览</h2>
-            <p class="text-gray-600">基于您的评估报告生成的智能美化效果</p>
-          </div>
+  <!-- 预期效果预览模态框 -->
+  <div id="effectModal" class="effect-modal" style="display: none;">
+    <div class="effect-modal-overlay" onclick="closeEffectModal()"></div>
+    <div class="effect-modal-content">
+      <div class="effect-modal-header">
+        <h2 class="text-2xl font-bold text-gray-800">
+          <i class="fas fa-magic mr-2" style="color: #ec4899;"></i>
+          AI 预期效果预览
+        </h2>
+        <button onclick="closeEffectModal()" class="effect-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
+      <div class="effect-modal-body">
         <!-- 加载状态 -->
-        <div id="effectLoading" class="text-center py-8">
-          <div class="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 mb-6">
-            <div class="effect-spinner w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin"></div>
-          </div>
-          <p class="text-gray-600 mb-2">AI 正在生成预期效果...</p>
-          <p class="text-sm text-gray-500">根据您的评估报告智能美化中</p>
+        <div id="effectLoading" class="effect-loading">
+          <div class="effect-spinner"></div>
+          <p class="mt-4 text-gray-600">AI 正在生成预期效果...</p>
+          <p class="text-sm text-gray-500 mt-2">根据您的评估报告智能美化中</p>
         </div>
 
         <!-- 对比展示区 -->
@@ -1769,65 +1348,23 @@
           </div>
 
           <!-- 底部按钮 -->
-          <!-- <div class="effect-actions">
+          <div class="effect-actions">
             <button onclick="downloadEffectImage()" class="effect-action-btn secondary">
               <i class="fas fa-download mr-2"></i>
               下载预期图
             </button>
-            <button onclick="consultExpert()" class="effect-action-btn primary">
+            <button onclick="consultFromEffect()" class="effect-action-btn primary">
               <i class="fas fa-comment-medical mr-2"></i>
               咨询专家了解更多
             </button>
-            <button onclick="bookAppointment()" class="effect-action-btn primary">
+            <button onclick="bookFromEffect()" class="effect-action-btn primary">
               <i class="fas fa-calendar-check mr-2"></i>
               立即预约治疗
             </button>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
-    <!-- 预期效果区块结束 -->
-
-    <!-- 操作按钮 -->
-    <div class="flex flex-col sm:flex-row gap-4 my-8">
-      <button onclick="downloadEffectImage()" class="effect-action-btn secondary">
-        <i class="fas fa-download mr-2"></i>
-        下载预期图
-      </button>
-      <button onclick="consultExpert()" class="action-button secondary-button flex-1">
-        <i class="fas fa-comment-medical"></i>
-        <span>咨询专家</span>
-      </button>
-      <button onclick="bookAppointment()" class="action-button primary-button flex-1">
-        <i class="fas fa-calendar-check"></i>
-        <span>预约治疗</span>
-      </button>
-    </div>
-
-    <!-- 测试数据提示 -->
-    <div id="testDataNotice" class="text-center text-sm mt-8 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg" style="display: none;">
-      <div class="flex items-center justify-center gap-2 text-amber-700 font-semibold mb-2">
-        <i class="fas fa-flask"></i>
-        <span>这是演示数据</span>
-      </div>
-      <p class="text-amber-600 mb-3">当前显示的是示例报告，如需获取真实的评估报告，请完成完整的评估流程。</p>
-      <a href="./guide.html" class="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all">
-        <i class="fas fa-camera"></i>
-        <span>开始真实评估</span>
-      </a>
-    </div>
-
-    <!-- 免责声明 -->
-    <div class="text-center text-sm text-gray-500 mt-8 p-4 bg-gray-50 rounded-lg">
-      <i class="fas fa-info-circle mr-1"></i>
-      本报告仅供参考，具体治疗方案请咨询专业医师
-    </div>
-  </div>
-
-
-  <!-- 浮动分享按钮 -->
-  <div class="floating-share-btn" onclick="shareReport()">
-    <i class="fas fa-share-alt"></i>
   </div>
 
   <!-- 引入共享脚本 - 使用相对路径兼容 GitHub Pages -->
@@ -2766,55 +2303,32 @@
     let originalImageData = null;
     let enhancedImageData = null;
 
-    // 内联显示预期效果
-    function showExpectedEffectInline() {
-      console.log('内联显示预期效果...');
+    // 显示预期效果
+    function showExpectedEffect() {
+      console.log('显示预期效果...');
       
       // 获取用户照片
       const userPhoto = getUserPhoto();
       
       if (!userPhoto) {
         // 如果没有用户照片，使用演示照片
-        showDemoEffectInline();
+        showDemoEffect();
         return;
       }
       
-      // 显示加载状态
+      // 显示模态框
+      const modal = document.getElementById('effectModal');
       const loading = document.getElementById('effectLoading');
       const comparison = document.getElementById('effectComparison');
       
-      if (loading) loading.style.display = 'block';
-      if (comparison) comparison.style.display = 'none';
+      modal.style.display = 'flex';
+      loading.style.display = 'block';
+      comparison.style.display = 'none';
       
       // 模拟加载延迟，处理图像
       setTimeout(() => {
         processImageEnhancement(userPhoto);
       }, 1500);
-    }
-
-    // 验证照片数据是否有效
-    function isValidPhotoData(photoData) {
-      if (!photoData || typeof photoData !== 'string') {
-        return false;
-      }
-      
-      // 检查是否为有效的 data URL
-      if (photoData.startsWith('data:image/')) {
-        // 确保不是空的 data URL
-        if (photoData === 'data:,' || photoData.length < 50) {
-          return false;
-        }
-        return true;
-      }
-      
-      // 检查是否为有效的相对路径
-      if (photoData.startsWith('../../assets/images/') || 
-          photoData.startsWith('./') || 
-          photoData.startsWith('../')) {
-        return true;
-      }
-      
-      return false;
     }
 
     // 获取用户照片
@@ -2825,37 +2339,21 @@
       const capturedPhotos = Storage.get('capturedPhotos');
       if (capturedPhotos && capturedPhotos.length > 0) {
         console.log('✅ 找到拍摄的照片，数量:', capturedPhotos.length);
-        const photoData = capturedPhotos[0].data;
-        if (isValidPhotoData(photoData)) {
-          console.log('✓ 照片数据验证通过');
-          return photoData;
-        } else {
-          console.warn('✗ 照片数据无效');
-        }
+        // 使用第一张（正面）照片
+        return capturedPhotos[0].data;
       }
       
       // 2. 从单张照片存储获取
       const currentPhoto = Storage.get('assessmentPhoto');
       if (currentPhoto) {
         console.log('✅ 找到当前评估照片');
-        if (isValidPhotoData(currentPhoto)) {
-          console.log('✓ 照片数据验证通过');
-          return currentPhoto;
-        } else {
-          console.warn('✗ 照片数据无效');
-        }
+        return currentPhoto;
       }
       
       // 3. 从报告数据获取
       if (report && report.photos && report.photos.length > 0) {
         console.log('✅ 从报告数据获取照片');
-        const photoData = report.photos[0];
-        if (isValidPhotoData(photoData)) {
-          console.log('✓ 照片数据验证通过');
-          return photoData;
-        } else {
-          console.warn('✗ 照片数据无效');
-        }
+        return report.photos[0];
       }
       
       // 4. 从评估历史获取
@@ -2864,23 +2362,17 @@
         const latestAssessment = assessmentHistory[0];
         if (latestAssessment.photo) {
           console.log('✅ 从历史记录获取照片');
-          const photoData = latestAssessment.photo;
-          if (isValidPhotoData(photoData)) {
-            console.log('✓ 照片数据验证通过');
-            return photoData;
-          } else {
-            console.warn('✗ 照片数据无效');
-          }
+          return latestAssessment.photo;
         }
       }
       
-      console.warn('❌ 未找到有效的用户照片，将使用演示照片');
+      console.warn('❌ 未找到用户照片，将使用演示照片');
       return null;
     }
 
-    // 使用演示照片（内联版本）
-    function showDemoEffectInline() {
-      console.log('使用演示照片展示效果（内联版本）');
+    // 使用演示照片
+    function showDemoEffect() {
+      console.log('使用演示照片展示效果');
       
       // 使用项目中的演示照片（使用相对路径，更稳定）
       const demoPhotos = [
@@ -2920,9 +2412,8 @@
       img.onerror = (error) => {
         console.error('❌ 加载演示照片失败:', error);
         console.error('尝试的路径:', randomPhoto);
-        // 内联版本不显示alert，直接隐藏加载状态
-        const loading = document.getElementById('effectLoading');
-        if (loading) loading.style.display = 'none';
+        alert('图片加载失败\n尝试的路径: ' + randomPhoto + '\n\n请刷新页面重试');
+        closeEffectModal();
       };
       
       console.log('设置图片 src:', randomPhoto);
@@ -2971,24 +2462,23 @@
           generateImprovementList();
           console.log('改善说明列表已生成');
           
-          // 显示对比界面（内联版本）
+          // 显示对比界面
           const loading = document.getElementById('effectLoading');
           const comparison = document.getElementById('effectComparison');
           
-          console.log('准备显示对比界面（内联版本）...');
+          console.log('准备显示对比界面...');
           console.log('- loading 元素:', loading ? '存在' : '不存在');
           console.log('- comparison 元素:', comparison ? '存在' : '不存在');
           
           if (loading && comparison) {
             loading.style.display = 'none';
             comparison.style.display = 'block';
-            console.log('✓ 对比界面已设置为显示（内联版本）');
+            console.log('✓ 对比界面已设置为显示');
             console.log('- loading display:', loading.style.display);
             console.log('- comparison display:', comparison.style.display);
           } else {
             console.error('❌ 找不到必要的 DOM 元素！');
-            console.log('内联版本：隐藏加载状态');
-            if (loading) loading.style.display = 'none';
+            alert('界面元素缺失，请刷新页面重试');
             return;
           }
           
@@ -2998,22 +2488,24 @@
           
           console.log('🎉 ✅ 图像处理完成！界面应该已经显示');
           
-          // 内联版本不需要模态框
-          console.log('✓ 内联版本显示完成');
+          // 额外检查：强制显示模态框
+          const modal = document.getElementById('effectModal');
+          if (modal) {
+            modal.style.display = 'flex';
+            console.log('✓ 模态框已强制设置为显示');
+          }
         } catch (error) {
           console.error('图像处理过程出错:', error);
-          console.log('内联版本：隐藏加载状态');
-          const loading = document.getElementById('effectLoading');
-          if (loading) loading.style.display = 'none';
+          alert('图像处理失败: ' + error.message + '\n\n请查看控制台了解详情');
+          closeEffectModal();
         }
       };
       
       img.onerror = (error) => {
         console.error('图像加载失败:', error);
         console.error('尝试加载的 URL:', photoDataUrl.substring(0, 100));
-        console.log('内联版本：隐藏加载状态');
-        const loading = document.getElementById('effectLoading');
-        if (loading) loading.style.display = 'none';
+        alert('图像加载失败\n\n请确保:\n1. 图片文件存在\n2. 图片格式正确\n3. 路径设置正确');
+        closeEffectModal();
       };
       
       img.src = photoDataUrl;
@@ -3273,6 +2765,11 @@
       });
     }
 
+    // 关闭模态框
+    function closeEffectModal() {
+      const modal = document.getElementById('effectModal');
+      modal.style.display = 'none';
+    }
 
     // 下载预期效果图
     function downloadEffectImage() {
@@ -3291,6 +2788,17 @@
       }, 'image/jpeg', 0.95);
     }
 
+    // 从效果预览咨询专家
+    function consultFromEffect() {
+      closeEffectModal();
+      consultExpert();
+    }
+
+    // 从效果预览预约治疗
+    function bookFromEffect() {
+      closeEffectModal();
+      bookAppointment();
+    }
     
     // 页面加载时设置 CSS 路径
     document.addEventListener('DOMContentLoaded', function() {
@@ -3299,601 +2807,9 @@
       if (baseCss) {
         baseCss.href = PathHelper.getPath('/web/assets/css/base.css');
       }
-      
-      // 初始化滚动监听
-      initScrollSpy();
-      
-      // 等待报告数据加载完成后再渲染面相分析
-      setTimeout(() => {
-        renderFortuneTelling();
-        
-        // 自动加载预期效果
-        setTimeout(() => {
-          showExpectedEffectInline();
-        }, 1000); // 再延迟1秒后开始加载预期效果
-      }, 500); // 延迟0.5秒确保报告数据已加载
     });
-
-    // ============ 锚点导航功能 ============
-    
-    // 滚动到指定区块
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        // 计算导航栏高度 + 一些额外间距
-        const navHeight = 80; // 导航栏高度
-        const extraOffset = 20; // 额外间距
-        const totalOffset = navHeight + extraOffset;
-        
-        const elementPosition = section.offsetTop;
-        const offsetPosition = elementPosition - totalOffset;
-        
-        window.scrollTo({
-          top: Math.max(0, offsetPosition), // 确保不会滚动到负数位置
-          behavior: 'smooth'
-        });
-        
-        // 滚动完成后更新激活状态
-        setTimeout(() => {
-          updateActiveTab(sectionId);
-        }, 300); // 等待滚动动画完成
-      }
-    }
-    
-    // 更新激活的标签
-    function updateActiveTab(sectionId) {
-      const tabs = document.querySelectorAll('.nav-tab');
-      tabs.forEach(tab => {
-        tab.classList.remove('active');
-      });
-      
-      // 根据 sectionId 找到对应的标签
-      const sectionMap = {
-        'assessment-result': 0,
-        'fortune-reading': 1,
-        'expected-effect': 2
-      };
-      
-      const index = sectionMap[sectionId];
-      if (index !== undefined && tabs[index]) {
-        tabs[index].classList.add('active');
-      }
-    }
-    
-    // 初始化滚动监听（自动更新激活标签）
-    function initScrollSpy() {
-      const sections = ['assessment-result', 'fortune-reading', 'expected-effect'];
-      
-      // 使用节流函数优化性能
-      let ticking = false;
-      
-      function updateActiveTabOnScroll() {
-        const scrollPosition = window.pageYOffset;
-        const windowHeight = window.innerHeight;
-        const offset = 150; // 导航栏高度 + 一些间距
-        
-        let activeSection = sections[0]; // 默认第一个
-        let maxVisibleArea = 0; // 记录最大可见面积
-        
-        // 检查每个区块的可见度
-        for (let i = 0; i < sections.length; i++) {
-          const section = document.getElementById(sections[i]);
-          if (section) {
-            const rect = section.getBoundingClientRect();
-            const sectionTop = rect.top + scrollPosition;
-            const sectionBottom = sectionTop + rect.height;
-            
-            // 计算区块在视窗中的可见面积
-            const visibleTop = Math.max(0, rect.top + offset);
-            const visibleBottom = Math.min(windowHeight, rect.bottom);
-            const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-            
-            // 如果区块在视窗中且可见面积最大，则设为激活
-            if (visibleHeight > maxVisibleArea && rect.top < windowHeight - offset) {
-              maxVisibleArea = visibleHeight;
-              activeSection = sections[i];
-            }
-          }
-        }
-        
-        // 如果滚动到页面顶部，激活第一个区块
-        if (scrollPosition < 100) {
-          activeSection = sections[0];
-        }
-        
-        // 如果滚动到页面底部，激活最后一个区块
-        const documentHeight = document.documentElement.scrollHeight;
-        if (scrollPosition + windowHeight >= documentHeight - 100) {
-          activeSection = sections[sections.length - 1];
-        }
-        
-        updateActiveTab(activeSection);
-        ticking = false;
-      }
-      
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          requestAnimationFrame(updateActiveTabOnScroll);
-          ticking = true;
-        }
-      });
-      
-      // 初始加载时也执行一次
-      setTimeout(updateActiveTabOnScroll, 100);
-    }
-
-    // ============ 面相分析功能 ============
-    
-    // 渲染面相分析
-    function renderFortuneTelling() {
-      console.log('开始渲染面相分析...');
-      
-      // 生成面相数据
-      const fortuneData = generateFortuneData();
-      
-      // 渲染面相类型和总评
-      renderFortuneSummary(fortuneData);
-      
-      // 渲染五官特征
-      renderFacialFeatures(fortuneData.facialFeatures);
-      
-      // 渲染运势分析
-      renderFortuneAnalysis(fortuneData.fortune);
-      
-      // 渲染流年运势
-      renderFortuneTimeline(fortuneData.timeline);
-      
-      // 渲染开运建议
-      renderLuckyAdvice(fortuneData.advice);
-      
-      console.log('面相分析渲染完成！');
-    }
-    
-    // 生成面相数据
-    function generateFortuneData() {
-      // 确保 report 对象存在
-      if (!report) {
-        console.warn('报告数据未加载，使用默认值生成面相数据');
-        return {
-          type: '福气之相',
-          summary: '面相端正，气色红润，整体呈现吉祥之象',
-          description: '面相整体呈现吉祥之象，预示着贵人运旺、事业有成之相。',
-          facialFeatures: generateFacialFeatures(80),
-          fortune: generateFortuneScores(80, 30),
-          timeline: generateTimeline(30),
-          advice: generateAdvice(80)
-        };
-      }
-      
-      const userAge = report.actualAge || 30;
-      const score = report.overallScore || 80;
-      
-      // 根据评分和年龄生成面相类型
-      let fortuneType = '福气之相';
-      let fortuneSummary = '天庭饱满，地阁方圆，五官端正';
-      let fortuneDesc = '面相整体呈现吉祥之象，预示着贵人运旺、事业有成之相。';
-      
-      if (score >= 85) {
-        fortuneType = '贵人之相';
-        fortuneSummary = '天庭饱满，眉目清秀，气宇轩昂';
-        fortuneDesc = '上等佳相，贵人运强，一生多得他人相助。面相端正大气，预示事业有成、财运亨通。';
-      } else if (score >= 75) {
-        fortuneType = '福禄之相';
-        fortuneSummary = '面相匀称，五官协调，福气充盈';
-        fortuneDesc = '福德之相，一生衣食无忧。面相和谐，预示家庭美满、事业稳定、晚年安康。';
-      } else if (score >= 65) {
-        fortuneType = '平和之相';
-        fortuneSummary = '面相平和，五官端正，性格温和';
-        fortuneDesc = '平和安稳之相，为人温和善良。注重修养气质，可逐步提升运势。';
-      }
-      
-      return {
-        type: fortuneType,
-        summary: fortuneSummary,
-        description: fortuneDesc,
-        facialFeatures: generateFacialFeatures(score),
-        fortune: generateFortuneScores(score, userAge),
-        timeline: generateTimeline(userAge),
-        advice: generateAdvice(score)
-      };
-    }
-    
-    // 生成五官特征数据
-    function generateFacialFeatures(score) {
-      const features = [];
-      
-      // 眼睛 - 扩展更多类型
-      const randomSeed = Math.floor(Math.random() * 10);
-      const eyeTypes = [
-        '桃花眼', '凤眼', '杏眼', '丹凤眼', '龙眼', '虎眼', 
-        '鹿眼', '象眼', '猴眼', '鱼眼', '鹰眼', '燕眼'
-      ];
-      const eyeMeanings = [
-        '异性缘佳，善于交际，桃花运旺',
-        '聪慧灵动，富有才华，文思敏捷',
-        '温柔善良，人缘极佳，心地纯真',
-        '气质优雅，贵人运强，天生丽质',
-        '威严庄重，领导能力强，事业有成',
-        '勇敢果断，意志坚定，执行力强',
-        '温和善良，人缘好，容易获得信任',
-        '稳重可靠，做事踏实，晚年富贵',
-        '机敏灵活，反应快，适应能力强',
-        '温和内敛，不争不抢，心境平和',
-        '锐利敏锐，洞察力强，善于分析',
-        '敏捷活泼，思维活跃，创造力强'
-      ];
-      const eyeIndex = Math.min(Math.floor(score / 10) + randomSeed % 3, eyeTypes.length - 1);
-      features.push({
-        emoji: '👁️',
-        label: '眼相',
-        value: eyeTypes[eyeIndex],
-        meaning: eyeMeanings[eyeIndex]
-      });
-      
-      // 鼻子 - 详细分类
-      const noseTypes = [
-        '鼻梁挺拔', '鼻翼丰满', '鼻头圆润', '山根饱满', '鼻型端正',
-        '鼻准丰隆', '鼻翼厚实', '鼻梁高挺', '鼻尖微翘', '鼻翼适中'
-      ];
-      const noseMeanings = [
-        '自立能力强，事业运佳，财运亨通',
-        '财运亨通，善于积累，理财有道',
-        '福气满满，晚年安康，心地善良',
-        '意志坚定，贵人相助，官运亨通',
-        '性格正直，品行端正，受人尊敬',
-        '财运旺盛，投资眼光好，财富积累快',
-        '财库丰盈，聚财能力强，不轻易破财',
-        '气质高雅，自尊心强，追求完美',
-        '性格开朗，人际关系好，容易获得帮助',
-        '财运平稳，收支平衡，生活安定'
-      ];
-      const noseIndex = Math.min(Math.floor(score / 10) + randomSeed % 2, noseTypes.length - 1);
-      features.push({
-        emoji: '👃',
-        label: '鼻相',
-        value: noseTypes[noseIndex],
-        meaning: noseMeanings[noseIndex]
-      });
-      
-      // 嘴巴 - 丰富内容
-      const mouthTypes = [
-        '唇形饱满', '唇角上扬', '口齿清晰', '唇色红润', '樱桃小口',
-        '厚唇丰润', '薄唇精致', '唇线分明', '嘴角含笑', '唇形端正'
-      ];
-      const mouthMeanings = [
-        '口福好，善于表达，人际关系佳',
-        '性格乐观，人缘佳，容易获得喜爱',
-        '沟通能力强，智慧过人，说服力强',
-        '健康状态佳，精力充沛，生命力强',
-        '性格温柔，心思细腻，容易获得保护',
-        '福气深厚，口福极佳，生活富足',
-        '思维敏捷，表达精准，工作效率高',
-        '性格鲜明，原则性强，值得信赖',
-        '性格开朗，感染力强，容易带动他人',
-        '为人正直，言语可信，受人尊敬'
-      ];
-      const mouthIndex = Math.min(Math.floor(score / 10) + randomSeed % 2, mouthTypes.length - 1);
-      features.push({
-        emoji: '👄',
-        label: '口相',
-        value: mouthTypes[mouthIndex],
-        meaning: mouthMeanings[mouthIndex]
-      });
-      
-      // 眉毛 - 详细分析
-      const eyebrowTypes = [
-        '眉清目秀', '眉形弯月', '眉毛浓密', '眉尾上扬', '剑眉星目',
-        '柳叶眉', '一字眉', '八字眉', '眉毛稀疏', '眉毛修长'
-      ];
-      const eyebrowMeanings = [
-        '心思细腻，有艺术天赋，审美能力强',
-        '温柔体贴，感情丰富，容易获得爱情',
-        '性格刚毅，意志坚定，做事有始有终',
-        '进取心强，事业运旺，容易获得成功',
-        '性格豪爽，正义感强，容易获得尊敬',
-        '性格温婉，气质优雅，容易获得好感',
-        '性格直爽，做事果断，效率很高',
-        '性格开朗，幽默风趣，容易获得朋友',
-        '性格内向，心思深沉，做事谨慎',
-        '性格文雅，学识渊博，容易获得敬重'
-      ];
-      const eyebrowIndex = Math.min(Math.floor(score / 10) + randomSeed % 3, eyebrowTypes.length - 1);
-      features.push({
-        emoji: '✨',
-        label: '眉相',
-        value: eyebrowTypes[eyebrowIndex],
-        meaning: eyebrowMeanings[eyebrowIndex]
-      });
-      
-      // 脸型 - 更丰富
-      const faceTypes = [
-        '鹅蛋脸', '瓜子脸', '圆脸', '方圆脸', '长脸', '心形脸',
-        '菱形脸', '梨形脸', '倒三角脸', '国字脸'
-      ];
-      const faceMeanings = [
-        '性格温和，人缘好，容易获得信任',
-        '气质优雅，魅力十足，容易获得关注',
-        '福气满满，心地善良，容易获得帮助',
-        '稳重踏实，值得信赖，容易获得重用',
-        '性格沉稳，思考深入，容易获得认可',
-        '性格开朗，感染力强，容易获得喜爱',
-        '性格独立，个性鲜明，容易获得敬佩',
-        '性格温和，包容性强，容易获得友谊',
-        '性格聪慧，适应性强，容易获得机会',
-        '性格正直，责任感强，容易获得尊敬'
-      ];
-      const faceIndex = Math.min(Math.floor(score / 10) + randomSeed % 3, faceTypes.length - 1);
-      features.push({
-        emoji: '😊',
-        label: '脸型',
-        value: faceTypes[faceIndex],
-        meaning: faceMeanings[faceIndex]
-      });
-      
-      // 额头 - 详细分类
-      const foreheadTypes = [
-        '额头饱满', '天庭开阔', '额角分明', '印堂明亮', '额头宽阔',
-        '额头高耸', '额头方正', '额头圆润', '额头突出', '额头平坦'
-      ];
-      const foreheadMeanings = [
-        '智慧聪颖，学业有成，思维敏捷',
-        '格局大，眼界开阔，容易获得成功',
-        '思维敏捷，善于分析，判断力强',
-        '运势畅通，贵人相助，容易获得机遇',
-        '心胸宽广，包容性强，容易获得支持',
-        '志向远大，追求卓越，容易获得成就',
-        '性格正直，原则性强，容易获得信任',
-        '性格温和，人缘好，容易获得帮助',
-        '性格开朗，积极向上，容易获得机会',
-        '性格平和，心态好，容易获得满足'
-      ];
-      const foreheadIndex = Math.min(Math.floor(score / 10) + randomSeed % 2, foreheadTypes.length - 1);
-      features.push({
-        emoji: '🧠',
-        label: '额相',
-        value: foreheadTypes[foreheadIndex],
-        meaning: foreheadMeanings[foreheadIndex]
-      });
-      
-      // 耳朵 - 新增特征
-      const earTypes = [
-        '耳朵厚大', '耳垂饱满', '耳形端正', '耳轮清晰', '耳廓分明',
-        '耳朵小巧', '耳垂圆润', '耳形优美', '耳轮完整', '耳廓厚实'
-      ];
-      const earMeanings = [
-        '福气深厚，寿命长，晚年安康',
-        '财运亨通，容易获得财富，生活富足',
-        '性格端正，品行良好，容易获得信任',
-        '听力敏锐，理解力强，学习能力强',
-        '性格独立，判断力强，不容易被误导',
-        '心思细腻，观察力强，容易发现机会',
-        '性格温和，人缘好，容易获得帮助',
-        '审美能力强，艺术天赋高，容易获得赞美',
-        '记忆力好，学习能力强，容易获得成就',
-        '性格稳重，做事踏实，容易获得认可'
-      ];
-      const earIndex = Math.min(Math.floor(score / 10) + randomSeed % 2, earTypes.length - 1);
-      features.push({
-        emoji: '👂',
-        label: '耳相',
-        value: earTypes[earIndex],
-        meaning: earMeanings[earIndex]
-      });
-      
-      // 下巴 - 新增特征
-      const chinTypes = [
-        '下巴丰满', '下巴尖翘', '下巴方正', '下巴圆润', '下巴突出',
-        '下巴平坦', '下巴厚实', '下巴修长', '下巴短小', '下巴端正'
-      ];
-      const chinMeanings = [
-        '晚年运势好，容易获得子女孝顺',
-        '性格活泼，思维敏捷，容易获得机会',
-        '性格坚毅，意志坚强，容易获得成功',
-        '性格温和，人缘好，容易获得支持',
-        '性格开朗，自信心强，容易获得认可',
-        '性格平和，心态好，容易获得满足',
-        '性格稳重，做事踏实，容易获得信任',
-        '性格优雅，气质佳，容易获得赞美',
-        '性格机敏，反应快，容易获得帮助',
-        '性格正直，品行端正，容易获得尊敬'
-      ];
-      const chinIndex = Math.min(Math.floor(score / 10) + randomSeed % 2, chinTypes.length - 1);
-      features.push({
-        emoji: '💪',
-        label: '下巴',
-        value: chinTypes[chinIndex],
-        meaning: chinMeanings[chinIndex]
-      });
-      
-      return features;
-    }
-    
-    // 生成运势评分
-    function generateFortuneScores(score, age) {
-      const base = score / 100;
-      
-      return [
-        {
-          emoji: '💰',
-          label: '财运',
-          score: Math.min(5, Math.round(base * 5 + Math.random())),
-          description: '鼻梁挺拔，财帛宫饱满，预示财运亨通',
-          advice: '近期适合投资理财，但需谨慎评估风险'
-        },
-        {
-          emoji: '🏆',
-          label: '事业',
-          score: Math.min(5, Math.round(base * 5.2 + Math.random() * 0.5)),
-          description: '额头开阔，官禄宫明亮，事业运势强劲',
-          advice: '贵人运旺，把握机会可有大的突破'
-        },
-        {
-          emoji: '❤️',
-          label: '感情',
-          score: Math.min(5, Math.round(base * 4.5 + Math.random() * 0.8)),
-          description: age < 35 ? '桃花运旺盛，异性缘佳' : '感情稳定，家庭和睦',
-          advice: age < 35 ? '真诚待人，珍惜缘分' : '经营好现有感情，家庭美满'
-        },
-        {
-          emoji: '🏥',
-          label: '健康',
-          score: Math.min(5, Math.round(base * 4.8 + Math.random() * 0.3)),
-          description: '气色红润，面部饱满，身体状况良好',
-          advice: '注意作息规律，保持适度运动'
-        }
-      ];
-    }
-    
-    // 生成流年运势时间线
-    function generateTimeline(currentAge) {
-      const timeline = [];
-      const startAge = Math.floor(currentAge / 5) * 5;
-      
-      const phases = [
-        { range: '学习成长期', desc: '求学阶段，打好基础' },
-        { range: '事业上升期', desc: '事业起步，积累经验' },
-        { range: '财运旺盛期', desc: '财富积累，事业有成' },
-        { range: '稳定发展期', desc: '家庭美满，事业稳定' },
-        { range: '收获期', desc: '功成名就，安享晚年' }
-      ];
-      
-      for (let i = 0; i < 4; i++) {
-        const age = startAge + i * 5;
-        const phaseIndex = Math.min(Math.floor(age / 15), phases.length - 1);
-        
-        timeline.push({
-          age: `${age}-${age + 5}岁`,
-          description: phases[phaseIndex].desc,
-          highlight: (age <= currentAge && currentAge < age + 5)
-        });
-      }
-      
-      return timeline;
-    }
-    
-    // 生成开运建议
-    function generateAdvice(score) {
-      const advice = [
-        { icon: '💎', text: '建议佩戴紫水晶或粉水晶，可提升个人气场和桃花运' },
-        { icon: '🌿', text: '办公桌左侧（青龙位）摆放绿植，有助于事业运势' },
-        { icon: '🧘', text: '保持微笑，面带笑容可改善面相，提升人缘' },
-        { icon: '📚', text: '多读书、多思考，充实内在可由内而外改善气质' },
-        { icon: '🎨', text: '适当打扮，衣着得体可提升整体气场' }
-      ];
-      
-      // 根据评分添加针对性建议
-      if (score < 75) {
-        advice.push({ 
-          icon: '😊', 
-          text: '保持乐观心态，积极向上的精神状态会反映在面相上' 
-        });
-      }
-      
-      advice.push({ 
-        icon: '🤝', 
-        text: '多与属龙、属马、属猪的人合作，易遇贵人' 
-      });
-      
-      return advice.slice(0, 6); // 返回6条建议
-    }
-    
-    // 渲染面相总评
-    function renderFortuneSummary(data) {
-      document.getElementById('fortuneType').textContent = data.type;
-      document.getElementById('fortuneSummary').textContent = data.summary;
-      document.getElementById('fortuneDescription').textContent = data.description;
-    }
-    
-    // 渲染五官特征
-    function renderFacialFeatures(features) {
-      const container = document.getElementById('facialFeaturesGrid');
-      container.innerHTML = '';
-      
-      features.forEach(feature => {
-        const div = document.createElement('div');
-        div.className = 'feature-item';
-        div.innerHTML = `
-          <span class="feature-emoji">${feature.emoji}</span>
-          <div class="feature-label">${feature.label}</div>
-          <div class="feature-value">${feature.value}</div>
-          <p class="text-sm text-gray-600 mt-2">${feature.meaning}</p>
-        `;
-        container.appendChild(div);
-      });
-    }
-    
-    // 渲染运势分析
-    function renderFortuneAnalysis(fortuneScores) {
-      const container = document.getElementById('fortuneAnalysisGrid');
-      container.innerHTML = '';
-      
-      fortuneScores.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'feature-item';
-        
-        // 生成星星
-        let stars = '';
-        for (let i = 0; i < 5; i++) {
-          stars += `<i class="fas fa-star fortune-star ${i < item.score ? '' : 'empty'}"></i>`;
-        }
-        
-        div.innerHTML = `
-          <span class="feature-emoji">${item.emoji}</span>
-          <div class="feature-label">${item.label}</div>
-          <div class="fortune-stars">${stars}</div>
-          <p class="text-sm text-gray-600 mt-2 mb-2">${item.description}</p>
-          <p class="text-xs text-purple-600 font-semibold">
-            <i class="fas fa-lightbulb mr-1"></i>${item.advice}
-          </p>
-        `;
-        container.appendChild(div);
-      });
-    }
-    
-    // 渲染流年运势
-    function renderFortuneTimeline(timeline) {
-      const container = document.getElementById('fortuneTimeline');
-      container.innerHTML = '';
-      
-      timeline.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'timeline-item';
-        if (item.highlight) {
-          div.style.backgroundColor = '#fef3f5';
-          div.style.padding = '1rem';
-          div.style.borderRadius = '12px';
-          div.style.marginLeft = '-1rem';
-          div.style.paddingLeft = '1rem';
-        }
-        
-        div.innerHTML = `
-          <div class="timeline-age">${item.age}</div>
-          <div class="timeline-desc">
-            ${item.description}
-            ${item.highlight ? '<span class="ml-2 text-pink-600 font-semibold">（当前阶段）</span>' : ''}
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-    
-    // 渲染开运建议
-    function renderLuckyAdvice(advice) {
-      const container = document.getElementById('luckyAdviceList');
-      container.innerHTML = '';
-      
-      advice.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'advice-item';
-        li.style.animationDelay = `${index * 0.1}s`;
-        
-        li.innerHTML = `
-          <div class="advice-icon">${item.icon}</div>
-          <div class="flex-1 text-gray-700">${item.text}</div>
-        `;
-        container.appendChild(li);
-      });
-    }
   </script>
 </body>
 </html>
+
+

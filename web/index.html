@@ -1609,9 +1609,14 @@
           currentPath = currentPath.substring(basePath.length);
         }
         
+        // 如果路径以 / 结尾（目录），假设是 index.html
+        if (currentPath.endsWith('/')) {
+          currentPath += 'index.html';
+        }
+        
         // 计算当前页面的目录深度
         const currentParts = currentPath.split('/').filter(p => p);
-        const currentDirs = currentParts.slice(0, -1);
+        const currentDirs = currentParts.slice(0, -1); // 去掉文件名，保留目录部分
         const currentDepth = currentDirs.length;
         
         // 构建相对路径
