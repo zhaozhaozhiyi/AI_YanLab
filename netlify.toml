@@ -1,0 +1,9 @@
+# Netlify 配置文件
+
+[build]
+  # 发布目录
+  publish = "."
+  
+  # 构建命令（如果需要）
+  command = ""
+

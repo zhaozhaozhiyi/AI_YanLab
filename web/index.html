@@ -1716,7 +1716,11 @@
 
     // 调用真实 AI API（流式输出）
     async function callAIAPIStreaming(userMessage, conversationId = '', onChunk) {
-      const API_BASE = 'http://aie.wenge.com:30051/v1';
+      // 检测是否为 HTTPS 环境（部署环境）
+      const isHTTPS = window.location.protocol === 'https:';
+      const API_BASE = isHTTPS 
+        ? '/.netlify/functions/api-proxy/v1'  // HTTPS 环境使用代理
+        : 'http://aie.wenge.com:30051/v1';     // HTTP 环境直接调用
       const API_KEY = 'app-7GvRPyu0pd3wzK7YDWF6byue';
       
       try {
@@ -1794,7 +1798,11 @@
 
     // 调用真实 AI API（阻塞模式，降级使用）
     async function callAIAPI(userMessage, conversationId = '') {
-      const API_BASE = 'http://aie.wenge.com:30051/v1';
+      // 检测是否为 HTTPS 环境（部署环境）
+      const isHTTPS = window.location.protocol === 'https:';
+      const API_BASE = isHTTPS 
+        ? '/.netlify/functions/api-proxy/v1'  // HTTPS 环境使用代理
+        : 'http://aie.wenge.com:30051/v1';     // HTTP 环境直接调用
       const API_KEY = 'app-7GvRPyu0pd3wzK7YDWF6byue';
       
       try {
