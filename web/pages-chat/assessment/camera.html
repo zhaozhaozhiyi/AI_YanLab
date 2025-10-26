@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>拍照评估 - AI颜值管家</title>
+  <title>拍照评估 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -67,7 +67,7 @@
       transform: translate(-50%, -50%);
       width: 280px;
       height: 360px;
-      border: 3px solid rgba(236, 72, 153, 0.6);
+      border: 3px solid rgba(251, 146, 60, 0.6);
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       pointer-events: none;
       animation: pulse-border 2s ease-in-out infinite;
@@ -75,11 +75,11 @@
 
     @keyframes pulse-border {
       0%, 100% {
-        border-color: rgba(236, 72, 153, 0.6);
+        border-color: rgba(251, 146, 60, 0.6);
         transform: translate(-50%, -50%) scale(1);
       }
       50% {
-        border-color: rgba(236, 72, 153, 0.9);
+        border-color: rgba(251, 146, 60, 0.9);
         transform: translate(-50%, -50%) scale(1.02);
       }
     }
@@ -99,7 +99,7 @@
       height: 70px;
       border-radius: 50%;
       border: 4px solid white;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #f59e0b 0%, #84cc16 100%);
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
@@ -111,7 +111,7 @@
 
     .camera-button:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+      box-shadow: 0 0 30px rgba(251, 146, 60, 0.8);
     }
 
     .camera-button:active {
@@ -152,13 +152,13 @@
     }
 
     .angle-dot.active {
-      background: #ec4899;
-      box-shadow: 0 0 10px #ec4899;
+      background: #f59e0b;
+      box-shadow: 0 0 10px #f59e0b;
     }
 
     .angle-dot.completed {
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
+      background: #84cc16;
+      box-shadow: 0 0 10px #84cc16;
     }
 
     .tip-message {
@@ -166,7 +166,7 @@
       bottom: 10rem;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(236, 72, 153, 0.9);
+      background: rgba(251, 146, 60, 0.9);
       color: white;
       padding: 0.75rem 1.5rem;
       border-radius: 20px;
@@ -247,20 +247,13 @@
 
     <!-- 角度指示器 -->
     <div class="angle-indicator">
-      <i class="fas fa-camera mr-2"></i>
-      <span id="angleText">正面照</span>
-    </div>
-
-    <!-- 进度指示器 -->
-    <div class="angle-progress">
-      <div class="angle-dot active" data-angle="front"></div>
-      <div class="angle-dot" data-angle="left"></div>
-      <div class="angle-dot" data-angle="right"></div>
+      <i class="fas fa-heart mr-2"></i>
+      <span id="angleText">美丽评估</span>
     </div>
 
     <!-- 拍照提示 -->
     <div class="tip-message" id="tipMessage">
-      请将面部对准椭圆框内
+      💛 请将面部温柔地放入椭圆框内，保持自然表情 💛
     </div>
 
     <!-- 相机预览 -->
@@ -278,7 +271,7 @@
         </button>
       </div>
       <div class="text-white text-center mt-4 text-sm">
-        <span id="photoCount">已拍摄 0/3 张</span>
+        <span id="photoCount">✨ 准备就绪，让我们开始吧 ✨</span>
       </div>
     </div>
   </div>
@@ -298,9 +291,7 @@
     let currentAngle = 0;
     
     const angles = [
-      { name: 'front', text: '正面照', tip: '请将面部对准椭圆框内，保持正面角度' },
-      { name: 'left', text: '左侧45°', tip: '请将面部轻微转向左侧，约45度角' },
-      { name: 'right', text: '右侧45°', tip: '请将面部轻微转向右侧，约45度角' }
+      { name: 'front', text: '正面照', tip: '💛 请将面部温柔地放入椭圆框内，保持自然表情 💛' }
     ];
 
     // 初始化相机
@@ -368,29 +359,21 @@
       // 更新进度
       updateProgress();
       
-      // 移到下一个角度
-      currentAngle++;
+      // 拍摄完成，直接跳转
+      showTip('拍摄完成！您的照片很美丽 ✨');
       
-      if (currentAngle < angles.length) {
-        updateAngleIndicator();
-        showTip(`拍摄成功！请继续拍摄${angles[currentAngle].text}`);
-      } else {
-        // 所有照片拍摄完成
-        showTip('拍摄完成！即将跳转...');
-        
-        // 保存照片数据
-        Storage.set('capturedPhotos', capturedPhotos);
-        
-        // 停止相机
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
-        }
-        
-        // 跳转到确认页面
-        setTimeout(() => {
-          window.location.href = './confirm.html';
-        }, 1000);
+      // 保存照片数据
+      Storage.set('capturedPhotos', capturedPhotos);
+      
+      // 停止相机
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
       }
+      
+      // 跳转到确认页面
+      setTimeout(() => {
+        window.location.href = './confirm.html';
+      }, 1500);
     }
 
     // 更新角度指示器
@@ -413,15 +396,7 @@
     // 更新进度
     function updateProgress() {
       const photoCount = document.getElementById('photoCount');
-      photoCount.textContent = `已拍摄 ${capturedPhotos.length}/3 张`;
-      
-      // 更新进度点
-      document.querySelectorAll('.angle-dot').forEach((dot, index) => {
-        if (index < capturedPhotos.length) {
-          dot.classList.add('completed');
-          dot.classList.remove('active');
-        }
-      });
+      photoCount.textContent = '✨ 正在处理您的美丽照片... ✨';
     }
 
     // 显示提示

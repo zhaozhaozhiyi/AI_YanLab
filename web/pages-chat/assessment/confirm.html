@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>确认照片 - AI颜值管家</title>
+  <title>确认照片 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +16,7 @@
   
   <style>
     body {
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      background: linear-gradient(135deg, #f0f9f4 0%, #fafbfc 50%, #f5f7f8 100%);
       min-height: 100vh;
     }
 
@@ -24,14 +24,16 @@
       background: white;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       transition: all 0.3s ease;
       cursor: pointer;
+      border: 2px solid transparent;
     }
 
     .photo-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.2);
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.15);
+      border-color: #22c55e;
     }
 
     .photo-image {
@@ -46,7 +48,7 @@
       text-align: center;
       font-weight: 600;
       color: #1f2937;
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+      background: #f9fafb;
     }
 
     .retake-button {
@@ -88,14 +90,15 @@
     }
 
     .submit-button {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
-      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
     }
 
     .submit-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.35);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
     }
 
     .submit-button:disabled {
@@ -111,17 +114,17 @@
     }
 
     .retake-all-button:hover {
-      border-color: #ec4899;
-      color: #ec4899;
+      border-color: #22c55e;
+      color: #059669;
       transform: translateY(-2px);
     }
 
     .header-gradient {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+      background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%);
       color: white;
       padding: 2rem 1rem;
       border-radius: 0 0 30px 30px;
-      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .check-icon {
@@ -137,12 +140,12 @@
       align-items: center;
       justify-content: center;
       font-size: 0.875rem;
-      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
     }
 
     .tip-box {
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
-      border-left: 4px solid #ec4899;
+      background: #f9fafb;
+      border-left: 4px solid #10b981;
       padding: 1rem 1.5rem;
       border-radius: 8px;
       margin: 1.5rem 0;
@@ -238,14 +241,14 @@
     <!-- 提示信息 -->
     <div class="tip-box fade-in">
       <div class="flex items-start gap-3">
-        <i class="fas fa-info-circle text-pink-500 text-xl mt-1"></i>
+        <i class="fas fa-info-circle text-xl mt-1" style="color: #10b981;"></i>
         <div>
           <h3 class="font-semibold text-gray-800 mb-2">照片质量检查</h3>
           <ul class="text-sm text-gray-600 space-y-1">
-            <li>✓ 确保面部清晰可见，无模糊</li>
-            <li>✓ 光线充足，五官清晰</li>
-            <li>✓ 没有遮挡物（眼镜、口罩等）</li>
-            <li>✓ 三个角度都已拍摄完整</li>
+            <li><i class="fas fa-check-circle mr-1" style="color: #10b981;"></i> 确保面部清晰可见，无模糊</li>
+            <li><i class="fas fa-check-circle mr-1" style="color: #10b981;"></i> 光线充足，五官清晰</li>
+            <li><i class="fas fa-check-circle mr-1" style="color: #10b981;"></i> 没有遮挡物（眼镜、口罩等）</li>
+            <li><i class="fas fa-check-circle mr-1" style="color: #10b981;"></i> 三个角度都已拍摄完整</li>
           </ul>
         </div>
       </div>

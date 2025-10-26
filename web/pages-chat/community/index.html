@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>美容社区 - AI颜值管家</title>
+  <title>美容社区 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -387,25 +387,7 @@
     <i class="fas fa-pen"></i>
   </button>
 
-  <!-- 底部导航栏 -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <a href="../../index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-home text-xl mb-1"></i>
-      <span class="text-xs">首页</span>
-    </a>
-    <a href="../assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-camera text-xl mb-1"></i>
-      <span class="text-xs">评估</span>
-    </a>
-    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
-      <i class="fas fa-comments text-xl mb-1"></i>
-      <span class="text-xs">社区</span>
-    </a>
-    <a href="../profile/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-user text-xl mb-1"></i>
-      <span class="text-xs">我的</span>
-    </a>
-  </nav>
+
 
   <script>
     // 内联路径配置 - 避免加载问题
@@ -550,7 +532,7 @@
         id: index + 1,
         title: title,
         category: categories[index % categories.length],
-        author: index % 3 === 0 ? 'AI颜值管家' : index % 3 === 1 ? '美容达人' : '护肤专家',
+        author: index % 3 === 0 ? '逆龄小颜' : index % 3 === 1 ? '美容达人' : '护肤专家',
         authorAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=64&h=64&fit=crop&crop=face&auto=format&q=80',
         image: `https://images.unsplash.com/photo-${1516000000000 + index * 1000000}?w=400&h=${heights[index]}&fit=crop&auto=format&q=80`,
         imageHeight: heights[index],

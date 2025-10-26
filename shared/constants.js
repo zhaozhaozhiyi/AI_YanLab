@@ -20,7 +20,7 @@ const Constants = {
    * 产品信息
    */
   APP: {
-    name: 'AI颜值管家',
+    name: '逆龄小颜',
     slogan: '您的专属AI颜值顾问',
     version: '1.0.0',
     support: '7x24小时在线服务',

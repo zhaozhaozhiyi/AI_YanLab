@@ -61,7 +61,7 @@ const MockData = {
       isUser: isUser,
       content: content,
       avatar: isUser ? './assets/images/avatars/user.jpg' : './assets/images/ai-expert.jpg',
-      name: isUser ? '我' : 'AI颜值管家',
+      name: isUser ? '我' : '逆龄小颜',
       time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
     };
   },

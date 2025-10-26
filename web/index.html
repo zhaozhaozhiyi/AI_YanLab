@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI颜值管家 - 您的专属AI颜值顾问</title>
+  <title>逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,2053 +14,2440 @@
   <!-- 自定义样式 -->
   <link rel="stylesheet" href="./assets/css/base.css">
   
-  <!-- Hero Section 样式 -->
+  <!-- Storage 工具 -->
+  <script src="../shared/storage.js"></script>
+  
   <style>
-    /* 防止横向滚动 */
-    html, body {
+    body {
+      background: #ffffff;
+      min-height: 100vh;
+      position: relative;
       overflow-x: hidden;
-      max-width: 100%;
-    }
-    
-    main {
-      overflow-x: hidden;
-      max-width: 100vw;
-    }
-    
-    /* Hero Section 主容器 */
-    .hero-section {
-        position: relative;
-        background: conic-gradient(
-          from 0deg at 50% 35%,
-          #ff6b9d,
-          #8b5cf6,
-          #3b82f6,
-          #10b981,
-          #fbbf24,
-          #ec4899,
-          #ff6b9d
-        );
-        color: white;
-        overflow: hidden;
-        min-height: 70vh;
-        padding: 5rem 0 6rem;
-        display: flex;
-        flex-direction: column;
-        animation: heroGradientFlow 8s linear infinite;
-      }
-
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: conic-gradient(
-          from 180deg at 50% 35%,
-          #10b981,
-          #fbbf24,
-          #ec4899,
-          #ff6b9d,
-          #8b5cf6,
-          #3b82f6,
-          #10b981
-        );
-        opacity: 0.6;
-        animation: heroGradientFlow2 12s linear infinite reverse;
-        z-index: 0;
-      }
-      
-    @keyframes heroGradientFlow {
-        0% {
-          transform: scale(1) rotate(0deg);
-        }
-        25% {
-          transform: scale(1.01) rotate(1deg);
-        }
-        50% {
-          transform: scale(1) rotate(0deg);
-        }
-        75% {
-          transform: scale(1.01) rotate(-1deg);
-        }
-        100% {
-          transform: scale(1) rotate(0deg);
-        }
-      }
-
-    @keyframes heroGradientFlow2 {
-        0% {
-          filter: blur(0px);
-          transform: scale(1) rotate(0deg);
-        }
-        33% {
-          filter: blur(1px);
-          transform: scale(1.02) rotate(2deg);
-        }
-        66% {
-          filter: blur(0px);
-          transform: scale(1) rotate(0deg);
-        }
-        100% {
-          filter: blur(1px);
-          transform: scale(1.02) rotate(-2deg);
-        }
-      }
-    
-    /* 背景装饰 */
-    .hero-background {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    
-    .hero-decoration {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      filter: blur(40px);
-    }
-    
-    .hero-decoration-1 {
-      width: 200px;
-      height: 200px;
-      top: 10%;
-      left: 5%;
-    }
-    
-    .hero-decoration-2 {
-      width: 150px;
-      height: 150px;
-      bottom: 15%;
-      right: 10%;
-    }
-    
-    .hero-decoration-3 {
-      width: 100px;
-      height: 100px;
-      top: 50%;
-      left: 20%;
-    }
-    
-    /* 主要内容容器 */
-    .hero-content {
-        position: relative;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem 1rem;
-        min-height: calc(70vh - 8rem);
-        z-index: 1;
-        overflow: hidden;
-      }
-    
-    .hero-container {
-      max-width: 1200px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1.5rem;
-      padding: 1rem 0;
-      overflow: hidden;
-    }
-    
-    /* 图片区域 */
-    .hero-image-section {
-      position: relative;
-      margin-bottom: 1rem;
-      overflow: visible;
-    }
-    
-    .hero-image-wrapper {
-        position: relative;
-        display: inline-block;
-        z-index: 2;
-      }
-    
-    .hero-image-container {
-      position: relative;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: white;
-      z-index: 2;
-      padding: 4px;
-      box-shadow: 
-         0 10px 40px rgba(0, 0, 0, 0.15),
-         inset 0 0 0 2px rgba(255, 255, 255, 0.8);
-      transition: all 0.3s ease;
-    }
-    
-    /* 移除图片光晕层，因为背景本身就是动态渐变 */
-    
-    
-    /* 波浪旋转动画 */
-    @keyframes waveRotate {
-      0%, 100% {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-      50% {
-        transform: translate(-50%, -50%) rotate(180deg);
-      }
-    }
-    
-    /* 波浪形状变化1 - 增强波浪幅度 */
-    @keyframes waveShape1 {
-      0%, 100% {
-        border-radius: 45% 55% 48% 52% / 55% 45% 55% 45%;
-      }
-      25% {
-        border-radius: 55% 45% 45% 55% / 45% 55% 48% 52%;
-      }
-      50% {
-        border-radius: 48% 52% 55% 45% / 52% 48% 45% 55%;
-      }
-      75% {
-        border-radius: 45% 55% 52% 48% / 48% 45% 55% 45%;
-      }
-    }
-    
-    /* 波浪形状变化2 - 增强波浪幅度 */
-    @keyframes waveShape2 {
-      0%, 100% {
-        border-radius: 52% 48% 55% 45% / 45% 55% 45% 55%;
-      }
-      25% {
-        border-radius: 45% 55% 48% 52% / 55% 45% 52% 48%;
-      }
-      50% {
-        border-radius: 55% 55% 45% 45% / 48% 52% 55% 45%;
-      }
-      75% {
-        border-radius: 48% 45% 52% 55% / 55% 48% 45% 52%;
-      }
-    }
-    
-    /* 选中状态 */
-    .hero-image-container.selected {
-      animation: pulse 0.6s ease-in-out;
-      box-shadow: 
-        0 15px 60px rgba(255, 255, 255, 0.4),
-        inset 0 0 0 3px rgba(255, 255, 255, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.7);
-      transform: scale(1.05);
-    }
-    
-    .hero-section.selected {
-      animation: heroGradientRotate 3s ease-in-out infinite;
     }
 
-    @keyframes heroGradientRotate {
-      0% {
-        transform: scale(1);
-      }
-      25% {
-        transform: scale(1.02);
-      }
-      50% {
-        transform: scale(1);
-      }
-      75% {
-        transform: scale(1.02);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.03);
-      }
-    }
-    
-    .hero-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease, opacity 0.3s ease, filter 0.2s ease;
-      opacity: 1;
-      filter: blur(0px);
-      position: relative;
-      z-index: 1;
-      border-radius: 50%;
-    }
-    
-    .hero-image.fast-scrolling {
-      filter: blur(3px);
-    }
-    
-    .hero-image.selected {
-      transform: scale(1.05);
-      filter: blur(0px);
-    }
-    
-    .hero-image:hover {
-      transform: scale(1.05);
-    }
-    
-    /* 图片占位符 */
-    .hero-image-placeholder {
-      position: absolute;
+    /* 背景动画层 */
+    #animatedBackground {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* 粒子层 */
+    .particle-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, #34C759 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.2;
+      }
+      25% {
+        opacity: 0.5;
+      }
+      50% {
+        transform: translate(50px, -30px);
+        opacity: 0.3;
+      }
+      75% {
+        opacity: 0.4;
+      }
+    }
+
+    /* 网格线 */
+    .grid-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(52, 199, 89, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 199, 89, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(50px, 50px);
+      }
+    }
+
+    /* 渐变泡泡 */
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.08;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      top: 5%;
+      left: -10%;
+      animation: orb1 25s ease-in-out infinite;
+    }
+
+    @keyframes orb1 {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(100px, 50px);
+      }
+    }
+
+    /* 主内容区域 - 确保层级在背景之上 */
+    .main-content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 悬浮的"我的"按钮 */
+    .floating-profile-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      color: #374151;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      text-decoration: none;
     }
-    
-    .hero-image-placeholder i {
-      font-size: 5rem;
-      opacity: 0.9;
+
+    .floating-profile-button:hover {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
     }
-    
-    /* AI筛选提示 */
-    .ai-selecting-hint {
+
+    .floating-profile-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .floating-profile-button i {
+      font-size: 1.25rem;
+    }
+
+    /* 顶部标题 */
+    .chat-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 1.5rem;
+      background: transparent;
+    }
+
+    .chat-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* 虚拟助手头像 */
+    .assistant-avatar-wrapper {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .assistant-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .assistant-avatar::before {
+      content: '';
       position: absolute;
-      bottom: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.95);
-      color: #ec4899;
-      padding: 8px 16px;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #34C759, #22c55e, #4ade80, #6fd88f);
+      z-index: -1;
+      animation: rotate-gradient 3s linear infinite;
+    }
+
+    @keyframes rotate-gradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .assistant-avatar-inner {
+      width: 114px;
+      height: 114px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .assistant-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .assistant-icon {
+      font-size: 3rem;
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 音频图标 */
+    .audio-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 28px;
+      height: 28px;
+      background: #34C759;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+      animation: audio-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes audio-pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+      }
+      50% {
+        transform: scale(1.1);
+        box-shadow: 0 4px 16px rgba(52, 199, 89, 0.5);
+      }
+    }
+
+    /* 问候语 */
+    .greeting {
+      font-size: 1rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* 助手能力区域 */
+    .capabilities-section {
+      padding: 1rem 2rem;
+      padding-top: 0.5rem;
+    }
+
+    .capability-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .capability-grid .capability-card[style*="display: none"] {
+      display: none !important;
+    }
+
+    .capability-card {
+      background: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.95) 100%);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      font-size: 0.875rem;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      min-width: 180px;
+      flex: 1;
+      width: 100%;
+      /* max-width: 250px; */
+    }
+
+    .capability-card:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 1) 100%);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .capability-card.active {
+      background: rgba(52, 199, 89, 0.08);
+      transform: scale(1.02);
+    }
+
+    .capability-card.active .capability-icon {
+      background: rgba(52, 199, 89, 0.15);
+    }
+
+    .capability-card.active .capability-name {
+      color: #34C759;
       font-weight: 600;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      white-space: nowrap;
-      z-index: 15;
     }
-    
-    .ai-selecting-hint.active {
-      opacity: 1;
+
+    .capability-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
-    
-    .ai-selecting-hint i {
-      margin-right: 6px;
-      animation: spin 1s linear infinite;
+
+    .capability-icon-globe {
+      background: rgba(59, 130, 246, 0.12);
+      color: #3b82f6;
     }
-    
-    @keyframes spin {
+
+    .capability-icon-camera {
+      background: rgba(236, 72, 153, 0.12);
+      color: #ec4899;
+    }
+
+    .capability-icon-nurse {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+
+    .capability-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+      text-align: left;
+      letter-spacing: 0.2px;
+      flex: 1;
+      line-height: 1.4;
+      padding-left: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 两个按钮卡片不同的背景 - 逆龄秘境（粉紫色旋转渐变） */
+    .capability-card:nth-child(2) {
+      background: linear-gradient(135deg, rgba(252, 231, 243, 0.06), rgba(249, 168, 212, 0.09));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capability-card:nth-child(2)::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(249, 168, 212, 0.06),
+        transparent,
+        rgba(252, 231, 243, 0.04),
+        transparent
+      );
+      animation: rotate-pink 4s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capability-card:nth-child(2):hover::before {
+      animation-play-state: paused;
+    }
+
+    /* 两个按钮卡片不同的背景 - 术后管家（青绿旋转渐变） */
+    .capability-card:nth-child(3) {
+      background: linear-gradient(135deg, rgba(209, 250, 229, 0.06), rgba(134, 239, 172, 0.09));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capability-card:nth-child(3)::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 180deg,
+        transparent,
+        rgba(134, 239, 172, 0.06),
+        transparent,
+        rgba(209, 250, 229, 0.04),
+        transparent
+      );
+      animation: rotate-green 5s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capability-card:nth-child(3):hover::before {
+      animation-play-state: paused;
+    }
+
+    /* 旋转动画 */
+    @keyframes rotate-pink {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate-green {
+      from {
+        transform: rotate(180deg);
+      }
+      to {
+        transform: rotate(540deg);
+      }
+    }
+
+    /* 建议问题区域 */
+    .suggested-questions-section {
+      padding: 1.5rem 1rem;
+    }
+
+    .suggestions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .suggestion-hint {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .refresh-button {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      padding: 0;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .refresh-button:hover {
+      color: #34C759;
+    }
+
+    .refresh-button i {
+      font-size: 0.75rem;
+      transition: transform 0.5s ease;
+    }
+
+    .refresh-button.rotating i {
+      animation: rotate 0.5s ease;
+    }
+
+    @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    
-    /* 装饰标签 */
-    .hero-badge {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.95);
-      color: #374151;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.75rem;
-      font-weight: 600;
+
+    /* 滚动容器 - 水平滚动 */
+    .questions-scroll-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      position: relative;
+      scroll-behavior: smooth;
+      padding: 0.5rem 0;
+    }
+
+    .questions-scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .questions-scroll-wrapper {
       display: flex;
+      gap: 0.75rem;
+      width: max-content;
+    }
+
+    /* 三排整体容器 - 作为一个轮播单元 */
+    .questions-swiper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      min-width: max-content;
+    }
+
+    /* 每一排 - 确保间距完全一致 */
+    .question-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-shrink: 0;
       align-items: center;
-      gap: 0.25rem;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      min-height: 36px;
+    }
+
+    .question-card {
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(10px);
-      z-index: 15;
+      border-radius: 20px;
+      padding: 0.5rem 0.875rem;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(229, 231, 235, 0.6);
+      white-space: nowrap;
+      flex: 0 0 auto;
     }
-    
-    .hero-badge-1 {
-      top: 1rem;
-      left: -2rem;
+
+    .question-card:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
-    
-    .hero-badge-2 {
-      bottom: 2rem;
-      right: -2rem;
-    }
-    
-    .hero-badge i {
-      font-size: 0.875rem;
-    }
-    
-    .hero-badge-1 i {
-      color: #f59e0b;
-    }
-    
-    .hero-badge-2 i {
-      color: #10b981;
-    }
-    
-    /* 装饰图标 */
-    .hero-icon {
-      position: absolute;
-      width: 3rem;
-      height: 3rem;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
+
+    .question-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      z-index: 10;
+      font-size: 0.625rem;
+      flex-shrink: 0;
+      opacity: 0.6;
     }
-    
-    .hero-icon-1 {
-      top: -0.5rem;
-      right: -0.5rem;
+
+    .question-icon-blue {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
     }
-    
-    .hero-icon-2 {
-      bottom: -1rem;
-      left: -1rem;
-      width: 4rem;
-      height: 4rem;
-    }
-    
-    .hero-icon i {
-      font-size: 1.25rem;
-      color: white;
-    }
-    
-    .hero-icon-2 i {
-      font-size: 1.5rem;
-    }
-    
-    /* 文字内容区域 */
-    .hero-text-section {
-      max-width: 600px;
-    }
-    
-    .hero-title {
-      font-size: 2.25rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    
-    .hero-title-main {
-      color: white;
-    }
-    
-    .hero-title-sub {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    
-    .hero-description {
-      font-size: 1rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 400;
-    }
-    
-    .hero-button {
-      background: white;
+
+    .question-icon-pink {
+      background: rgba(236, 72, 153, 0.1);
       color: #ec4899;
-      padding: 0.875rem 2rem;
-      border-radius: 3rem;
-      font-size: 1rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
     }
-    
-    .hero-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-      background: #f8fafc;
+
+    .question-icon-green {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
     }
-    
-    .hero-button i {
-      font-size: 1.25rem;
+
+    .question-text {
+      font-size: 0.75rem;
+      color: #374151;
+      font-weight: 400;
+      white-space: nowrap;
+      line-height: 1.2;
     }
-    
-    /* 波浪装饰 */
-    .hero-wave {
-      position: absolute;
+
+    /* 输入框区域 */
+    .message-input-area {
+      position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      pointer-events: none;
+      padding: 1rem;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      z-index: 40;
+      padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
     }
-    
-    .hero-wave-svg {
-      width: 100%;
-      height: 5rem;
+
+    .message-input {
+      flex: 1;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.9375rem;
+      color: #374151;
+      outline: none;
+      transition: all 0.3s ease;
     }
-    
-    /* 响应式设计 */
-    @media (min-width: 768px) {
-      .hero-image-container {
-        width: 280px;
-        height: 280px;
+
+    .message-input:focus {
+      background: white;
+      border-color: #34C759;
+      box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.1);
+    }
+
+    .message-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .voice-button {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+    }
+
+    .voice-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(52, 199, 89, 0.4);
+    }
+
+    .voice-button:active {
+      transform: scale(0.95);
+    }
+
+    /* 录音状态样式 */
+    .voice-button.recording {
+      animation: recording-pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes recording-pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
       }
-      
-      .hero-title {
-        font-size: 2.75rem;
-      }
-      
-      .hero-description {
-        font-size: 1.125rem;
-      }
-      
-      .hero-button {
-        padding: 1rem 2.5rem;
-        font-size: 1.125rem;
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(52, 199, 89, 0.6);
       }
     }
-    
-    @media (min-width: 1024px) {
-      .hero-image-container {
-        width: 320px;
-        height: 320px;
+
+    /* 录音动画提示 */
+    .recording-indicator {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(52, 199, 89, 0.95);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 4px 16px rgba(52, 199, 89, 0.4);
+      z-index: 100;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .recording-indicator.active {
+      display: flex;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
       }
-      
-      .hero-title {
-        font-size: 3rem;
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
       }
-      
-      .hero-container {
+    }
+
+    .recording-indicator .wave {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .recording-indicator .wave span {
+      width: 3px;
+      height: 20px;
+      background: white;
+      border-radius: 2px;
+      animation: wave-animation 1s ease-in-out infinite;
+    }
+
+    .recording-indicator .wave span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .recording-indicator .wave span:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .recording-indicator .wave span:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .recording-indicator .wave span:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes wave-animation {
+      0%, 100% {
+        height: 10px;
+      }
+      50% {
+        height: 24px;
+      }
+    }
+
+    /* 主内容区 */
+    .main-content {
+      padding-bottom: 90px; /* 为底部输入框留空间 */
+      min-height: calc(100vh - 120px);
+    }
+
+    /* 响应式 */
+    @media (min-width: 640px) {
+      .chat-title {
+        font-size: 2rem;
+      }
+
+      .assistant-avatar {
+        width: 140px;
+        height: 140px;
+      }
+
+      .assistant-avatar-inner {
+        width: 134px;
+        height: 134px;
+      }
+
+      .assistant-icon {
+        font-size: 3.5rem;
+      }
+
+      .capability-grid {
         gap: 2rem;
       }
-    }
-    
-    /* 动画效果 */
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .hero-decoration-1 {
-      animation: float 8s ease-in-out infinite;
-    }
-    
-    .hero-decoration-2 {
-      animation: float 10s ease-in-out infinite reverse;
-    }
-    
-    /* 核心功能区域样式 */
-    .features-section {
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      padding: 4rem 0;
-      position: relative;
-    }
-    
-    .features-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    
-    .features-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 3rem;
-      background: linear-gradient(135deg, #1f2937, #6b7280);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    
-    .feature-card {
-      background: white;
-      border-radius: 24px;
-      padding: 2rem;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-    }
-    
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #ec4899, #8b5cf6);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    
-    .feature-card:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
-    
-    .feature-card-inner {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    
-    .feature-icon-wrapper {
-      position: relative;
-      margin-bottom: 1.5rem;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .feature-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      z-index: 2;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-icon i {
-      font-size: 2rem;
-      color: white;
-    }
-    
-    .feature-icon-1 {
-      background: linear-gradient(135deg, #ec4899, #f97316);
-    }
-    
-    .feature-icon-2 {
-      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-    }
-    
-    .feature-icon-3 {
-      background: linear-gradient(135deg, #10b981, #059669);
-    }
-    
-    .feature-icon-bg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      opacity: 0.1;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-card-1 .feature-icon-bg {
-      background: #ec4899;
-    }
-    
-    .feature-card-2 .feature-icon-bg {
-      background: #8b5cf6;
-    }
-    
-    .feature-card-3 .feature-icon-bg {
-      background: #10b981;
-    }
-    
-    .feature-card:hover .feature-icon-bg {
-      transform: translate(-50%, -50%) scale(1.2);
-      opacity: 0.2;
-    }
-    
-    .feature-content {
-      flex: 1;
-      text-align: center;
-    }
-    
-    .feature-content .feature-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
-    }
-    
-    .feature-description {
-      font-size: 1rem;
-      color: #6b7280;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-    
-    .feature-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-      color: #374151;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    
-    .feature-arrow {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      background: #f3f4f6;
-      border-radius: 50%;
-      margin: 0 auto;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-arrow i {
-      font-size: 1rem;
-      color: #6b7280;
-      transition: all 0.3s ease;
-    }
-    
-    .feature-card:hover .feature-arrow {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      transform: scale(1.1);
-    }
-    
-    .feature-card:hover .feature-arrow i {
-      color: white;
-      transform: translateX(2px);
-    }
-    
-    /* 响应式设计 */
-    @media (max-width: 768px) {
-      .features-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+
+      .capability-card {
+        padding: 1.5rem 2rem;
+        /* min-width: 220px; */
       }
-      
-      .feature-card {
-        padding: 1.5rem;
+
+      .capability-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
       }
-      
-      .features-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
+
+      .capability-name {
+        font-size: 1.125rem;
       }
     }
-    
-    /* 科普文章区域样式 */
-    .articles-section {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      padding: 4rem 0;
-      position: relative;
+
+    /* 移动端小屏幕优化 */
+    @media (max-width: 360px) {
+      .floating-profile-button {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .floating-profile-button i {
+        font-size: 1.125rem;
+      }
+
+      .capabilities-section {
+        padding: 1rem 1.5rem;
+      }
+
+      .capability-grid {
+        gap: 1rem;
+      }
+
+      .capability-card {
+        padding: 1rem 1.25rem;
+        min-width: 160px;
+      }
+
+      .capability-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.125rem;
+      }
+
+      .capability-name {
+        font-size: 0.9375rem;
+      }
+
+      .question-card {
+        padding: 0.5rem 0.875rem;
+      }
+
+      .question-text {
+        font-size: 0.75rem;
+      }
     }
-    
-    .articles-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
+
+    /* 超小屏或大屏自适应 */
+    @media (max-width: 480px) {
+      .question-card {
+        padding: 0.5rem 0.875rem;
+      }
     }
-    
-    .articles-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 3rem;
+
+    @media (min-width: 768px) {
+      .questions-scroll-container {
+        max-height: 400px;
+      }
     }
-    
-    .articles-title-wrapper {
-      flex: 1;
+
+    /* ==================== 聊天消息样式 ==================== */
+    .chat-messages-section {
+      display: none;
+      padding: 1rem;
+      padding-bottom: calc(100px + env(safe-area-inset-bottom));
+      min-height: 200px;
     }
-    
-    .articles-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #1f2937;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #1f2937, #6b7280);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .articles-subtitle {
-      font-size: 1.125rem;
-      color: #6b7280;
-      font-weight: 400;
-    }
-    
-    .articles-more-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      color: white;
-      text-decoration: none;
-      border-radius: 2rem;
-      font-weight: 600;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-    }
-    
-    .articles-more-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
-    }
-    
-    .articles-more-link i {
-      font-size: 0.75rem;
-      transition: transform 0.3s ease;
-    }
-    
-    .articles-more-link:hover i {
-      transform: translateX(2px);
-    }
-    
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+
+    .messages-container {
       max-width: 800px;
       margin: 0 auto;
     }
-    
-    .article-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .message-item {
+      display: flex;
+      margin-bottom: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-item.user {
+      justify-content: flex-end;
+    }
+
+    .message-item.assistant {
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 75%;
+      padding: 0.75rem 1rem;
+      border-radius: 18px;
       position: relative;
+      word-wrap: break-word;
+      white-space: normal;
+      line-height: 1.6;
+      font-size: 0.9375rem;
+      color: #374151;
       display: flex;
       flex-direction: column;
     }
-    
-    .article-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+    .message-text {
+      line-height: 1.6;
     }
-    
-    .article-image {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      overflow: hidden;
+
+    .message-text strong {
+      font-weight: 600;
+      color: #1f2937;
     }
-    
-    .article-image-real {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: all 0.3s ease;
+
+    .message-text p {
+      margin: 0.5rem 0;
+      line-height: 1.6;
     }
-    
-    .article-card:hover .article-image-real {
-      transform: scale(1.05);
+
+    .message-text ul, .message-text ol {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
     }
-    
-    .article-image-placeholder {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+
+    .message-text li {
+      margin: 0.25rem 0;
+      line-height: 1.5;
+    }
+
+    .message-item.user .message-bubble {
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message-item.assistant .message-bubble {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .message-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin: 0 0.5rem;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .article-image-placeholder i {
-      font-size: 2rem;
-      color: #9ca3af;
-      transition: all 0.3s ease;
-    }
-    
-    .article-card:hover .article-image-placeholder {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-    }
-    
-    .article-card:hover .article-image-placeholder i {
-      color: white;
-      transform: scale(1.1);
-    }
-    
-    .article-category {
-      position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-    
-    .article-content {
-      padding: 0.75rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    
-    .article-title {
+      background: #f3f4f6;
+      color: #6b7280;
       font-size: 0.875rem;
-      font-weight: 600;
-      color: #1f2937;
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin: 0;
     }
-    
-    .article-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.5rem;
+
+    .message-item.user .message-avatar {
+      order: 2;
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      color: white;
     }
-    
-    .article-author {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .article-author-avatar {
-      width: 20px;
-      height: 20px;
+
+    .message-avatar img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
     }
-    
-    .article-author-name {
-      font-size: 0.75rem;
-      color: #6b7280;
-      font-weight: 500;
+
+    .message-meta {
+      font-size: 0.6875rem;
+      color: #9ca3af;
+      margin-top: 0.5rem;
+      text-align: right;
+      align-self: flex-end;
     }
-    
-    .article-likes {
+
+    .message-item.assistant .message-bubble .message-meta {
+      text-align: right;
+    }
+
+    /* 打字动画 */
+    .typing-indicator {
       display: flex;
+      gap: 4px;
+      padding: 0.5rem 0;
       align-items: center;
-      gap: 0.25rem;
-      font-size: 0.75rem;
-      color: #6b7280;
     }
-    
-    .article-likes i {
-      font-size: 0.75rem;
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #9ca3af;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
     }
-    
-    /* 响应式设计 */
-    @media (max-width: 768px) {
-      .articles-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-        max-width: 100%;
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
       }
-      
-      .articles-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
-      
-      .articles-title {
-        font-size: 2rem;
-      }
-      
-      .article-content {
-        padding: 0.5rem;
-      }
-      
-      .article-title {
-        font-size: 0.75rem;
-      }
-      
-      .article-author-avatar {
-        width: 16px;
-        height: 16px;
-      }
-      
-      .article-author-name {
-        font-size: 0.625rem;
-      }
-      
-      .article-likes {
-        font-size: 0.625rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .articles-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-      }
-      
-      .article-content {
-        padding: 0.75rem;
-      }
-      
-      .article-title {
-        font-size: 0.875rem;
-      }
-    }
-  </style>
-  
-  <!-- Tailwind配置 -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#FFF1F5',
-              100: '#FFE4EC',
-              200: '#FFCADA',
-              300: '#FF9BBF',
-              400: '#FF6B9D',
-              500: '#FF3B7B',
-              600: '#E0005F',
-              700: '#B8004D',
-              800: '#8F003C',
-              900: '#66002B',
-            },
-            secondary: {
-              50: '#F0EFFF',
-              100: '#E1DFFF',
-              200: '#C3BFFF',
-              300: '#A5A0FF',
-              400: '#8780FF',
-              500: '#6B66FF',
-              600: '#4C47CC',
-              700: '#3A3699',
-              800: '#282566',
-              900: '#161433',
-            },
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-gray-50">
-  
-  <!-- 顶部导航栏 -->
-  <nav class="glass-nav fixed top-0 left-0 right-0 px-4 z-50 flex flex-row items-center justify-between" style="height: 64px;">
-    <!-- 左侧品牌 -->
-    <div class="flex items-center flex-shrink-0" style="height: 44px;">
-      <span class="brand-title text-2xl font-bold leading-none">AI颜值管家</span>
-    </div>
-    
-    <!-- 右侧功能区 -->
-    <div class="flex items-center gap-3 flex-shrink-0" style="height: 44px;">
-      <!-- 通知按钮 -->
-      <button onclick="goToNotifications()" class="simple-icon-button relative w-11 h-11 flex items-center justify-center transition-all">
-        <i class="far fa-bell text-xl"></i>
-        <span class="notification-badge absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-      </button>
-      <!-- 用户头像 -->
-      <a href="./pages/profile/index.html">
-        <div class="simple-icon-button w-11 h-11 flex items-center justify-center transition-all">
-          <i class="far fa-user text-xl"></i>
-        </div>
-      </a>
-    </div>
-  </nav>
-
-  <style>
-    /* 融入式导航栏 - 初始状态完全透明 */
-    .glass-nav {
-      background: transparent;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border-bottom: 1px solid transparent;
-      box-shadow: none;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* 滚动后的玻璃拟态效果 */
-    .glass-nav.scrolled {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.08),
-        0 0 1px rgba(0, 0, 0, 0.08);
-    }
-
-    /* Logo 渐变效果 */
-    .logo-glass {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.2);
-    }
-
-    .logo-glass::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .logo-glass:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
-    }
-
-    .logo-glass:hover::before {
-      left: 100%;
-    }
-
-    /* 品牌文字 - 初始白色 */
-    .brand-text {
-      transition: color 0.4s ease;
-    }
-    
-    .glass-nav .brand-title {
-      color: white;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .glass-nav .brand-subtitle {
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    /* 滚动后文字变深色 */
-    .glass-nav.scrolled .brand-title {
-      color: #111827;
-      text-shadow: none;
-    }
-    
-    .glass-nav.scrolled .brand-subtitle {
-      color: #6b7280;
-      text-shadow: none;
-    }
-
-    /* 玻璃按钮 - 初始状态 */
-    .glass-button {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .glass-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .glass-button:active {
-      transform: translateY(0);
-    }
-
-    /* 滚动后按钮效果 */
-    .glass-nav.scrolled .glass-button {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .glass-nav.scrolled .glass-button:hover {
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 按钮图标颜色 - 初始白色 */
-    .glass-button i {
-      color: white;
-      transition: color 0.4s ease;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-    }
-
-    /* 滚动后图标变深色 */
-    .glass-nav.scrolled .glass-button i {
-      color: #374151;
-      filter: none;
-    }
-
-    .glass-nav.scrolled .glass-button:hover i {
-      color: #ec4899;
-    }
-
-    /* 用户头像按钮保持渐变 */
-    .glass-button.avatar-button {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      border: 2px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .glass-nav.scrolled .glass-button.avatar-button {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      border: 2px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .glass-button.avatar-button i {
-      color: white !important;
-      filter: none !important;
-    }
-
-    /* 简约图标按钮 */
-    .simple-icon-button {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .simple-icon-button i {
-      color: white;
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
-    }
-
-    .simple-icon-button:hover {
-      transform: scale(1.1);
-    }
-
-    .simple-icon-button:hover i {
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
-    }
-
-    .simple-icon-button:active {
-      transform: scale(1.05);
-    }
-
-    /* 滚动后图标变深色 */
-    .glass-nav.scrolled .simple-icon-button i {
-      color: #374151;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-    }
-
-    .glass-nav.scrolled .simple-icon-button:hover i {
-      color: #ec4899;
-      filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
-    }
-
-    /* 通知徽章动画 */
-    .notification-badge {
-      animation: pulse-badge 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
-    }
-
-    @keyframes pulse-badge {
-      0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.8;
-        transform: scale(1.1);
+      30% {
+        transform: translateY(-10px);
       }
     }
 
     /* 响应式调整 */
+    @media (max-width: 480px) {
+      .message-bubble {
+        max-width: 80%;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+      }
+
+      .message-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* ==================== Sticky Header ==================== */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.92) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      padding: 0.875rem 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .sticky-header.hidden {
+      opacity: 0;
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
+    .sticky-header-content {
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .sticky-header-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1f2937;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    .sticky-profile-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      color: #374151;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      text-decoration: none;
+    }
+
+    .sticky-profile-btn:hover {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .sticky-profile-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .sticky-profile-btn i {
+      font-size: 1.125rem;
+    }
+
+    /* Sticky 功能卡片区域 */
+    .sticky-cards-section {
+      position: sticky;
+      top: 64px;
+      z-index: 59;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.92) 100%);
+      backdrop-filter: blur(20px);
+      padding: 1rem;
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sticky-cards-section.hidden {
+      display: none;
+    }
+
+    .sticky-cards-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .sticky-capability-card {
+      flex: 1;
+      max-width: 260px;
+      background: white;
+      border-radius: 16px;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(229, 231, 235, 0.6);
+    }
+
+    .sticky-capability-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .sticky-capability-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .sticky-capability-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
     @media (max-width: 640px) {
-      .glass-nav {
-        height: 60px;
+      .sticky-header {
+        padding: 0.75rem 1rem;
       }
-      
-      .logo-glass {
-        width: 40px;
-        height: 40px;
-      }
-      
-      .logo-glass i {
+
+      .sticky-header-title {
         font-size: 1.125rem;
+      }
+
+      .sticky-profile-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .sticky-profile-btn i {
+        font-size: 1rem;
+      }
+
+      .sticky-cards-section {
+        top: 58px;
+        padding: 0.875rem;
+      }
+
+      .sticky-cards-grid {
+        gap: 0.75rem;
+      }
+
+      .sticky-capability-card {
+        padding: 0.75rem 1rem;
+      }
+
+      .sticky-capability-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+      }
+
+      .sticky-capability-name {
+        font-size: 0.875rem;
       }
     }
   </style>
-
-  <!-- 主内容区 -->
-  <main style="padding-bottom: 60px;padding-top: 0px;">
+</head>
+<body>
+  
+  <!-- 背景动画层 -->
+  <div id="animatedBackground">
+    <!-- 渐变泡泡 -->
+    <div class="gradient-orb orb-1"></div>
     
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <!-- 背景渐变和装饰 -->
-      <div class="hero-background">
-        <div class="hero-decoration hero-decoration-1"></div>
-        <div class="hero-decoration hero-decoration-2"></div>
-        <div class="hero-decoration hero-decoration-3"></div>
-      </div>
-      
-      <!-- 主要内容容器 -->
-      <div class="hero-content">
-        <div class="hero-container">
-          
-          <!-- 人脸图片区域 -->
-          <div class="hero-image-section">
-            <div class="hero-image-wrapper">
-              <!-- 主图片 -->
-              <div class="hero-image-container" id="heroImageContainer">
-                <img 
-                  id="heroImage"
-                  src="./assets/images/face/face1.jpg" 
-                  alt="AI颜值评估示例" 
-                  class="hero-image"
-                  loading="eager"
-                >
-                <!-- 占位符（图片加载失败时显示） -->
-                <div class="hero-image-placeholder" id="heroImagePlaceholder" style="display: none;">
-                  <i class="fas fa-user-circle"></i>
-                </div>
-                <!-- AI筛选提示 -->
-                <div class="ai-selecting-hint" id="aiSelectingHint">
-                  <i class="fas fa-sync-alt"></i>
-                  <span>AI智能筛选中...</span>
-                </div>
-              </div>
-              
-              <!-- 装饰元素 -->
-              <div class="hero-badge hero-badge-1">
-                <i class="fas fa-star"></i>
-                <span>专业AI评估</span>
-              </div>
-              <div class="hero-badge hero-badge-2">
-                <i class="fas fa-shield-alt"></i>
-                <span>隐私保护</span>
-              </div>
-              <div class="hero-icon hero-icon-1">
-                <i class="fas fa-sparkles"></i>
-              </div>
-              <div class="hero-icon hero-icon-2">
-                <i class="fas fa-crown"></i>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 文字内容区域 -->
-          <div class="hero-text-section">
-            <h1 class="hero-title">
-              <span class="hero-title-main">您的专属</span>
-              <span class="hero-title-sub">AI颜值顾问</span>
-            </h1>
-            <p class="hero-description">
-              AI面部评估 · 专家在线咨询 · 个性化治疗方案
-            </p>
-            <button onclick="goToAssessmentGuide()" class="hero-button">
-              <i class="fas fa-camera"></i>
-              <span>立即免费评估</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 底部波浪装饰 -->
-      <div class="hero-wave">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="hero-wave-svg">
-          <defs>
-            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:rgba(255,255,255,0.9);stop-opacity:1" />
-              <stop offset="30%" style="stop-color:rgba(255,255,255,0.6);stop-opacity:1" />
-              <stop offset="70%" style="stop-color:rgba(255,255,255,0.2);stop-opacity:1" />
-              <stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" />
-            </linearGradient>
-          </defs>
-          <path d="M0,60 C150,20 300,100 450,60 C600,20 750,100 900,60 C1050,20 1200,100 1200,60 L1200,120 L0,120 Z" fill="url(#waveGradient)"></path>
-        </svg>
-      </div>
-    </section>
-
-    <!-- 核心功能 -->
-    <section class="features-section">
-      <div class="features-container">
-        <h2 class="features-title">核心功能</h2>
-        <div class="features-grid">
-          
-          <!-- 功能卡片1 -->
-          <div class="feature-card feature-card-1" onclick="goToAssessmentGuide()">
-            <div class="feature-card-inner">
-              <div class="feature-icon-wrapper">
-                <div class="feature-icon feature-icon-1">
-                  <i class="fas fa-camera"></i>
-                </div>
-                <div class="feature-icon-bg"></div>
-              </div>
-              <div class="feature-content">
-                <h3 class="feature-title">AI面部评估</h3>
-                <p class="feature-description">专业AI算法，3秒生成评估报告</p>
-                <div class="feature-badge">
-                  <span>免费体验</span>
-                </div>
-              </div>
-              <div class="feature-arrow">
-                <i class="fas fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- 功能卡片2 -->
-          <div class="feature-card feature-card-2" onclick="goToChat()">
-            <div class="feature-card-inner">
-              <div class="feature-icon-wrapper">
-                <div class="feature-icon feature-icon-2">
-                  <i class="fas fa-robot"></i>
-                </div>
-                <div class="feature-icon-bg"></div>
-              </div>
-              <div class="feature-content">
-                <h3 class="feature-title">AI专家问答</h3>
-                <p class="feature-description">7x24小时在线，专业解答疑问</p>
-                <div class="feature-badge">
-                  <span>智能回复</span>
-                </div>
-              </div>
-              <div class="feature-arrow">
-                <i class="fas fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- 功能卡片3 -->
-          <div class="feature-card feature-card-3" onclick="goToBooking()">
-            <div class="feature-card-inner">
-              <div class="feature-icon-wrapper">
-                <div class="feature-icon feature-icon-3">
-                  <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="feature-icon-bg"></div>
-              </div>
-              <div class="feature-content">
-                <h3 class="feature-title">在线预约</h3>
-                <p class="feature-description">预约专家，享受一对一服务</p>
-                <div class="feature-badge">
-                  <span>专业服务</span>
-                </div>
-              </div>
-              <div class="feature-arrow">
-                <i class="fas fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 成功案例 -->
-    <section class="max-w-4xl mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">成功案例</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        
-        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-          <div class="aspect-square bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-image text-gray-400 text-3xl"></i>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-medium text-gray-900">案例1</p>
-            <p class="text-xs text-gray-500">激光祛斑</p>
-          </div>
-        </div>
-
-        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-          <div class="aspect-square bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-image text-gray-400 text-3xl"></i>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-medium text-gray-900">案例2</p>
-            <p class="text-xs text-gray-500">超声刀提拉</p>
-          </div>
-        </div>
-
-        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-          <div class="aspect-square bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-image text-gray-400 text-3xl"></i>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-medium text-gray-900">案例3</p>
-            <p class="text-xs text-gray-500">水光针</p>
-          </div>
-        </div>
-
-        <div class="card p-0 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
-          <div class="aspect-square bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-image text-gray-400 text-3xl"></i>
-          </div>
-          <div class="p-3">
-            <p class="text-sm font-medium text-gray-900">案例4</p>
-            <p class="text-xs text-gray-500">热玛吉</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 科普文章 -->
-    <section class="articles-section">
-      <div class="articles-container">
-        <div class="articles-header">
-          <div class="articles-title-wrapper">
-            <h2 class="articles-title">科普文章</h2>
-            <p class="articles-subtitle">专业美容知识分享</p>
-          </div>
-          <a href="./pages/community/index.html" class="articles-more-link">
-            <span>查看更多</span>
-            <i class="fas fa-chevron-right"></i>
-          </a>
-        </div>
-        <div class="articles-grid" id="articleList">
-          <!-- 文章列表会通过JS动态加载 -->
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- 底部导航栏 -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
-      <i class="fas fa-home text-xl mb-1"></i>
-      <span class="text-xs">首页</span>
+    <!-- 网格线 -->
+    <div class="grid-overlay"></div>
+    
+    <!-- 粒子层 -->
+    <div class="particle-layer" id="particleContainer"></div>
+  </div>
+  
+  <!-- 主内容层 -->
+  <div class="main-content-wrapper">
+    <!-- 悬浮的"我的"按钮 -->
+    <a href="/web/pages-chat/profile/index.html" class="floating-profile-button">
+      <i class="fas fa-user"></i>
     </a>
-    <a href="./pages/assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-camera text-xl mb-1"></i>
-      <span class="text-xs">评估</span>
-    </a>
-    <a href="./pages/community/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-comments text-xl mb-1"></i>
-      <span class="text-xs">社区</span>
-    </a>
-    <a href="./pages/profile/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-user text-xl mb-1"></i>
-      <span class="text-xs">我的</span>
-    </a>
-  </nav>
 
-  <!-- 页面脚本 -->
+    <!-- Sticky Header (滚动时显示) -->
+    <div class="sticky-header hidden" id="stickyHeader">
+      <div class="sticky-header-content">
+        <h1 class="sticky-header-title">逆龄小颜</h1>
+        <a href="/web/pages-chat/profile/index.html" class="sticky-profile-btn">
+          <i class="fas fa-user"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sticky 功能卡片区域 -->
+    <div class="sticky-cards-section hidden" id="stickyCardsSection">
+      <div class="sticky-cards-grid">
+        <div class="sticky-capability-card" onclick="openCapability('assessment')">
+          <div class="sticky-capability-icon capability-icon-camera">
+            <i class="fas fa-camera"></i>
+          </div>
+          <div class="sticky-capability-name">逆龄秘境</div>
+        </div>
+        <div class="sticky-capability-card" onclick="openCapability('care')">
+          <div class="sticky-capability-icon capability-icon-nurse">
+            <i class="fas fa-user-nurse"></i>
+          </div>
+          <div class="sticky-capability-name">术后管家</div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- 聊天头部 -->
+  <div class="chat-header">
+    <h1 class="chat-title">逆龄小颜</h1>
+    
+    <div class="assistant-avatar-wrapper">
+      <div class="assistant-avatar">
+        <div class="assistant-avatar-inner">
+          <img src="./assets/images/NiLing/peple.png" alt="小颜医生" class="assistant-avatar-img">
+        </div>
+      </div>
+      <div class="audio-icon">
+        <i class="fas fa-volume-up"></i>
+      </div>
+    </div>
+    
+    <p class="greeting">HELLO, 小颜医生</p>
+  </div>
+
+  <!-- 助手能力区域 -->
+  <section class="capabilities-section">
+    <div class="capability-grid">
+    
+
+      <!-- 逆龄秘境 -->
+      <div class="capability-card" onclick="openCapability('assessment')">
+        <div class="capability-icon capability-icon-camera">
+          <i class="fas fa-camera"></i>
+        </div>
+        <div class="capability-name">逆龄秘境</div>
+      </div>
+
+      <!-- 术后管家 -->
+      <div class="capability-card" onclick="openCapability('care')">
+        <div class="capability-icon capability-icon-nurse">
+          <i class="fas fa-user-nurse"></i>
+        </div>
+        <div class="capability-name">术后管家</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 建议问题区域 -->
+  <section class="suggested-questions-section" id="suggestedQuestionsSection">
+    <!-- 标题区域 -->
+    <div class="suggestions-header">
+      <p class="suggestion-hint">猜你想问</p>
+      <button class="refresh-button" onclick="refreshQuestions()">
+        <i class="fas fa-sync-alt"></i>
+        <span>换一换</span>
+      </button>
+    </div>
+    
+    <!-- 滚动容器 -->
+    <div class="questions-scroll-container" id="questionsScrollContainer">
+      <div class="questions-scroll-wrapper" id="questionsScrollWrapper">
+        <!-- 问题会通过JS动态生成，分成三排 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 消息列表区域 -->
+  <section class="chat-messages-section" id="chatMessagesSection">
+    <div class="messages-container" id="messagesContainer">
+      <!-- 消息会通过JS动态生成 -->
+    </div>
+  </section>
+
+  <!-- 录音提示 -->
+  <div class="recording-indicator" id="recordingIndicator">
+    <div class="wave">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span id="recordingText"></span>
+  </div>
+
+  <!-- 输入框区域 -->
+  <div class="message-input-area">
+    <input 
+      type="text" 
+      placeholder="给小颜医生发送消息" 
+      class="message-input"
+      id="messageInput"
+      onkeypress="handleEnterKey(event)"
+    >
+    <button class="voice-button" id="voiceButton" 
+            onmousedown="handleVoiceInput(event)" 
+            onmouseup="stopRecordingOnRelease(event)"
+            ontouchstart="handleVoiceInput(event)"
+            ontouchend="stopRecordingOnRelease(event)"
+            ontouchcancel="stopRecordingOnRelease(event)">
+      <i class="fas fa-microphone"></i>
+    </button>
+  </div>
+
   <script>
-    // 内联路径配置 - 支持本地和 GitHub Pages 环境
-    window.PathConfig = {
-      getBasePath() {
-        const hostname = window.location.hostname;
-        const pathname = window.location.pathname;
-        
-        // GitHub Pages 环境
-        if (hostname.includes('github.io')) {
-          const pathParts = pathname.split('/').filter(p => p);
-          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
-            return '/' + pathParts[0];
-          }
-        }
-        
-        // Gitee Pages 环境
-        if (hostname.includes('gitee.io')) {
-          const pathParts = pathname.split('/').filter(p => p);
-          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
-            return '/' + pathParts[0];
-          }
-        }
-        
-        // 本地环境
-        return '';
-      },
+    // 语音录音相关变量
+    let mediaRecorder = null;
+    let isRecording = false;
+    let audioChunks = [];
+    let recordingStartTime = null;
+    let recordingTimer = null;
+    let hasPermission = false;
+
+    // ==================== 对话功能代码 ====================
+    let conversationMessages = [];
+    let isConversationStarted = false;
+    let currentConversationId = null;
+
+    // 初始化聊天
+    function initChat() {
+      // 从 localStorage 加载历史对话
+      conversationMessages = Storage.get('chatMessages') || [];
       
-      getAssetPath(relativePath) {
-        if (!relativePath) return '';
-        if (!relativePath.startsWith('/')) {
-          relativePath = '/' + relativePath;
-        }
-        return this.getBasePath() + relativePath;
-      },
+      // 加载 conversation_id
+      currentConversationId = Storage.get('currentConversationId') || null;
       
-      getPagePath(absolutePath) {
-        if (!absolutePath) return '';
-        
-        // 如果已经是相对路径，直接返回
-        if (!absolutePath.startsWith('/')) {
-          return absolutePath;
-        }
-        
-        // 获取当前页面路径
-        let currentPath = window.location.pathname;
-        
-        // 去掉 base path
-        const basePath = this.getBasePath();
-        if (basePath && currentPath.startsWith(basePath)) {
-          currentPath = currentPath.substring(basePath.length);
-        }
-        
-        // 如果路径以 / 结尾（目录），假设是 index.html
-        if (currentPath.endsWith('/')) {
-          currentPath += 'index.html';
-        }
-        
-        // 计算当前页面的目录深度
-        const currentParts = currentPath.split('/').filter(p => p);
-        const currentDirs = currentParts.slice(0, -1); // 去掉文件名，保留目录部分
-        const currentDepth = currentDirs.length;
-        
-        // 构建相对路径
-        let relativePath = '';
-        if (currentDepth === 0) {
-          relativePath = './';
-        } else {
-          relativePath = '../'.repeat(currentDepth);
-        }
-        
-        // 目标路径（去掉开头的 /）
-        const targetPath = absolutePath.substring(1);
-        
-        return relativePath + targetPath;
-      },
-      
-      async loadScript(src) {
-        return new Promise((resolve, reject) => {
-          const script = document.createElement('script');
-          const scriptPath = this.getPagePath(src);
-          script.src = scriptPath;
-          script.onload = () => {
-            console.log('✅ Loaded script:', scriptPath);
-            resolve();
-          };
-          script.onerror = (error) => {
-            console.error('❌ Failed to load script:', scriptPath, error);
-            reject(error);
-          };
-          document.head.appendChild(script);
-        });
-      },
-      
-      async loadSharedScripts() {
-        const scripts = [
-          '/shared/storage.js',
-          '/shared/utils.js',
-          '/shared/constants.js',
-          '/shared/router.js'
-        ];
-        
-        let successCount = 0;
-        for (const script of scripts) {
-          try {
-            await this.loadScript(script);
-            successCount++;
-          } catch (error) {
-            console.warn(`⚠️ Failed to load ${script}:`, error);
-          }
-        }
-        
-        if (successCount === 0) {
-          console.error('❌ No shared scripts loaded successfully');
-        } else {
-          console.log(`✅ Loaded ${successCount}/${scripts.length} shared scripts`);
-        }
-      },
-      
-      // 获取环境信息
-      getEnvironmentInfo() {
-        return {
-          basePath: this.getBasePath(),
-          hostname: window.location.hostname,
-          pathname: window.location.pathname,
-          fullUrl: window.location.href,
-          isGitHubPages: window.location.hostname.includes('github.io'),
-          isGiteePages: window.location.hostname.includes('gitee.io'),
-          isLocal: ['localhost', '127.0.0.1'].includes(window.location.hostname) ||
-                   window.location.hostname.includes('192.168.') ||
-                   window.location.hostname.includes('10.')
-        };
+      if (conversationMessages.length > 0) {
+        showChatMessages();
+        renderMessages();
       }
-    };
-    
-    // 本地环境输出调试信息
-    if (['localhost', '127.0.0.1'].includes(window.location.hostname)) {
-      console.log('🔧 PathConfig Environment:', window.PathConfig.getEnvironmentInfo());
     }
 
-    // 后备 Storage 实现（如果外部脚本加载失败时使用）
-    if (typeof Storage.get !== 'function') {
-      window.Storage = {
-        prefix: 'aibeauty_',
-        set(key, value) {
-          try {
-            localStorage.setItem(this.prefix + key, JSON.stringify(value));
-            return true;
-          } catch (e) {
-            console.error('Storage set error:', e);
-            return false;
-          }
-        },
-        get(key) {
-          try {
-            const item = localStorage.getItem(this.prefix + key);
-            return item ? JSON.parse(item) : null;
-          } catch (e) {
-            console.error('Storage get error:', e);
-            return null;
-          }
-        },
-        remove(key) {
-          localStorage.removeItem(this.prefix + key);
-        },
-        clear() {
-          const keys = Object.keys(localStorage);
-          keys.forEach(key => {
-            if (key.startsWith(this.prefix)) {
-              localStorage.removeItem(key);
-            }
-          });
-        },
-        keys() {
-          const keys = Object.keys(localStorage);
-          return keys
-            .filter(key => key.startsWith(this.prefix))
-            .map(key => key.replace(this.prefix, ''));
-        }
+    // 显示聊天区域（隐藏建议问题）
+    function showChatMessages() {
+      const suggestedSection = document.getElementById('suggestedQuestionsSection');
+      const chatSection = document.getElementById('chatMessagesSection');
+      
+      if (suggestedSection && chatSection) {
+        suggestedSection.style.display = 'none';
+        chatSection.style.display = 'block';
+        isConversationStarted = true;
+      }
+    }
+
+    // 渲染所有消息
+    function renderMessages() {
+      const container = document.getElementById('messagesContainer');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      conversationMessages.forEach((msg) => {
+        appendMessage(msg, false);
+      });
+      
+      scrollToBottom();
+    }
+
+    // 格式化消息内容（加粗关键词、标题等）
+    function formatMessageContent(content) {
+      if (!content) return '';
+      
+      // 保护已经格式化的 HTML
+      if (content.includes('<')) return content;
+      
+      let formatted = content
+        // 匹配 "标题:" 格式并加粗
+        .replace(/([\u4e00-\u9fa5]{2,6}[：:])/g, '<strong style="font-weight: 600;">$1</strong>')
+        // 匹配 【关键词】格式
+        .replace(/【([^】]+)】/g, '<strong style="font-weight: 600;">【$1】</strong>')
+        // 匹配数字编号的标题
+        .replace(/(\d+\.\s+)([^\n]+)/g, '<strong style="font-weight: 600;">$1$2</strong>')
+        // 匹配 • 或 · 开头的项目
+        .replace(/([•·]\s*)([^\n]+)/g, '<span style="display: block; margin: 0.25rem 0;"><strong style="font-weight: 600;">$1</strong>$2</span>')
+        // 换行转换为 <br>，但去除多余空行
+        .replace(/\n{2,}/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+      
+      return formatted;
+    }
+
+    // 添加消息到界面
+    function appendMessage(msg, scroll = true) {
+      const container = document.getElementById('messagesContainer');
+      if (!container) return;
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message-item ${msg.isUser ? 'user' : 'assistant'}`;
+      
+      if (msg.isUser) {
+        messageDiv.innerHTML = `
+          <div class="message-bubble">${msg.content}</div>
+          <div class="message-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+        `;
+      } else {
+        const formattedContent = formatMessageContent(msg.content);
+        messageDiv.innerHTML = `
+          <div class="message-avatar">
+            <img src="./assets/images/NiLing/peple.png" alt="小颜医生" onerror="this.parentElement.innerHTML='<i class=&quot;fas fa-user-nurse&quot;></i>'">
+          </div>
+          <div class="message-bubble">
+            <div class="message-text">${formattedContent}</div>
+            <div class="message-meta">${msg.timestamp}</div>
+          </div>
+        `;
+      }
+      
+      container.appendChild(messageDiv);
+      
+      if (scroll) {
+        scrollToBottom();
+      }
+    }
+
+    // 滚动到底部
+    function scrollToBottom() {
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+
+    // 添加流式消息（初始为空）
+    function appendStreamingMessage(msg) {
+      const container = document.getElementById('messagesContainer');
+      if (!container) return;
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message-item assistant`;
+      messageDiv.id = `msg-${msg.id}`;
+      messageDiv.innerHTML = `
+        <div class="message-avatar">
+          <img src="./assets/images/NiLing/peple.png" alt="小颜医生" onerror="this.parentElement.innerHTML='<i class=&quot;fas fa-user-nurse&quot;></i>'">
+        </div>
+        <div class="message-bubble">
+          <div class="message-text" id="msg-content-${msg.id}"></div>
+          <div class="message-meta">${msg.timestamp}</div>
+        </div>
+      `;
+      
+      container.appendChild(messageDiv);
+      scrollToBottom();
+    }
+
+    // 更新流式消息内容
+    function updateStreamingMessage(msgId, content) {
+      const contentElement = document.getElementById(`msg-content-${msgId}`);
+      if (contentElement) {
+        // 显示纯文本，保留换行符
+        // 使用 innerHTML 将换行转换为 <br>，避免重复格式化
+        const withBreaks = content.replace(/\n/g, '<br>');
+        contentElement.innerHTML = withBreaks;
+        scrollToBottom();
+      }
+    }
+
+    // 流式内容累积器（参考流式解析工具的思路）
+    class StreamingContentAccumulator {
+      constructor(onUpdate) {
+        this.buffer = '';
+        this.onUpdate = onUpdate;
+      }
+      
+      addChunk(chunk) {
+        this.buffer += chunk;
+        // 每次添加新内容后，完整格式化并更新显示
+        this.onUpdate(this.buffer);
+      }
+      
+      // 新增：直接设置完整内容（用于累积型流式响应）
+      setFullContent(fullContent) {
+        this.buffer = fullContent;
+        this.onUpdate(this.buffer);
+      }
+      
+      getContent() {
+        return this.buffer;
+      }
+      
+      reset() {
+        this.buffer = '';
+      }
+    }
+
+    // 发送消息
+    async function sendMessage(content) {
+      if (!content.trim()) return;
+      
+      // 显示聊天区域
+      if (!isConversationStarted) {
+        showChatMessages();
+      }
+      
+      // 添加用户消息
+      const userMsg = {
+        id: Date.now(),
+        isUser: true,
+        content: content,
+        timestamp: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
       };
-      console.log('✅ Using fallback Storage implementation');
-    }
-
-    // 动态加载共享脚本
-    document.addEventListener('DOMContentLoaded', async function() {
+      
+      conversationMessages.push(userMsg);
+      appendMessage(userMsg);
+      
+      // 保存到 localStorage
+      Storage.set('chatMessages', conversationMessages);
+      
+      // 显示打字动画
+      showTypingIndicator();
+      
+      // 调用真实 API 流式输出
       try {
-        await PathConfig.loadSharedScripts();
+        // 先隐藏打字动画
+        hideTypingIndicator();
         
-        // 验证关键对象是否加载成功
-        if (typeof Storage.get === 'function') {
-          console.log('✅ Storage loaded successfully');
+        // 创建消息容器
+        const msgId = Date.now() + 1;
+        const aiMsg = {
+          id: msgId,
+          isUser: false,
+          content: '',
+          timestamp: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+        };
+        
+        conversationMessages.push(aiMsg);
+        appendStreamingMessage(aiMsg);
+        
+        // 调用流式 API，使用累积器
+        const accumulator = new StreamingContentAccumulator((fullContent) => {
+          // 更新消息内容和显示
+          const lastMsg = conversationMessages[conversationMessages.length - 1];
+          if (lastMsg && lastMsg.id === msgId) {
+            lastMsg.content = fullContent;
+            updateStreamingMessage(msgId, fullContent);
+          }
+        });
+        
+        await callAIAPIStreaming(content, currentConversationId, (chunk) => {
+          // 累积增量内容
+          accumulator.addChunk(chunk);
+        });
+        
+        // 确保最终内容已保存并重新格式化
+        const lastMsg = conversationMessages[conversationMessages.length - 1];
+        if (lastMsg && lastMsg.id === msgId) {
+          lastMsg.content = accumulator.getContent();
+          // 流式结束后，格式化完整内容
+          const formattedContent = formatMessageContent(lastMsg.content);
+          const contentElement = document.getElementById(`msg-content-${msgId}`);
+          if (contentElement) {
+            contentElement.innerHTML = formattedContent;
+          }
         }
         
-        // 脚本加载完成后初始化页面
-        initPage();
+        // 保存完整消息
+        Storage.set('chatMessages', conversationMessages);
+        
       } catch (error) {
-        console.error('❌ Failed to load shared scripts:', error);
-        // 即使脚本加载失败，也尝试初始化页面
-        initPage();
-      }
-    });
-
-    // 页面初始化函数
-    function initPage() {
-      // URL标准化：确保访问 /web 时重定向到 /web/
-      if (window.location.pathname === '/web') {
-        window.location.replace('/web/');
-      }
-      
-      // 启动页面功能
-      startImageCarousel();
-      renderArticles();
-      initGlassNavScroll();
-    }
-    
-    // 融入式导航栏滚动效果
-    function initGlassNavScroll() {
-      const nav = document.querySelector('.glass-nav');
-      if (!nav) return;
-      
-      // 页面加载时检查滚动位置
-      const checkScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        // 发送消息失败
+        hideTypingIndicator();
         
-        // 滚动超过 20px 时添加 scrolled 类，实现平滑过渡
-        if (scrollTop > 20) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
+        // 显示错误消息
+        const errorMsg = {
+          id: Date.now() + 1,
+          isUser: false,
+          content: '抱歉，服务暂时不可用，请稍后再试。',
+          timestamp: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+        };
+        
+        conversationMessages.push(errorMsg);
+        appendMessage(errorMsg);
+        Storage.set('chatMessages', conversationMessages);
+      }
+    }
+
+    // 打字动画显示
+    function showTypingIndicator() {
+      const container = document.getElementById('messagesContainer');
+      if (!container) return;
+      
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'message-item assistant';
+      typingDiv.id = 'typingIndicator';
+      typingDiv.innerHTML = `
+        <div class="message-avatar">
+          <img src="./assets/images/NiLing/peple.png" alt="小颜医生" onerror="this.parentElement.innerHTML='<i class=&quot;fas fa-user-nurse&quot;></i>'">
+        </div>
+        <div class="message-bubble">
+          <div class="typing-indicator">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+      `;
+      container.appendChild(typingDiv);
+      scrollToBottom();
+    }
+
+    // 隐藏打字动画
+    function hideTypingIndicator() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) indicator.remove();
+    }
+
+    // AI回复生成（智能匹配）
+    function generateAIResponse(userMsg) {
+      const msg = userMsg.toLowerCase();
+      
+      // 关键词匹配回复
+      const responses = {
+        '热玛吉': '热玛吉是一种射频紧肤技术，通过高频电波加热皮肤深层组织，刺激胶原蛋白再生。通常能维持1-2年效果，需要专业医生操作。疼痛感因人而异，可通过表面麻醉缓解。',
+        '水光针': '水光针是注射式护肤，建议每3-4周进行一次，具体频率需根据个人皮肤状况调整。主要作用是补水、提亮肤色、改善细纹。术后24小时内避免沾水。',
+        '玻尿酸': '玻尿酸能维持6-18个月不等，具体取决于产品类型、注射部位和个人代谢速度。品质玻尿酸副作用很小，关键是选择正规机构和有资质医生。',
+        '抗衰': '抗衰老是系统性工程：日常防晒是基础、适度运动促进新陈代谢、选择适合的医美项目。建议从25岁起开始抗衰管理。',
+        '副作用': '正规医疗机构使用认证产品进行医美是相对安全的，但需要选择有资质的医生，并做好术前咨询和术后护理。',
+        '年龄': '18岁以上可开始医美，不同年龄段关注不同：20-30岁重点是预防，30-40岁着重抗衰，40+岁更关注修复。',
+        '护理': '术后护理很关键：①严格防晒 ②避免刺激性护肤品 ③保持清洁 ④遵医嘱用药 ⑤忌烟酒辛辣 ⑥充足睡眠。',
+        '衰老': '衰老主要由三大因素导致：①自然老化（基因）②光老化（紫外线）③氧化应激（自由基）。科学抗衰需要三者兼顾。',
+        '松弛': '面部松弛可通过热玛吉、超声刀、线雕等方式改善，根据松弛程度选择，中度建议热玛吉，重度可考虑线雕。',
+        '细纹': '细纹形成因缺水、胶原流失，可通过水光针、肉毒素、光子嫩肤等改善，同时日常保湿和防晒很重要。',
+        '超声刀': '超声刀是深层聚焦超声波技术，提升效果比热玛吉更强，能维持2-3年。疼痛感较强，需要敷麻。适合中重度松弛。',
+        '防晒': '防晒是抗衰第一要务！紫外线造成80%皮肤老化，必须每天使用SPF30+防晒霜，每2小时补涂。阴天也要防晒。',
+        '食物': '抗衰多吃：①富含维C的水果（蓝莓、番茄）②优质蛋白 ③坚果（富含维E）④深海鱼（Omega3）⑤绿茶（抗氧化）',
+        '项目': '相对安全的医美项目：肉毒素、玻尿酸、光子嫩肤、热玛吉、水光针等。关键是选择合规产品和专业医生。',
+        '计划': '建议：轻度松弛选热玛吉；严重松弛选线雕；细纹选肉毒素+玻尿酸；色斑选皮秒/光子嫩肤。根据预算和需求组合。',
+        '效果': '抗衰效果维持时间：热玛吉1-2年，超声刀2-3年，玻尿酸6-18个月，线雕1年左右。定期维护可延长效果。',
       };
       
-      // 初始检查
-      checkScroll();
-      
-      // 监听滚动事件
-      window.addEventListener('scroll', checkScroll, { passive: true });
-    }
-    
-    // 主图片轮播配置
-    const heroImages = [
-      './assets/images/face/face1.jpg',
-      './assets/images/face/face2.jpg',
-      './assets/images/face/face3.jpg',
-      './assets/images/face/face4.png',
-      './assets/images/face/face5.png',
-      './assets/images/face/face6.png',
-      './assets/images/face/face7.png',
-      './assets/images/face/face8.png',
-      './assets/images/face/face9.png',
-      './assets/images/face/face10.png',
-      './assets/images/face/face11.png'
-    ];
-    
-    let currentImageIndex = 0;
-    let imageCarouselTimeout = null;
-    let isCarouselRunning = false;
-    
-    // 切换图片（无动画）
-    function switchImage(index) {
-      const heroImage = document.getElementById('heroImage');
-      if (heroImage) {
-        heroImage.src = heroImages[index];
-      }
-    }
-    
-    // 阶段1: 快速滚动
-    function fastScrollPhase(callback) {
-      const heroImage = document.getElementById('heroImage');
-      const container = document.getElementById('heroImageContainer');
-      const hint = document.getElementById('aiSelectingHint');
-      
-      if (!heroImage || !container) return;
-      
-      // 显示提示和模糊效果
-      heroImage.classList.add('fast-scrolling');
-      if (hint) hint.classList.add('active');
-      
-      let scrollCount = 0;
-      const maxScrolls = 30; // 快速滚动30次
-      
-      const fastInterval = setInterval(() => {
-        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-        switchImage(currentImageIndex);
-        scrollCount++;
-        
-        if (scrollCount >= maxScrolls) {
-          clearInterval(fastInterval);
-          callback();
-        }
-      }, 50); // 每50ms切换一次
-    }
-    
-    // 阶段2: 减速阶段
-    function slowDownPhase(callback) {
-      const heroImage = document.getElementById('heroImage');
-      const delays = [100, 150, 250, 400, 600]; // 逐渐减速
-      let step = 0;
-      
-      function nextStep() {
-        if (step < delays.length) {
-          currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-          switchImage(currentImageIndex);
-          step++;
-          imageCarouselTimeout = setTimeout(nextStep, delays[step - 1]);
-        } else {
-          callback();
+      // 精确匹配
+      for (let key in responses) {
+        if (msg.includes(key)) {
+          return responses[key];
         }
       }
       
-      nextStep();
+      // 模糊匹配
+      if (msg.includes('疼') || msg.includes('痛')) {
+        return '疼痛感因人而异：肉毒素轻微针刺感、水光针有胀痛、热玛吉需表面麻醉、超声刀和线雕痛感较强但可忍受。术后会有轻微不适，1-3天恢复。';
+      }
+      
+      if (msg.includes('多久') || msg.includes('一次')) {
+        return '不同项目频率不同：\n• 水光针：3-4周/次\n• 热玛吉：1年/次\n• 肉毒素：6个月/次\n• 光子嫩肤：1-3个月/次\n\n具体需要医生根据个人情况定制方案。';
+      }
+      
+      // 默认智能回复
+      return `关于「${userMsg}」，我是专业美肤顾问小颜，很高兴为您解答！
+
+💡 建议您：
+1. 可以点击「逆龄秘境」进行免费面部评估
+2. 获取个性化的改善方案和费用建议
+3. 或咨询我们的专业美容顾问
+
+我可以回答您的具体问题，比如：
+• 项目选择、效果、副作用
+• 术后护理、恢复时间
+• 费用参考、最佳年龄
+
+请具体描述您关心的问题，我会详细为您解答哦~ 😊`;
     }
-    
-    // 阶段3: 选中停留
-    function selectedPhase(callback) {
-      const heroImage = document.getElementById('heroImage');
-      const container = document.getElementById('heroImageContainer');
-      const wrapper = container ? container.parentElement : null;
-      const hint = document.getElementById('aiSelectingHint');
+
+    // 调用真实 AI API（流式输出）
+    async function callAIAPIStreaming(userMessage, conversationId = '', onChunk) {
+      const API_BASE = 'http://aie.wenge.com:30051/v1';
+      const API_KEY = 'app-7GvRPyu0pd3wzK7YDWF6byue';
       
-      if (!heroImage || !container) return;
-      
-      // 移除模糊，添加选中效果
-      heroImage.classList.remove('fast-scrolling');
-      heroImage.classList.add('selected');
-      container.classList.add('selected');
-      if (wrapper) wrapper.classList.add('selected');
-      
-      // 隐藏提示
-      if (hint) hint.classList.remove('active');
-      
-      // 停留3秒
-      imageCarouselTimeout = setTimeout(() => {
-        // 移除选中效果
-        heroImage.classList.remove('selected');
-        container.classList.remove('selected');
-        if (wrapper) wrapper.classList.remove('selected');
-        
-        // 短暂淡出
-        heroImage.style.opacity = '0.7';
-        setTimeout(() => {
-          heroImage.style.opacity = '1';
-          callback();
-        }, 300);
-      }, 3000); // 停留3秒
-    }
-    
-    // 开始一轮完整的"开盲盒"动画
-    function startBlindBoxAnimation() {
-      if (isCarouselRunning) return;
-      isCarouselRunning = true;
-      
-      // 阶段1: 快速滚动
-      fastScrollPhase(() => {
-        // 阶段2: 减速
-        slowDownPhase(() => {
-          // 阶段3: 选中停留
-          selectedPhase(() => {
-            isCarouselRunning = false;
-            // 等待1秒后开始下一轮
-            imageCarouselTimeout = setTimeout(() => {
-              startBlindBoxAnimation();
-            }, 1000);
-          });
+      try {
+        const response = await fetch(`${API_BASE}/chat-messages`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            query: userMessage,
+            response_mode: 'streaming',
+            user: 'web-user-001',
+            conversation_id: conversationId,
+            inputs: {}
+          })
         });
+
+        if (!response.ok) {
+          throw new Error(`API错误: ${response.status}`);
+        }
+        
+        // 处理流式响应
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let fullAnswer = '';
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop(); // 保留不完整的行
+          
+          for (const line of lines) {
+            if (line.trim().startsWith('data: ')) {
+              try {
+                const jsonData = line.substring(6).trim();
+                if (!jsonData || jsonData === '') continue;
+                
+                const data = JSON.parse(jsonData);
+                
+                if (data.event === 'message') {
+                  // 每次收到 message 事件，answer 是增量内容片段
+                  const newAnswer = data.answer || '';
+                  
+                  // 累积完整内容
+                  if (newAnswer) {
+                    fullAnswer += newAnswer;
+                    // 直接传递增量片段
+                    onChunk(newAnswer);
+                  }
+                } else if (data.event === 'message_end') {
+                  // 保存 conversation_id
+                  if (data.conversation_id) {
+                    currentConversationId = data.conversation_id;
+                    Storage.set('currentConversationId', currentConversationId);
+                  }
+                } else if (data.event === 'error') {
+                  throw new Error(data.error || 'API错误');
+                }
+              } catch (e) {
+                console.error('解析流数据失败:', e, '原始数据:', line);
+              }
+            }
+          }
+        }
+        
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // 调用真实 AI API（阻塞模式，降级使用）
+    async function callAIAPI(userMessage, conversationId = '') {
+      const API_BASE = 'http://aie.wenge.com:30051/v1';
+      const API_KEY = 'app-7GvRPyu0pd3wzK7YDWF6byue';
+      
+      try {
+        const response = await fetch(`${API_BASE}/chat-messages`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            query: userMessage,
+            response_mode: 'blocking',
+            user: 'web-user-001',
+            conversation_id: conversationId,
+            inputs: {}
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`API错误: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // 保存 conversation_id
+        if (data.conversation_id) {
+          currentConversationId = data.conversation_id;
+          Storage.set('currentConversationId', currentConversationId);
+        }
+        
+        return data.answer || '抱歉，未能获取回复';
+        
+      } catch (error) {
+        // 降级到模拟回复
+        return generateAIResponse(userMessage);
+      }
+    }
+
+    // 问题数据
+    const questionTemplates = [
+      { icon: 'fa-question', iconClass: 'question-icon-blue', text: '衰老的三大因素?' },
+      { icon: 'fa-heart', iconClass: 'question-icon-pink', text: '热玛吉真的有效果吗?' },
+      { icon: 'fa-shield-alt', iconClass: 'question-icon-green', text: '童颜针对人体有没有危害?' },
+      { icon: 'fa-star', iconClass: 'question-icon-blue', text: '面部松弛如何改善?' },
+      { icon: 'fa-droplet', iconClass: 'question-icon-pink', text: '水光针多久做一次?' },
+      { icon: 'fa-bolt', iconClass: 'question-icon-blue', text: '超声刀效果怎么样?' },
+      { icon: 'fa-sun', iconClass: 'question-icon-pink', text: '日常防晒有多重要?' },
+      { icon: 'fa-leaf', iconClass: 'question-icon-green', text: '抗衰吃什么食物好?' },
+      { icon: 'fa-fire', iconClass: 'question-icon-pink', text: '热玛吉疼不疼?' },
+      { icon: 'fa-eye', iconClass: 'question-icon-blue', text: '眼部细纹怎么去除?' },
+      { icon: 'fa-magic', iconClass: 'question-icon-pink', text: '哪些医美项目安全?' },
+      { icon: 'fa-clock', iconClass: 'question-icon-blue', text: '做医美的最佳年龄?' },
+      { icon: 'fa-gem', iconClass: 'question-icon-green', text: '玻尿酸能维持多久?' },
+      { icon: 'fa-flask', iconClass: 'question-icon-blue', text: '肉毒素有副作用吗?' },
+      { icon: 'fa-sparkles', iconClass: 'question-icon-pink', text: '如何选择合适的项目?' },
+      { icon: 'fa-hands-helping', iconClass: 'question-icon-green', text: '医美术后如何护理?' },
+      { icon: 'fa-chart-line', iconClass: 'question-icon-blue', text: '抗衰效果能持续多久?' },
+      { icon: 'fa-calendar-check', iconClass: 'question-icon-pink', text: '多久做一次医美合适?' },
+      { icon: 'fa-lightbulb', iconClass: 'question-icon-green', text: '日常护肤要注意什么?' },
+      { icon: 'fa-heartbeat', iconClass: 'question-icon-blue', text: '如何保持年轻状态?' },
+    ];
+
+    // 渲染问题（分成三排，确保间距一致）
+    function renderQuestions() {
+      const wrapper = document.getElementById('questionsScrollWrapper');
+      
+      // 检查元素是否存在
+      if (!wrapper) {
+        console.error('questionsScrollWrapper 元素不存在');
+        return;
+      }
+      
+      // 清空容器
+      wrapper.innerHTML = '';
+      
+      // 检查问题模板是否为空
+      if (!questionTemplates || questionTemplates.length === 0) {
+        console.error('问题模板为空');
+        return;
+      }
+      
+      // 将问题尽可能均匀地分成三排
+      const rows = [[], [], []];
+      const totalQuestions = questionTemplates.length;
+      const questionsPerRow = Math.ceil(totalQuestions / 3);
+      
+      // 按顺序分配到三排，确保尽可能均匀
+      questionTemplates.forEach((question, index) => {
+        const rowIndex = Math.floor(index / questionsPerRow);
+        if (rowIndex < 3) {
+          rows[rowIndex].push(question);
+        }
+      });
+      
+      // 创建原始内容和克隆内容
+      const originalContainer = createRowsContainer(rows);
+      const clonedContainer = originalContainer.cloneNode(true);
+      
+      wrapper.appendChild(originalContainer);
+      wrapper.appendChild(clonedContainer);
+      
+      console.log('问题已渲染，共', totalQuestions, '个问题');
+    }
+    
+    // 创建三排轮播容器
+    function createRowsContainer(rows) {
+      const swiper = document.createElement('div');
+      swiper.className = 'questions-swiper';
+      
+      // 创建三排
+      rows.forEach((row, rowIndex) => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'question-row';
+        
+        row.forEach(question => {
+          const card = createQuestionCard(question);
+          rowDiv.appendChild(card);
+        });
+        
+        swiper.appendChild(rowDiv);
+        console.log(`第${rowIndex + 1}排创建了${row.length}个问题`);
+      });
+      
+      return swiper;
+    }
+
+    // 创建问题卡片
+    function createQuestionCard(question) {
+      const div = document.createElement('div');
+      div.className = 'question-card';
+      div.onclick = () => handleQuestion(question.text);
+      
+      div.innerHTML = `
+        <div class="question-icon ${question.iconClass}">
+          <i class="fas ${question.icon}"></i>
+        </div>
+        <div class="question-text">${question.text}</div>
+      `;
+      
+      return div;
+    }
+
+    // 自动滚动功能（水平）
+    let autoScrollInterval;
+    let isUserScrolling = false;
+    let isPaused = false;
+    let manualScrollTimeout;
+
+    function initAutoScroll() {
+      const container = document.getElementById('questionsScrollContainer');
+      const wrapper = document.getElementById('questionsScrollWrapper');
+      const autoScrollSpeed = 3.6; // 滚动速度（加速3倍）
+      
+      // 使用requestAnimationFrame替代setInterval，更流畅
+      function animate() {
+        if (!isPaused && !isUserScrolling && wrapper.children.length > 0) {
+          const originalSwiper = wrapper.children[0];
+          if (originalSwiper) {
+            container.scrollLeft += autoScrollSpeed;
+            const originalWidth = originalSwiper.offsetWidth + 12;
+            
+            if (container.scrollLeft >= originalWidth) {
+              container.scrollLeft -= originalWidth;
+            }
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+      
+      // 立即开始动画
+      requestAnimationFrame(animate);
+      
+      // 监听手动滚动
+      container.addEventListener('scroll', () => {
+        clearTimeout(manualScrollTimeout);
+        isUserScrolling = true;
+        
+        manualScrollTimeout = setTimeout(() => {
+          isUserScrolling = false;
+        }, 2000);
+      });
+      
+      // 鼠标悬停时暂停
+      container.addEventListener('mouseenter', () => {
+        isPaused = true;
+      });
+      
+      container.addEventListener('mouseleave', () => {
+        isPaused = false;
       });
     }
-    
-    // 停止图片轮播
-    function stopImageCarousel() {
-      if (imageCarouselTimeout) {
-        clearTimeout(imageCarouselTimeout);
-        imageCarouselTimeout = null;
-      }
-      isCarouselRunning = false;
+
+    // 处理能力卡片点击
+    function openCapability(type) {
+      console.log('Opening capability:', type);
       
-      // 清理状态
-      const heroImage = document.getElementById('heroImage');
-      const container = document.getElementById('heroImageContainer');
-      const wrapper = container ? container.parentElement : null;
-      const hint = document.getElementById('aiSelectingHint');
+      // 更新激活状态
+      const cards = document.querySelectorAll('.capability-card');
+      cards.forEach(card => card.classList.remove('active'));
+      event.currentTarget.classList.add('active');
       
-      if (heroImage) {
-        heroImage.classList.remove('fast-scrolling', 'selected');
-      }
-      if (container) {
-        container.classList.remove('selected');
-      }
-      if (wrapper) {
-        wrapper.classList.remove('selected');
-      }
-      if (hint) {
-        hint.classList.remove('active');
+      // 根据类型跳转
+      setTimeout(() => {
+        switch(type) {
+          case 'encyclopedia':
+            // 跳转到抗衰百科（已隐藏）
+            // window.location.href = './pages-chat/community/index.html';
+            break;
+          case 'assessment':
+            // 跳转到逆龄秘境（评估功能）
+            window.location.href = '/web/pages-chat/assessment/guide.html';
+            break;
+          case 'care':
+            // 跳转到术后管家
+            // 暂时跳转到预约页面  
+            window.location.href = '/web/pages-chat/profile/appointments.html';
+            break;
+          default:
+            console.log('Unknown capability:', type);
+        }
+      }, 300);
+    }
+
+    // 处理问题点击
+    function handleQuestion(question) {
+      console.log('Question clicked:', question);
+      // 直接发送消息
+      sendMessage(question);
+    }
+
+    // 处理回车键
+    function handleEnterKey(event) {
+      if (event.key === 'Enter') {
+        const input = document.getElementById('messageInput');
+        const message = input.value.trim();
+        
+        if (message) {
+          sendMessage(message);
+          input.value = '';
+        }
       }
     }
-    
-    // 启动图片轮播（开盲盒模式）
-    function startImageCarousel() {
-      stopImageCarousel();
-      // 延迟1秒后开始第一轮
-      imageCarouselTimeout = setTimeout(() => {
-        startBlindBoxAnimation();
+
+    // 请求麦克风权限
+    async function requestMicrophonePermission() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(track => track.stop()); // 立即停止流，只是用于获取权限
+        hasPermission = true;
+        return true;
+      } catch (error) {
+        console.error('Permission denied:', error);
+        alert('需要麦克风权限才能使用语音功能，请在浏览器设置中允许麦克风访问');
+        hasPermission = false;
+        return false;
+      }
+    }
+
+    // 开始录音
+    async function startRecording() {
+      if (!hasPermission) {
+        const gotPermission = await requestMicrophonePermission();
+        if (!gotPermission) return;
+      }
+
+      // 如果已经在录音，先停止之前的录音
+      if (isRecording) {
+        stopRecording();
+      }
+
+      // 清除之前的计时器（如果存在）
+      if (recordingTimer) {
+        clearInterval(recordingTimer);
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioChunks = [];
+        
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          handleRecordingComplete(audioBlob);
+          
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.start();
+        isRecording = true;
+        recordingStartTime = Date.now();
+        
+        // 显示录音提示
+        const indicator = document.getElementById('recordingIndicator');
+        const voiceButton = document.getElementById('voiceButton');
+        indicator.classList.add('active');
+        voiceButton.classList.add('recording');
+        
+        // 开始录音计时
+        startRecordingTimer();
+        
+        console.log('Recording started');
+      } catch (error) {
+        console.error('Error starting recording:', error);
+        alert('无法访问麦克风，请检查浏览器权限设置');
+      }
+    }
+
+    // 停止录音
+    function stopRecording() {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        
+        // 隐藏录音提示
+        const indicator = document.getElementById('recordingIndicator');
+        const voiceButton = document.getElementById('voiceButton');
+        indicator.classList.remove('active');
+        voiceButton.classList.remove('recording');
+        
+        // 清除计时器
+        if (recordingTimer) {
+          clearInterval(recordingTimer);
+          recordingTimer = null;
+        }
+        
+        // 重置时间显示
+        const timeSpan = document.getElementById('recordingText');
+        if (timeSpan) {
+          timeSpan.textContent = '';
+        }
+        
+        console.log('Recording stopped');
+      }
+    }
+
+    // 录音完成后处理
+    async function handleRecordingComplete(audioBlob) {
+      console.log('Recording completed, audio size:', audioBlob.size);
+      
+      // 显示聊天区域（如果还没有）
+      if (!isConversationStarted) {
+        showChatMessages();
+      }
+      
+      // 尝试Web Speech API识别（直接识别，不需要音频文件）
+      const recognizedText = await startWebSpeechRecognition();
+      
+      if (recognizedText && recognizedText.trim()) {
+        // 识别成功，发送文字消息
+        sendMessage(recognizedText);
+      } else {
+        // 识别失败，显示为语音消息
+        const voiceMsg = {
+          id: Date.now(),
+          isUser: true,
+          content: '🎤 [语音消息]',
+          type: 'audio',
+          timestamp: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+        };
+        
+        conversationMessages.push(voiceMsg);
+        appendMessage(voiceMsg);
+        Storage.set('chatMessages', conversationMessages);
+      }
+    }
+
+    // Web Speech API 语音识别（直接识别）
+    async function startWebSpeechRecognition() {
+      return new Promise((resolve) => {
+        // 检查浏览器支持
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          
+          try {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'zh-CN';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onresult = (event) => {
+              const text = event.results[0][0].transcript;
+              console.log('语音识别结果:', text);
+              resolve(text);
+            };
+            
+            recognition.onerror = (error) => {
+              console.log('语音识别失败:', error);
+              resolve('');
+            };
+            
+            recognition.onend = () => {
+              resolve('');
+            };
+            
+            // 开始识别
+            recognition.start();
+            
+            // 超时处理（5秒）
+            setTimeout(() => {
+              recognition.stop();
+              resolve('');
+            }, 5000);
+            
+          } catch (error) {
+            console.log('语音识别不可用:', error);
+            resolve('');
+          }
+        } else {
+          console.log('浏览器不支持语音识别');
+          resolve('');
+        }
+      });
+    }
+
+    // 录音计时器
+    let recordingSeconds = 0;
+    function startRecordingTimer() {
+      recordingSeconds = 0;
+      
+      // 清除之前的计时器
+      if (recordingTimer) {
+        clearInterval(recordingTimer);
+      }
+      
+      // 立即显示初始时间
+      const timeSpan = document.getElementById('recordingText');
+      if (timeSpan) {
+        timeSpan.textContent = '正在录音中... 0:00';
+      }
+      
+      recordingTimer = setInterval(() => {
+        recordingSeconds++;
+        const timeSpan = document.getElementById('recordingText');
+        if (timeSpan) {
+          const minutes = Math.floor(recordingSeconds / 60);
+          const secs = recordingSeconds % 60;
+          timeSpan.textContent = `正在录音中... ${minutes}:${secs.toString().padStart(2, '0')}`;
+        }
       }, 1000);
     }
-    
-    // 页面可见性变化时，暂停/恢复轮播
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopImageCarousel();
-      } else {
-        startImageCarousel();
+
+    // 处理语音输入（长按）
+    let mouseDownTime = null;
+    let isLongPressing = false;
+    let recordingTimeout = null;
+
+    function handleVoiceInput(event) {
+      // 阻止默认行为，防止页面滚动
+      event.preventDefault();
+      event.stopPropagation();
+      
+      mouseDownTime = Date.now();
+      isLongPressing = false;
+      
+      // 延迟300ms后开始录音（防止误触）
+      recordingTimeout = setTimeout(() => {
+        isLongPressing = true;
+        startRecording();
+      }, 300);
+    }
+
+    function stopRecordingOnRelease(event) {
+      // 阻止默认行为和事件冒泡
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
+      if (recordingTimeout) {
+        clearTimeout(recordingTimeout);
+        recordingTimeout = null;
+      }
+      
+      // 如果已经开始录音，则停止
+      if (isLongPressing && isRecording) {
+        stopRecording();
+      }
+      
+      isLongPressing = false;
+    }
+
+    // 换一换功能
+    function refreshQuestions(event) {
+      // 添加旋转动画
+      const button = event.currentTarget;
+      const icon = button.querySelector('i');
+      icon.style.animation = 'rotate 0.5s ease';
+      
+      // 打乱问题数组
+      const shuffled = [...questionTemplates].sort(() => Math.random() - 0.5);
+      
+      // 临时替换questionTemplates
+      const original = [...questionTemplates];
+      questionTemplates.length = 0;
+      questionTemplates.push(...shuffled);
+      
+      // 重新渲染
+      renderQuestions();
+      
+      // 恢复原始数组
+      questionTemplates.length = 0;
+      questionTemplates.push(...original);
+      
+      // 重新应用动画
+      setTimeout(() => {
+        animateQuestionCards();
+      }, 100);
+      
+      // 动画结束后清理
+      setTimeout(() => {
+        icon.style.animation = '';
+      }, 500);
+    }
+
+    // 粒子生成器
+    function createParticles() {
+      const container = document.getElementById('particleContainer');
+      const particleCount = 30; // 控制粒子数量
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // 随机位置
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // 随机动画延迟
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        
+        container.appendChild(particle);
+      }
+    }
+
+    // 页面卸载时清理资源
+    window.addEventListener('beforeunload', function() {
+      if (isRecording) {
+        stopRecording();
+      }
+      if (recordingTimer) {
+        clearInterval(recordingTimer);
+      }
+      if (recordingTimeout) {
+        clearTimeout(recordingTimeout);
       }
     });
-    
-    // 页面卸载时清理定时器
-    window.addEventListener('beforeunload', () => {
-      stopImageCarousel();
-    });
 
-    // 渲染文章列表
-    function renderArticles() {
-      const articleList = document.getElementById('articleList');
+    // ==================== Sticky Header 滚动控制 ====================
+    let lastScrollTop = 0;
+    const STICKY_THRESHOLD = 250;
+    let ticking = false;
+
+    function updateStickyHeader() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const stickyHeader = document.getElementById('stickyHeader');
+      const stickyCardsSection = document.getElementById('stickyCardsSection');
+      const floatingButton = document.querySelector('.floating-profile-button');
       
-      // 检查自定义 Storage 对象是否已加载（注意：Storage 是浏览器内置接口，需检查 get 方法）
-      if (typeof Storage.get !== 'function') {
-        console.warn('⚠️ Custom Storage not loaded yet, using empty articles');
-        articleList.innerHTML = '<div class="empty-state"><p>暂无文章</p></div>';
+      if (scrollTop > STICKY_THRESHOLD) {
+        if (stickyHeader) stickyHeader.classList.remove('hidden');
+        if (stickyCardsSection) stickyCardsSection.classList.remove('hidden');
+        // 隐藏浮动按钮
+        if (floatingButton) floatingButton.style.display = 'none';
+      } else {
+        if (stickyHeader) stickyHeader.classList.add('hidden');
+        if (stickyCardsSection) stickyCardsSection.classList.add('hidden');
+        // 显示浮动按钮
+        if (floatingButton) floatingButton.style.display = 'flex';
+      }
+      
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }
+
+    // 优化的滚动监听
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          updateStickyHeader();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // 问题卡片动画函数
+    function animateQuestionCards() {
+      const questionCards = document.querySelectorAll('.question-card');
+      if (questionCards.length === 0) {
+        console.log('未找到问题卡片，延迟执行动画');
+        setTimeout(animateQuestionCards, 100);
         return;
       }
       
-      const articles = Storage.get('articles') || [];
+      questionCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.8)';
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+        }, 50 + (index * 10));
+      });
+    }
+
+    // 页面加载动画
+    document.addEventListener('DOMContentLoaded', function() {
+      // 创建背景粒子
+      createParticles();
       
-      if (articles.length === 0) {
-        articleList.innerHTML = '<div class="empty-state"><p>暂无文章</p></div>';
-        return;
-      }
+      // 先渲染问题
+      renderQuestions();
       
-      const beautyImages = [
-        'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=400&h=225&fit=crop&auto=format&q=80', // 护肤产品
-        'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400&h=225&fit=crop&auto=format&q=80', // 化妆镜
-        'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=225&fit=crop&auto=format&q=80', // 美容工具
-        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=225&fit=crop&auto=format&q=80', // 面膜
-        'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&h=225&fit=crop&auto=format&q=80', // 化妆品
-        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=225&fit=crop&auto=format&q=80'  // 护肤流程
-      ];
+      // 初始化自动滚动（页面打开就开始滚）
+      initAutoScroll();
       
-      articleList.innerHTML = articles.slice(0, 4).map((article, index) => `
-        <article class="article-card" onclick="goToArticle(${article.id})">
-          <div class="article-image">
-            <img src="${beautyImages[index] || beautyImages[0]}" alt="${article.title}" class="article-image-real">
-            <div class="article-category">
-              <span>美容知识</span>
-            </div>
-          </div>
-          <div class="article-content">
-            <h3 class="article-title">${article.title}</h3>
-            <div class="article-footer">
-              <div class="article-author">
-                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
-                     alt="作者头像" class="article-author-avatar">
-                <span class="article-author-name">AI颜值管家</span>
-              </div>
-              <div class="article-likes">
-                <i class="far fa-heart"></i>
-                <span>${article.likes}</span>
-              </div>
-            </div>
-          </div>
-        </article>
-      `).join('');
-    }
+      // 初始化聊天功能
+      initChat();
 
-    // 页面跳转函数 - 保留用于页面内按钮跳转
-    // 底部导航栏已改用a标签直接跳转
-    
-    function goToAssessmentGuide() {
-      window.location.href = './pages/assessment/guide.html';
-    }
+      // 初始化sticky header状态
+      updateStickyHeader();
 
-    function goToChat() {
-      window.location.href = './pages/chat/detail.html';
-    }
+      // 能力卡片动画
+      const capabilityCards = document.querySelectorAll('.capability-card');
+      capabilityCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.8)';
+          card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        }, index * 80);
+      });
 
-    function goToBooking() {
-      window.location.href = './pages/booking/experts.html';
-    }
-
-    function goToArticle(id) {
-      if (window.Router) {
-        Router.navigate('./pages/community/article.html', { id: id });
-      } else {
-        window.location.href = `./pages/community/article.html?id=${id}`;
-      }
-    }
-
-    function goToNotifications() {
-      // 暂时跳转到个人中心
-      if (window.Router) {
-        Router.navigate('./pages/profile/index.html');
-      } else {
-        window.location.href = './pages/profile/index.html';
-      }
-    }
+      // 问题卡片动画（延迟执行确保已经渲染）
+      setTimeout(() => {
+        animateQuestionCards();
+      }, 100);
+    });
   </script>
 
+  </div> <!-- 结束 main-content-wrapper -->
 </body>
 </html>
+
 

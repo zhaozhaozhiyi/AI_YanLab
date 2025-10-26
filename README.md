@@ -1,4 +1,4 @@
-# AI颜值管家 - 页面原型Demo项目
+# 逆龄小颜 - 页面原型Demo项目
 
 > 基于AI技术的面部抗衰评估和咨询平台 - 纯前端静态原型
 
@@ -6,7 +6,7 @@
 
 ## 📖 项目说明
 
-本项目是 **AI颜值管家** 的页面原型Demo，采用纯前端静态技术实现，用于验证产品核心功能和用户体验。
+本项目是 **逆龄小颜** 的页面原型Demo，采用纯前端静态技术实现，用于验证产品核心功能和用户体验。
 
 ### 特点
 - ✅ **纯前端静态** - 无需后端服务器
@@ -20,10 +20,10 @@
 ## 🏗️ 项目结构
 
 ```
-AI颜值管家/
+逆龄小颜/
 ├── web/                    # 前台原型（小程序/H5模拟）
 │   ├── index.html         # 首页
-│   ├── pages/             # 页面目录（40-50页）
+│   ├── pages-chat/        # 页面目录（实际使用，40-50页）
 │   ├── assets/            # 静态资源
 │   └── components/        # 可复用组件
 │
@@ -45,7 +45,7 @@ AI颜值管家/
 │   └── constants.js       # 常量定义
 │
 ├── docs/                   # 文档目录
-│   ├── PRD-AI颜值管家产品需求文档.md  ⭐ 主文档
+│   ├── PRD-逆龄小颜产品需求文档.md  ⭐ 主文档
 │   └── README.md          # 文档说明
 │
 └── README.md               # 本文档
@@ -78,7 +78,7 @@ AI颜值管家/
 #### 启动效果：
 ```
 ╔════════════════════════════════════════════════╗
-║            🌟 AI颜值管家 Demo 🌟              ║
+║            🌟 逆龄小颜 Demo 🌟              ║
 ╚════════════════════════════════════════════════╝
 
 🔍 检查3000端口...
@@ -134,12 +134,12 @@ python3 -m http.server 3000
 **前台（C端）**：
 - 首页：http://localhost:3000/web/ ✅ 已完成
 - 评估模块（5页）：✅ 已完成
-  - 拍照引导：http://localhost:3000/web/pages/assessment/guide.html
-  - 拍照页：http://localhost:3000/web/pages/assessment/camera.html
-  - 照片确认：http://localhost:3000/web/pages/assessment/confirm.html
-  - 评估等待：http://localhost:3000/web/pages/assessment/waiting.html
-  - 评估报告：http://localhost:3000/web/pages/assessment/report.html
-- 登录页：http://localhost:3000/web/pages/auth/login.html ✅ 已完成
+  - 拍照引导：http://localhost:3000/web/pages-chat/assessment/guide.html
+  - 拍照页：http://localhost:3000/web/pages-chat/assessment/camera.html
+  - 照片确认：http://localhost:3000/web/pages-chat/assessment/confirm.html
+  - 评估等待：http://localhost:3000/web/pages-chat/assessment/waiting.html
+  - 评估报告：http://localhost:3000/web/pages-chat/assessment/report.html
+- 登录页：http://localhost:3000/web/pages-chat/auth/login.html ✅ 已完成
 
 **后台（B端）**：
 - 登录页：http://localhost:3000/admin/login.html ✅ 已完成
@@ -350,7 +350,7 @@ npm run  # 查看所有可用的npm脚本
 ### 🎯 产品设计文档
 | 文档 | 说明 | 类型 |
 |------|------|------|
-| **[PRD-产品需求文档](./docs/PRD-AI颜值管家产品需求文档.md)** | 完整产品需求与功能设计 | 核心文档 ⭐ |
+| **[PRD-产品需求文档](./docs/PRD-逆龄小颜产品需求文档.md)** | 完整产品需求与功能设计 | 核心文档 ⭐ |
 | **[开发计划](./docs/开发计划.md)** | 3阶段开发路线图，进度跟踪 | 计划文档 ⭐ |
 | [品牌命名分析](./docs/品牌命名分析.md) | 品牌定位与命名方案 | 参考文档 |
 | [文档说明](./docs/README.md) | 文档目录结构说明 | 参考文档 |
@@ -399,7 +399,7 @@ npm run  # 查看所有可用的npm脚本
 **开发时查阅**：
 - 查看进度 → [开发计划](./docs/开发计划.md)
 - 遇到问题 → [评估模块调试指南](./评估模块调试指南.md)
-- 了解功能 → [PRD产品需求文档](./docs/PRD-AI颜值管家产品需求文档.md)
+- 了解功能 → [PRD产品需求文档](./docs/PRD-逆龄小颜产品需求文档.md)
 - 技术细节 → [评估模块README](./web/pages/assessment/README.md)
 
 **演示时使用**：
@@ -417,7 +417,7 @@ npm run  # 查看所有可用的npm脚本
 4. 确认Node.js环境：`node --version`（建议 >= 14）
 
 ### 了解功能时
-1. 查看 [PRD产品需求文档](./docs/PRD-AI颜值管家产品需求文档.md)
+1. 查看 [PRD产品需求文档](./docs/PRD-逆龄小颜产品需求文档.md)
 2. 查看 [开发计划](./docs/开发计划.md) - 了解开发进度和规划
 3. 体验在线Demo
 4. 查看各模块的使用说明

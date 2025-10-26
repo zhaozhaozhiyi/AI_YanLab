@@ -177,7 +177,7 @@
   description: '随着天气转凉...',
   image: 'https://...',
   category: '护肤知识',
-  author: 'AI颜值管家',
+  author: '逆龄小颜',
   date: '2024-10-10',
   views: 1258,
   likes: 89
@@ -425,7 +425,7 @@
 如有问题，请查看：
 - 主文档：`/docs/个人中心模块使用说明.md`
 - 评估模块：`/docs/评估模块使用说明.md`
-- PRD文档：`/docs/PRD-AI颜值管家产品需求文档.md`
+- PRD文档：`/docs/PRD-逆龄小颜产品需求文档.md`
 
 ---
 

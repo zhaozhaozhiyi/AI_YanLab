@@ -63,7 +63,7 @@ body {
 }
 
 .sidebar-item.active {
-  background-color: #FF6B9D;
+  background-color: #10b981;
   color: white;
 }
 
@@ -186,7 +186,7 @@ body {
 
 .form-input:focus {
   ring: 2px;
-  ring-color: #FF6B9D;
+  ring-color: #10b981;
   border-color: transparent;
 }
 
@@ -201,7 +201,7 @@ body {
 
 .form-select:focus {
   ring: 2px;
-  ring-color: #FF6B9D;
+  ring-color: #10b981;
   border-color: transparent;
 }
 
@@ -216,7 +216,7 @@ body {
 
 .form-textarea:focus {
   ring: 2px;
-  ring-color: #FF6B9D;
+  ring-color: #10b981;
   border-color: transparent;
 }
 
@@ -235,12 +235,12 @@ body {
 }
 
 .btn-primary {
-  background-color: #FF6B9D;
+  background-color: #10b981;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #FF3B7B;
+  background-color: #059669;
 }
 
 .btn-success {
@@ -352,9 +352,9 @@ body {
 }
 
 .pagination-btn.active {
-  background-color: #FF6B9D;
+  background-color: #10b981;
   color: white;
-  border-color: #FF6B9D;
+  border-color: #10b981;
 }
 
 /* ==================== 面包屑 ==================== */
@@ -379,7 +379,7 @@ body {
 }
 
 .breadcrumb-item a:hover {
-  color: #FF6B9D;
+  color: #10b981;
 }
 
 /* ==================== 工具类 ==================== */
@@ -403,7 +403,7 @@ body {
 }
 
 .text-primary {
-  color: #FF6B9D;
+  color: #10b981;
 }
 
 /* 空状态 */

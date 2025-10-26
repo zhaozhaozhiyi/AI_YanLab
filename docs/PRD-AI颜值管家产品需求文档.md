@@ -1,7 +1,7 @@
-# AI颜值管家产品需求文档 (PRD) - 页面原型设计版
+# 逆龄小颜产品需求文档 (PRD) - 页面原型设计版
 
 ## 文档信息
-- **产品名称**: AI颜值管家
+- **产品名称**: 逆龄小颜
 - **版本**: v2.2（前端Demo开发版）
 - **创建日期**: 2024年12月
 - **最后更新**: 2025年10月
@@ -74,7 +74,7 @@
 ## 1. 项目概述
 
 ### 1.1 产品定位
-AI颜值管家是一个基于人工智能技术的面部抗衰评估和咨询平台，通过AI专家数字分身为用户提供专业的面部评估、个性化治疗方案推荐和全流程服务体验。
+逆龄小颜是一个基于人工智能技术的面部抗衰评估和咨询平台，通过AI专家数字分身为用户提供专业的面部评估、个性化治疗方案推荐和全流程服务体验。
 
 ### 1.2 目标用户
 - **主要用户**: 25-45岁关注面部抗衰的女性用户
@@ -736,7 +736,7 @@ flowchart TD
 
 **基础模块（8页）** - 进度: 2/8 ✅
 1. 🔄 启动页/闪屏页
-2. ✅ 登录页 (web/pages/auth/login.html)
+2. ✅ 登录页 (web/pages-chat/auth/login.html)
 3. 🔄 注册页
 4. 🔄 用户协议页
 5. 🔄 隐私政策页
@@ -745,12 +745,12 @@ flowchart TD
 8. 🔄 通知中心页
 
 **评估模块（10页）** - 进度: 5/10 ✅
-9. ✅ 拍照引导页 (web/pages/assessment/guide.html)
-10. ✅ 拍照页 (web/pages/assessment/camera.html)
-11. ✅ 照片确认页 (web/pages/assessment/confirm.html)
+9. ✅ 拍照引导页 (web/pages-chat/assessment/guide.html)
+10. ✅ 拍照页 (web/pages-chat/assessment/camera.html)
+11. ✅ 照片确认页 (web/pages-chat/assessment/confirm.html)
 12. 🔄 历史照片管理页
-13. ✅ 评估等待页 (web/pages/assessment/waiting.html)
-14. ✅ 评估报告首页 (web/pages/assessment/report.html)
+13. ✅ 评估等待页 (web/pages-chat/assessment/waiting.html)
+14. ✅ 评估报告首页 (web/pages-chat/assessment/report.html)
     - 包含多维度改善建议
     - 包含前后对比效果
 15. 🔄 问题详情页（色斑）
@@ -761,39 +761,39 @@ flowchart TD
 20. 🔄 报告分享页
 
 **AI问答模块（3页）** - 进度: 0/3 🔄
-21. 🔄 对话列表页 (web/pages/chat/index.html)
-22. 🔄 对话详情页 (web/pages/chat/detail.html)
-23. 🔄 报告解读页 (web/pages/chat/report.html)
+21. 🔄 对话列表页 (web/pages-chat/chat/index.html)
+22. 🔄 对话详情页 (web/pages-chat/chat/detail.html)
+23. 🔄 报告解读页 (web/pages-chat/chat/report.html)
 
 **预约模块（8页）** - 进度: 0/8 🔄
-24. 🔄 专家列表页 (web/pages/booking/experts.html)
+24. 🔄 专家列表页 (web/pages-chat/booking/experts.html)
 25. 🔄 专家详情页
 26. 🔄 预约日历页
 27. 🔄 服务项目页
-28. 🔄 预约确认页 (web/pages/booking/confirm.html)
+28. 🔄 预约确认页 (web/pages-chat/booking/confirm.html)
 29. 🔄 支付页
 30. 🔄 支付成功页
 31. 🔄 预约管理页（已集成到个人中心）
 
 **个人中心（8页）** - 进度: 6/8 ✅
-32. ✅ 个人中心首页 (web/pages/profile/index.html)
-33. ✅ 个人资料页 (web/pages/profile/edit.html)
-34. ✅ 我的评估报告列表 (web/pages/profile/reports.html)
-35. ✅ 我的预约页 (web/pages/profile/appointments.html)
+32. ✅ 个人中心首页 (web/pages-chat/profile/index.html)
+33. ✅ 个人资料页 (web/pages-chat/profile/edit.html)
+34. ✅ 我的评估报告列表 (web/pages-chat/profile/reports.html)
+35. ✅ 我的预约页 (web/pages-chat/profile/appointments.html)
 36. 🔄 我的治疗计划页
-37. ✅ 我的收藏页 (web/pages/profile/favorites.html)
-38. ✅ 账户设置页 (web/pages/profile/settings.html)
+37. ✅ 我的收藏页 (web/pages-chat/profile/favorites.html)
+38. ✅ 账户设置页 (web/pages-chat/profile/settings.html)
 39. 🔄 关于我们页
 
 **内容社区（5页）** - 进度: 1/5 ✅
-40. ✅ 社区首页 (web/pages/community/index.html)
+40. ✅ 社区首页 (web/pages-chat/community/index.html)
 41. 🔄 文章详情页
 42. 🔄 案例详情页
 43. 🔄 视频播放页
 44. 🔄 评论页
 
 **营销活动（5页）** - 进度: 0/5 🔄
-45. 🔄 活动列表页 (web/pages/activity/)
+45. 🔄 活动列表页 (web/pages-chat/activity/)
 46. 🔄 活动详情页
 47. 🔄 优惠券页
 48. 🔄 积分商城页
@@ -829,98 +829,99 @@ flowchart TD
 1. ✅ 登录页 (admin/login.html)
 2. ✅ 数据看板首页 (admin/index.html)
 
-#### 5.2.2 用户管理系统（12页）- 进度: 0/12 🔄
+#### 5.2.2 用户管理系统（12页）- 进度: 0/12 📋
 
-1. 🔄 用户列表页 (admin/pages/users/list.html)
-2. 🔄 用户详情页 (admin/pages/users/detail.html)
-3. 🔄 用户编辑页
-4. 🔄 用户标签管理页
-5. 🔄 黑名单管理页
-6. 🔄 用户行为分析页
-7. 🔄 用户分群页
-8. 🔄 分群创建页
-9. 🔄 CRM客户管理页
-10. 🔄 客户跟进详情页
-11. 🔄 工单管理页
+1. 📋 用户列表页 (admin/pages/users/list.html)
+2. 📋 用户详情页 (admin/pages/users/detail.html)
+3. 📋 用户编辑页
+4. 📋 用户标签管理页
+5. 📋 黑名单管理页
+6. 📋 用户行为分析页
+7. 📋 用户分群页
+8. 📋 分群创建页
+9. 📋 CRM客户管理页
+10. 📋 客户跟进详情页
+11. 📋 工单管理页
 
-#### 5.2.3 内容管理系统（15页）- 进度: 0/15 🔄
+#### 5.2.3 内容管理系统（15页）- 进度: 0/15 📋
 
-12. 🔄 内容列表页（文章） (admin/pages/content/)
-13. 🔄 内容列表页（案例）
-14. 🔄 内容列表页（视频）
-15. 🔄 文章编辑器页
-16. 🔄 案例编辑页
-17. 🔄 视频上传页
-18. 🔄 素材库页
-19. 🔄 分类管理页
-20. 🔄 审核列表页
-21. 🔄 审核详情页
-22. 🔄 营销活动列表页
-23. 🔄 活动配置页
-24. 🔄 优惠券管理页
-25. 🔄 推送消息页
-26. 🔄 Banner管理页
+12. 📋 内容列表页（文章） (admin/pages/content/)
+13. 📋 内容列表页（案例）
+14. 📋 内容列表页（视频）
+15. 📋 文章编辑器页
+16. 📋 案例编辑页
+17. 📋 视频上传页
+18. 📋 素材库页
+19. 📋 分类管理页
+20. 📋 审核列表页
+21. 📋 审核详情页
+22. 📋 营销活动列表页
+23. 📋 活动配置页
+24. 📋 优惠券管理页
+25. 📋 推送消息页
+26. 📋 Banner管理页
 
-#### 5.2.4 数据运营与分析平台（15页）- 进度: 0/15 🔄
+#### 5.2.4 数据运营与分析平台（15页）- 进度: 0/15 📋
 
-27. 🔄 数据看板页（总览） (admin/pages/analytics/)
-28. 🔄 用户数据分析页
-29. 🔄 业务数据分析页
-30. 🔄 转化漏斗页
-31. 🔄 漏斗详细分析页
-32. 🔄 案例归档列表页
-33. 🔄 案例详情页
-34. 🔄 效果对比页
-35. 🔄 AI效果监控页
-36. 🔄 模型准确率页
-37. 🔄 高意向客户列表页
-38. 🔄 客户详情页
-39. 🔄 报表中心页
-40. 🔄 自定义报表配置页
-41. 🔄 报表详情页
+27. 📋 数据看板页（总览） (admin/pages/analytics/)
+28. 📋 用户数据分析页
+29. 📋 业务数据分析页
+30. 📋 转化漏斗页
+31. 📋 漏斗详细分析页
+32. 📋 案例归档列表页
+33. 📋 案例详情页
+34. 📋 效果对比页
+35. 📋 AI效果监控页
+36. 📋 模型准确率页
+37. 📋 高意向客户列表页
+38. 📋 客户详情页
+39. 📋 报表中心页
+40. 📋 自定义报表配置页
+41. 📋 报表详情页
 
-#### 5.2.5 系统管理与配置（12页）- 进度: 0/12 🔄
+#### 5.2.5 系统管理与配置（12页）- 进度: 0/12 📋
 
-42. 🔄 角色管理页 (admin/pages/system/)
-43. 🔄 角色权限配置页
-44. 🔄 账号管理页
-45. 🔄 账号创建/编辑页
-46. 🔄 操作日志页
-47. 🔄 系统参数页
-48. 🔄 第三方配置页
-49. 🔄 API管理页
-50. 🔄 监控告警页
-51. 🔄 专家管理页
-52. 🔄 专家详情/编辑页
-53. 🔄 排班管理页
+42. 📋 角色管理页 (admin/pages/system/)
+43. 📋 角色权限配置页
+44. 📋 账号管理页
+45. 📋 账号创建/编辑页
+46. 📋 操作日志页
+47. 📋 系统参数页
+48. 📋 第三方配置页
+49. 📋 API管理页
+50. 📋 监控告警页
+51. 📋 专家管理页
+52. 📋 专家详情/编辑页
+53. 📋 排班管理页
 
-#### 5.2.6 知识库维护系统（18页）- 进度: 0/18 🔄
+#### 5.2.6 知识库维护系统（18页）- 进度: 0/18 📋
 
-54. 🔄 知识库首页（Dashboard） (admin/pages/knowledge/)
-55. 🔄 知识列表页
-56. 🔄 知识编辑器页
-57. 🔄 知识详情页
-58. 🔄 知识分类页
-59. 🔄 标签管理页
-60. 🔄 SOP管理页
-61. 🔄 SOP编辑页
-62. 🔄 FAQ管理页
-63. 🔄 FAQ编辑页
-64. 🔄 医美词典页
-65. 🔄 词条编辑页
-66. 🔄 案例知识库页
-67. 🔄 知识审核列表页
-68. 🔄 审核详情页
-69. 🔄 版本管理页
-70. 🔄 版本对比页
-71. 🔄 效果评估页
-72. 🔄 知识引用统计页
-73. 🔄 缺口分析页
-74. 🔄 导入导出页
+54. 📋 知识库首页（Dashboard） (admin/pages/knowledge/)
+55. 📋 知识列表页
+56. 📋 知识编辑器页
+57. 📋 知识详情页
+58. 📋 知识分类页
+59. 📋 标签管理页
+60. 📋 SOP管理页
+61. 📋 SOP编辑页
+62. 📋 FAQ管理页
+63. 📋 FAQ编辑页
+64. 📋 医美词典页
+65. 📋 词条编辑页
+66. 📋 案例知识库页
+67. 📋 知识审核列表页
+68. 📋 审核详情页
+69. 📋 版本管理页
+70. 📋 版本对比页
+71. 📋 效果评估页
+72. 📋 知识引用统计页
+73. 📋 缺口分析页
+74. 📋 导入导出页
 
 **后台合计**: 74页
-**已完成**: 2页 (3%)
+**已完成**: 2页（登录页+数据看板，仅为基础框架）
 **待开发**: 72页 (97%)
+**注意**: admin/pages/ 目录下所有子目录均为空，实际仅完成2个基础页面
 
 ---
 
@@ -1272,10 +1273,10 @@ deploy.bat
 ### 6.2 项目结构
 
 ```
-AI颜值管家/
+逆龄小颜/
 ├── web/                          # 前台（小程序/H5模拟）
 │   ├── index.html               # 首页/启动页
-│   ├── pages/                   # 页面目录
+│   ├── pages-chat/              # 页面目录（实际使用）
 │   │   ├── auth/               # 登录注册模块
 │   │   │   ├── login.html
 │   │   │   ├── register.html
@@ -1386,7 +1387,7 @@ AI颜值管家/
 │   └── path-helper-inline.js  # 内联路径辅助工具
 │
 ├── docs/                       # 文档目录
-│   └── PRD-AI颜值管家产品需求文档.md
+│   └── PRD-逆龄小颜产品需求文档.md
 │
 └── README.md                   # 项目说明
 ```
@@ -1539,7 +1540,7 @@ xl: 1280px  /* 桌面 */
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>页面标题 - AI颜值管家</title>
+  <title>页面标题 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>

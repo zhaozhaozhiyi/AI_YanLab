@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * AI颜值管家 - 一键启动脚本
+ * 逆龄小颜 - 一键启动脚本
  * 自动启动开发服务器并打开浏览器
  */
 
@@ -30,7 +30,7 @@ function printBanner() {
   console.log('');
   log('╔════════════════════════════════════════════════╗', 'cyan');
   log('║                                                ║', 'cyan');
-  log('║            🌟 AI颜值管家 Demo 🌟              ║', 'cyan');
+  log('║            🌟 逆龄小颜 Demo 🌟              ║', 'cyan');
   log('║                                                ║', 'cyan');
   log('║          您的专属AI颜值顾问平台原型            ║', 'cyan');
   log('║                                                ║', 'cyan');

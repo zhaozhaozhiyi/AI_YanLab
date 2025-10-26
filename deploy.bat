@@ -2,7 +2,7 @@
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
-REM AI颜值管家 - Gitee Pages 快速部署脚本 (Windows版)
+REM 逆龄小颜 - Gitee Pages 快速部署脚本 (Windows版)
 REM 使用方法: deploy.bat 或 deploy.bat "提交说明"
 
 echo.

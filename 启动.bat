@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-:: AI颜值管家 - Windows双击启动脚本
+:: 逆龄小颜 - Windows双击启动脚本
 :: 双击此文件即可启动前后台系统
 
 cd /d "%~dp0"
@@ -9,7 +9,7 @@ cls
 echo.
 echo ╔════════════════════════════════════════════════╗
 echo ║                                                ║
-echo ║            🌟 AI颜值管家 Demo 🌟              ║
+echo ║            🌟 逆龄小颜 Demo 🌟              ║
 echo ║                                                ║
 echo ║          您的专属AI颜值顾问平台原型            ║
 echo ║                                                ║

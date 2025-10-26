@@ -1,7 +1,7 @@
 {
   "name": "ai-beauty-manager",
   "version": "2.1.0",
-  "description": "AI颜值管家 - 页面原型Demo项目（纯前端静态）",
+  "description": "逆龄小颜 - 页面原型Demo项目（纯前端静态）",
   "scripts": {
     "start": "node start.js",
     "dev": "npx --yes serve -l 3000",
@@ -18,7 +18,7 @@
     "prototype",
     "demo"
   ],
-  "author": "AI颜值管家团队",
+  "author": "逆龄小颜团队",
   "license": "MIT",
   "devDependencies":{},
   "dependencies":{}

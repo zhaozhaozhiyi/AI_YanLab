@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>评估报告（测试版-面相分析）- AI颜值管家</title>
+  <title>评估报告（测试版-面相分析）- 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -2752,7 +2752,7 @@
     function shareReport() {
       if (navigator.share) {
         navigator.share({
-          title: 'AI颜值管家 - 我的面部评估报告',
+          title: '逆龄小颜 - 我的面部评估报告',
           text: `我的综合评分：${report.overallScore}分，AI预测年龄：${report.estimatedAge}岁`,
           url: window.location.href
         }).catch(err => console.log('分享失败', err));
@@ -3283,7 +3283,7 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `AI颜值管家-预期效果-${Date.now()}.jpg`;
+        a.download = `逆龄小颜-预期效果-${Date.now()}.jpg`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

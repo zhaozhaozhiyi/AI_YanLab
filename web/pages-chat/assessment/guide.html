@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>拍照引导 - AI颜值管家</title>
+  <title>拍照引导 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,20 +55,126 @@
   
   <style>
     body {
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 背景动画层 */
+    #animatedBackground {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* 粒子层 */
+    .particle-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: radial-gradient(circle, #34C759 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.2;
+      }
+      25% {
+        opacity: 0.5;
+      }
+      50% {
+        transform: translate(50px, -30px);
+        opacity: 0.3;
+      }
+      75% {
+        opacity: 0.4;
+      }
+    }
+
+    /* 网格线 */
+    .grid-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(52, 199, 89, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 199, 89, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(50px, 50px);
+      }
+    }
+
+    /* 渐变泡泡 */
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.08;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #34C759, #22c55e);
+      top: 5%;
+      left: -10%;
+      animation: orb1 25s ease-in-out infinite;
+    }
+
+    @keyframes orb1 {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(100px, 50px);
+      }
+    }
+
+    /* 主内容区域 - 确保层级在背景之上 */
+    .main-content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 导航栏样式 */
+    .main-content-wrapper nav {
+      z-index: 1000;
     }
 
     .guide-card {
       background: white;
       border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.1);
+      box-shadow: 0 10px 40px rgba(52, 199, 89, 0.08);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .guide-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(236, 72, 153, 0.15);
+      box-shadow: 0 15px 50px rgba(52, 199, 89, 0.12);
     }
 
     .angle-card {
@@ -114,7 +220,7 @@
     }
 
     .start-button {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #34C759 0%, #10b981 100%);
       color: white;
       padding: 1rem 3rem;
       border-radius: 50px;
@@ -122,7 +228,7 @@
       font-weight: 600;
       border: none;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+      box-shadow: 0 10px 30px rgba(52, 199, 89, 0.25);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -131,7 +237,7 @@
 
     .start-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+      box-shadow: 0 15px 40px rgba(52, 199, 89, 0.35);
     }
 
     .start-button:active {
@@ -207,7 +313,7 @@
     .modal-icon-wrapper {
       width: 80px;
       height: 80px;
-      background: linear-gradient(135deg, #fce7f3 0%, #f3e8ff 100%);
+      background: linear-gradient(135deg, #dcfce7 0%, #dbeafe 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -217,7 +323,7 @@
 
     .modal-icon {
       font-size: 2.5rem;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #34C759 0%, #3b82f6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -248,7 +354,7 @@
     .btn-primary {
       width: 100%;
       padding: 1rem;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #34C759 0%, #10b981 100%);
       color: white;
       border: none;
       border-radius: 12px;
@@ -260,12 +366,12 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+      box-shadow: 0 4px 15px rgba(52, 199, 89, 0.25);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+      box-shadow: 0 6px 20px rgba(52, 199, 89, 0.35);
     }
 
     .btn-secondary {
@@ -286,8 +392,8 @@
     }
 
     .btn-secondary:hover {
-      border-color: #ec4899;
-      color: #ec4899;
+      border-color: #0ea5e9;
+      color: #0ea5e9;
       transform: translateY(-2px);
     }
 
@@ -295,198 +401,173 @@
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
-      background: #fef3f5;
-      color: #ec4899;
+      background: #f0fdf4;
+      color: #22c55e;
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.75rem;
       font-weight: 500;
     }
+
+    /* 医生插图样式 */
+    .doctor-illustration {
+      position: relative;
+    }
+
+    /* 麦克风图标样式 */
+    .microphone-icon {
+      position: relative;
+    }
+
+    /* 问题选择按钮样式 */
+    .question-btn {
+      padding: 0.625rem 0.375rem;
+      background: #f3f4f6;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: #374151;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.3;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .question-btn:hover {
+      background: #f0f9ff;
+      border-color: #0ea5e9;
+      transform: translateY(-2px);
+    }
+
+    .question-btn.selected {
+      background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+      color: white !important;
+      border-color: #f97316;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    }
+
+    /* 禁用状态的开始按钮 */
+    #startBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 640px) {
+      .question-btn {
+        font-size: 0.6875rem;
+        padding: 0.5rem 0.25rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- 顶部导航 -->
-  <div class="header-gradient">
-    <div class="max-w-4xl mx-auto">
-      <button onclick="Router.back()" class="text-white mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity">
-        <i class="fas fa-arrow-left"></i>
-        <span>返回</span>
-      </button>
-      <div class="text-center">
-        <div class="badge">
-          <i class="fas fa-crown mr-1"></i>
-          专业AI评估
-        </div>
-        <h1 class="text-3xl font-bold mb-2">免费颜值评估</h1>
-        <p class="text-white/90">仅需30秒，获取专业面部分析报告</p>
-      </div>
-    </div>
+  
+  <!-- 背景动画层 -->
+  <div id="animatedBackground">
+    <!-- 渐变泡泡 -->
+    <div class="gradient-orb orb-1"></div>
+    
+    <!-- 网格线 -->
+    <div class="grid-overlay"></div>
+    
+    <!-- 粒子层 -->
+    <div class="particle-layer" id="particleContainer"></div>
   </div>
+  
+  <!-- 主内容层 -->
+  <div class="main-content-wrapper">
+    <!-- 顶部导航栏 - 极简透明 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-white to-transparent pt-3 pb-2">
+      <div class="max-w-md mx-auto px-4 flex items-center justify-between">
+        <button onclick="Router.back()" class="w-10 h-10 flex items-center justify-center">
+          <i class="fas fa-arrow-left text-gray-600 hover:text-green-600 transition-colors"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-800">拍照引导</h1>
+        <div class="w-10 h-10"></div> <!-- 占位 -->
+      </div>
+    </nav>
 
   <!-- 主要内容 -->
-  <div class="max-w-4xl mx-auto px-4 py-8">
-    <!-- 拍照角度说明 -->
-    <div class="guide-card p-8 mb-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
-        <i class="fas fa-camera text-pink-500 mr-2"></i>
-        拍照角度说明
-      </h2>
+  <div class="max-w-md mx-auto px-4 pt-24 pb-6">
+    
+    <!-- 上半部分：小安医生照片 -->
+    <div class="text-center mb-6">
+      <div class="doctor-illustration">
+        <div class="w-64 h-64 mx-auto rounded-full flex items-center justify-center relative overflow-hidden">
+          <!-- 小安医生头像 -->
+          <img src="../../assets/images/NiLing/peple.png" 
+               alt="小安医生" 
+               class="w-full h-full object-cover rounded-full"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               id="doctorAvatar">
+          <!-- 备用图标（如果图片加载失败） -->
+          <div class="w-full h-full bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 rounded-full items-center justify-center hidden">
+            <i class="fas fa-user-doctor text-8xl text-green-400 opacity-80"></i>
+          </div>
+        </div>
+      </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <!-- 正面照 -->
-        <div class="angle-card text-center">
-          <div class="angle-icon">
-            <i class="fas fa-user"></i>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-800 mb-2">正面照</h3>
-          <p class="text-gray-600 text-sm mb-3">面部完整，正对镜头</p>
-          <div class="flex items-center justify-center text-pink-500 text-sm">
-            <i class="fas fa-check-circle mr-1"></i>
-            <span>必拍</span>
-          </div>
-        </div>
-
-        <!-- 左侧45度 -->
-        <div class="angle-card text-center">
-          <div class="angle-icon">
-            <i class="fas fa-user-slash" style="transform: rotate(-45deg);"></i>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-800 mb-2">左侧45°</h3>
-          <p class="text-gray-600 text-sm mb-3">轻微转向左侧</p>
-          <div class="flex items-center justify-center text-pink-500 text-sm">
-            <i class="fas fa-check-circle mr-1"></i>
-            <span>必拍</span>
-          </div>
-        </div>
-
-        <!-- 右侧45度 -->
-        <div class="angle-card text-center">
-          <div class="angle-icon">
-            <i class="fas fa-user-slash" style="transform: rotate(45deg);"></i>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-800 mb-2">右侧45°</h3>
-          <p class="text-gray-600 text-sm mb-3">轻微转向右侧</p>
-          <div class="flex items-center justify-center text-pink-500 text-sm">
-            <i class="fas fa-check-circle mr-1"></i>
-            <span>必拍</span>
-          </div>
+      <!-- 麦克风图标 -->
+      <div class="microphone-icon mt-4">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full">
+          <i class="fas fa-bullhorn text-gray-500 text-xl"></i>
         </div>
       </div>
     </div>
 
-    <!-- 拍照小贴士 -->
-    <div class="guide-card p-8 mb-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">
-        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
-        拍照小贴士
-      </h2>
-      
-      <div class="space-y-4">
-        <div class="tip-item">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center mr-3">
-              <i class="fas fa-sun"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-800 mb-1">光线充足</h3>
-              <p class="text-gray-600 text-sm">在光线明亮的环境下拍摄，避免背光和强光直射</p>
-            </div>
-          </div>
-        </div>
+    <!-- 下部卡片：问题选择 -->
+    <div class="guide-card p-6" style="border-radius: 20px; border: 2px solid #e0f2fe;">
+      <!-- 欢迎文本 -->
+      <div class="text-center mb-6">
+        <p class="text-gray-700 text-base leading-relaxed">
+          欢迎来到<b class="text-sky-600">逆龄秘境</b><br>
+          <span class="text-sm text-gray-600">权威机构研究表明以下为衰老的六大因素</span><br>
+          <span class="text-lg font-semibold text-gray-800 mt-2 block">您最关心？</span>
+        </p>
+      </div>
 
-        <div class="tip-item">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center mr-3">
-              <i class="fas fa-smile"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-800 mb-1">面部放松</h3>
-              <p class="text-gray-600 text-sm">保持自然表情，面部放松，不要刻意做表情</p>
-            </div>
-          </div>
-        </div>
+      <!-- 问题选择按钮 -->
+      <div class="grid grid-cols-3 gap-2 mb-6">
+        <button class="question-btn" data-question="outline" onclick="toggleQuestion(this)">
+          轮廓
+        </button>
+        <button class="question-btn" data-question="wrinkles" onclick="toggleQuestion(this)">
+          皱纹
+        </button>
+        <button class="question-btn" data-question="eye-area" onclick="toggleQuestion(this)">
+          眼周
+        </button>
+        <button class="question-btn" data-question="spots" onclick="toggleQuestion(this)">
+          色斑
+        </button>
+        <button class="question-btn" data-question="skin-tone" onclick="toggleQuestion(this)">
+          肤色
+        </button>
+        <button class="question-btn" data-question="pores" onclick="toggleQuestion(this)">
+          毛孔
+        </button>
+      </div>
 
-        <div class="tip-item">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3">
-              <i class="fas fa-eye"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-800 mb-1">五官清晰</h3>
-              <p class="text-gray-600 text-sm">确保面部五官清晰可见，不要被头发遮挡</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="tip-item">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-3">
-              <i class="fas fa-ban"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-800 mb-1">避免遮挡</h3>
-              <p class="text-gray-600 text-sm">拍摄时摘掉眼镜、口罩等遮挡物，露出完整面部</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="tip-item">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center mr-3">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-gray-800 mb-1">隐私保护</h3>
-              <p class="text-gray-600 text-sm">您的照片仅用于AI分析，我们承诺严格保护您的隐私</p>
-            </div>
-          </div>
-        </div>
+      <!-- 提示和开始按钮 -->
+      <div class="text-center">
+        <p class="text-gray-500 text-sm mb-4">点击进行选择</p>
+        <button onclick="startCamera()" class="start-button mx-auto" id="startBtn" style="max-width: 200px;">
+          <i class="fas fa-camera"></i>
+          <span>开始检测</span>
+        </button>
       </div>
     </div>
 
-    <!-- 评估优势说明 -->
-    <div class="guide-card p-8 mb-8">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
-        <i class="fas fa-star text-yellow-500 mr-2"></i>
-        为什么选择我们
-      </h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl">
-            <i class="fas fa-brain"></i>
-          </div>
-          <h3 class="font-semibold text-gray-800 mb-2">AI智能分析</h3>
-          <p class="text-gray-600 text-sm">采用先进AI技术，精准识别面部问题</p>
-        </div>
-
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl">
-            <i class="fas fa-user-md"></i>
-          </div>
-          <h3 class="font-semibold text-gray-800 mb-2">专家级报告</h3>
-          <p class="text-gray-600 text-sm">专业医美专家团队提供权威建议</p>
-        </div>
-
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white text-2xl">
-            <i class="fas fa-lock"></i>
-          </div>
-          <h3 class="font-semibold text-gray-800 mb-2">隐私保护</h3>
-          <p class="text-gray-600 text-sm">数据加密存储，绝不泄露个人信息</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 开始拍照按钮 -->
-    <div class="text-center mb-8">
-      <button onclick="startCamera()" class="start-button mx-auto">
-        <i class="fas fa-camera"></i>
-        <span>开始拍照</span>
-      </button>
-      <p class="text-gray-500 text-sm mt-4">
-        <i class="fas fa-clock mr-1 pulse-animate"></i>
-        预计评估时间：30-60秒
+    <!-- 底部提示 -->
+    <div class="text-center mt-6">
+      <p class="text-xs text-gray-400">
+        <i class="fas fa-shield-alt mr-1"></i>
+        您的隐私安全受到严格保护
       </p>
     </div>
   </div>
@@ -497,6 +578,38 @@
   <script src="../../../shared/router.js"></script>
 
   <script>
+    // ==================== 问题选择功能 ====================
+    
+    let selectedQuestions = [];
+
+    // 切换问题选择状态
+    function toggleQuestion(button) {
+      const question = button.getAttribute('data-question');
+      
+      if (button.classList.contains('selected')) {
+        button.classList.remove('selected');
+        selectedQuestions = selectedQuestions.filter(q => q !== question);
+      } else {
+        button.classList.add('selected');
+        selectedQuestions.push(question);
+      }
+      
+      // 更新开始按钮状态
+      updateStartButton();
+    }
+
+    // 更新开始按钮状态
+    function updateStartButton() {
+      const startBtn = document.getElementById('startBtn');
+      if (selectedQuestions.length > 0) {
+        startBtn.disabled = false;
+        startBtn.style.opacity = '1';
+      } else {
+        startBtn.disabled = true;
+        startBtn.style.opacity = '0.5';
+      }
+    }
+
     // ==================== 核心功能 ====================
     
     // 开始拍照
@@ -506,6 +619,12 @@
         console.error('❌ Storage 未加载！检查 storage.js 路径:', '../../../shared/storage.js');
         alert('页面资源加载失败，请刷新页面重试');
         return;
+      }
+      
+      // 保存选择的问题
+      if (selectedQuestions.length > 0) {
+        Storage.set('selectedQuestions', selectedQuestions);
+        console.log('已保存选择的问题:', selectedQuestions);
       }
       
       console.log('✅ Storage 已加载，开始检查登录状态...');
@@ -661,6 +780,18 @@
     document.addEventListener('DOMContentLoaded', function() {
       console.log('📄 拍照引导页已加载');
       
+      // 创建背景粒子
+      createParticles();
+      
+      // 修正医生头像路径（兼容 GitHub Pages）
+      const doctorAvatar = document.getElementById('doctorAvatar');
+      if (doctorAvatar && typeof PathHelper !== 'undefined') {
+        const basePath = PathHelper.getBasePath();
+        if (basePath) {
+          doctorAvatar.src = basePath + '/web/assets/images/NiLing/peple.png';
+        }
+      }
+      
       // 检查依赖是否加载
       console.log('🔍 检查依赖加载状态:');
       console.log('  - Storage:', typeof Storage !== 'undefined' ? '✅' : '❌');
@@ -674,11 +805,11 @@
         console.error('❌ Router 未加载，请检查 router.js 文件路径');
       }
       
+      // 初始化开始按钮状态
+      updateStartButton();
+      
       // 检查是否是登录后返回
       checkLoginReturn();
-      
-      // 添加淡入动画
-      animateCards();
       
       // 点击模态框背景关闭
       document.addEventListener('click', function(e) {
@@ -728,11 +859,11 @@
         top: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
         color: white;
         padding: 1rem 2rem;
         border-radius: 50px;
-        box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+        box-shadow: 0 10px 30px rgba(52, 199, 89, 0.25);
         z-index: 10000;
         font-weight: 600;
         display: flex;
@@ -753,20 +884,29 @@
       }, 1500);
     }
 
-    // 卡片淡入动画
-    function animateCards() {
-      const cards = document.querySelectorAll('.guide-card');
-      cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    // 粒子生成器
+    function createParticles() {
+      const container = document.getElementById('particleContainer');
+      if (!container) return;
+      
+      const particleCount = 20; // 控制粒子数量（减少以保持简洁）
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
         
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 100 + 100);
-      });
+        // 随机位置
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // 随机动画延迟
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        
+        container.appendChild(particle);
+      }
     }
+
 
     // ==================== 调试工具（开发时使用）====================
     
@@ -839,6 +979,8 @@
       }
     }
   </style>
+
+  </div> <!-- 结束 main-content-wrapper -->
 </body>
 </html>
 

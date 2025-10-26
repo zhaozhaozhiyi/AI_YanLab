@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI测肤报告 - 逆龄小颜</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 路径配置 -->
+  <script>
+    window.PathHelper = {
+      getBasePath() {
+        const hostname = window.location.hostname;
+        const pathname = window.location.pathname;
+        if (hostname.includes('github.io') || hostname.includes('gitee.io')) {
+          const pathParts = pathname.split('/').filter(p => p);
+          if (pathParts.length > 0 && pathParts[0] !== 'web' && pathParts[0] !== 'admin') {
+            return '/' + pathParts[0];
+          }
+        }
+        return '';
+      },
+      getPath(path) {
+        if (!path) return '';
+        if (!path.startsWith('/')) path = '/' + path;
+        
+        const basePath = this.getBasePath();
+        if (basePath) {
+          return basePath + path;
+        }
+        return path;
+      }
+    };
+  </script>
+  
+  <!-- 自定义样式 -->
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #f0fdf4 0%, #f9fafb 50%, #ffffff 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+      padding-top: 64px;
+      padding-bottom: 120px;
+      min-height: 100vh;
+    }
+
+    /* 顶部导航栏 - 极简透明风格 */
+    .navbar {
+      background: linear-gradient(to bottom, white, transparent);
+      color: #333;
+      padding: 12px 16px;
+      padding-top: 12px;
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+      height: 64px;
+      box-sizing: border-box;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-left:hover {
+      background: rgba(52, 199, 89, 0.1);
+    }
+
+    .navbar-left i {
+      color: #6b7280;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-left:hover i {
+      color: #34C759;
+    }
+
+    .navbar-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+      flex: 1;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .navbar-share-btn {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #34C759;
+      font-size: 16px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .navbar-share-btn:hover {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      transform: scale(1.05);
+    }
+
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .section-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(52, 199, 89, 0.08), 0 0 0 1px rgba(52, 199, 89, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .section-card:hover {
+      box-shadow: 0 4px 24px rgba(52, 199, 89, 0.12), 0 0 0 1px rgba(52, 199, 89, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* 健康分区域 */
+    .score-section {
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #1dd1a1;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .score-info {
+      flex: 1;
+    }
+
+    .score-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .score-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1dd1a1;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .score-tip {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    .skin-age-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #34C759;
+      border-radius: 12px;
+      border: 1px solid rgba(52, 199, 89, 0.2);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #1dd1a1;
+      border: 1px solid #1dd1a1;
+    }
+
+    .btn-outline:hover {
+      background: #f0f9ff;
+    }
+
+    .btn-primary {
+      background: #1dd1a1;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #16a085;
+    }
+
+    /* 重点问题 */
+    .problems-section {
+      padding: 16px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .problem-item {
+      padding: 12px;
+      background: #fff9f5;
+      border-left: 3px solid #ff9800;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+
+    .problem-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ff9800;
+      margin-bottom: 4px;
+    }
+
+    .problem-desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .info-tip {
+      margin-top: 12px;
+      padding: 12px;
+      background: #f5f7fa;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #666;
+      display: flex;
+      gap: 8px;
+    }
+
+    .info-tip .highlight {
+      color: #1dd1a1;
+    }
+
+    /* 皮肤属性 */
+    .attribute-group {
+      padding: 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .attribute-group:last-child {
+      border-bottom: none;
+    }
+
+    .attribute-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .color-bar {
+      position: relative;
+      height: 32px;
+      background: linear-gradient(to right, #fdbcb4, #f8d49a, #f4e3a8, #cec3a8, #9b806c, #7a5e52, #554236);
+      border-radius: 16px;
+      margin-bottom: 12px;
+    }
+
+    .color-tag {
+      position: absolute;
+      top: -24px;
+      background: #8b6914;
+      color: white;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .tone-selector {
+      display: flex;
+      gap: 12px;
+    }
+
+    .tone-option {
+      flex: 1;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .tone-option.active {
+      border-color: #1dd1a1;
+      background: #f0f9ff;
+      color: #1dd1a1;
+      font-weight: 600;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .slider-bar {
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .slider-dot {
+      position: absolute;
+      top: -8px;
+      width: 20px;
+      height: 20px;
+      background: #1dd1a1;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .slider-title {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .value-display {
+      font-size: 14px;
+      color: #1dd1a1;
+      font-weight: 600;
+    }
+
+    /* 问题分析标签 */
+    .tab-container {
+      padding: 16px 16px 0;
+    }
+
+    .tab-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-item {
+      padding: 8px 16px;
+      font-size: 14px;
+      color: #666;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tab-item.active {
+      background: #1dd1a1;
+      color: white;
+    }
+
+    .tab-content {
+      padding: 16px;
+    }
+
+    .tab-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1dd1a1;
+      margin-bottom: 16px;
+    }
+
+    .face-diagram {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .face-illustration {
+      flex: 1;
+      max-width: 150px;
+      position: relative;
+    }
+
+    .face-svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .original-image {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid white;
+      object-fit: cover;
+    }
+
+    .stats-list {
+      flex: 1;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      color: #666;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .desc-text {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* 医学声明 */
+    .disclaimer {
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    .disclaimer-link {
+      color: #1dd1a1;
+      text-decoration: underline;
+      margin-left: 8px;
+    }
+
+    /* 底部操作栏 */
+    .action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      background: white;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .action-btn-secondary {
+      background: white;
+      color: #34C759;
+      border: 2px solid #34C759;
+    }
+
+    .action-btn-secondary:hover {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .action-btn-primary {
+      background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
+      color: white;
+    }
+
+    .action-btn-primary:hover {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+    }
+
+    /* 浮动按钮 */
+    .float-buttons {
+      position: fixed;
+      right: 16px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .float-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      font-size: 20px;
+      color: white;
+    }
+
+    .float-btn-skin {
+      background: #1dd1a1;
+    }
+
+    .float-btn-share {
+      background: #ff9800;
+    }
+
+    .float-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* 面相分析相关样式 */
+    .fortune-summary {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fortune-feature-item {
+      background: linear-gradient(135deg, #faf5ff 0%, #fef3f5 100%);
+      border: 2px solid #e9d5ff;
+      border-radius: 12px;
+      padding: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .fortune-feature-item:hover {
+      border-color: #8b5cf6;
+      transform: translateX(2px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+    }
+
+    .fortune-emoji {
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .fortune-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .fortune-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+
+    .fortune-stars {
+      display: flex;
+      gap: 2px;
+      margin-top: 4px;
+    }
+
+    .fortune-star {
+      color: #fbbf24;
+      font-size: 10px;
+    }
+
+    .fortune-star.empty {
+      color: #d1d5db;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 - 极简透明 -->
+  <div class="navbar">
+    <div class="navbar-left" onclick="goToHome()">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="navbar-title">AI测肤报告</div>
+    <div class="navbar-right">
+      <div class="navbar-share-btn" onclick="shareReport()">
+        <i class="fas fa-share-alt"></i>
+        <span class="badge">3</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 健康分区域 -->
+    <div class="section-card">
+      <div class="score-section">
+        <img src="../../assets/images/face/face1.jpg" alt="用户头像" class="avatar">
+        <div class="score-info">
+          <div class="score-label">皮肤健康分~</div>
+          <div class="score-value">70分</div>
+          <div class="score-tip">高于75.0%的用户</div>
+          <div class="skin-age-tags">
+            <span class="tag">肤龄:29</span>
+            <span class="tag">轻度皱纹</span>
+            <span class="tag">轻度色斑</span>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-outline">重测</button>
+            <button class="btn btn-primary">皮肤档案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 护肤重点问题 -->
+    <div class="section-card">
+      <div class="problems-section">
+        <div class="section-title">护肤重点问题</div>
+        
+        <div class="problem-item">
+          <div class="problem-title">轻度皱纹</div>
+          <div class="problem-desc">您的面部有轻度的抬头纹，但无真性皱纹。</div>
+        </div>
+        
+        <div class="problem-item">
+          <div class="problem-title">轻度色斑</div>
+          <div class="problem-desc">您面部呈现轻度色斑。</div>
+        </div>
+        
+        <div class="info-tip">
+          <i class="fas fa-info-circle" style="color: #1dd1a1;"></i>
+          <span>基于您的肤质问题，建议您进行<span class="highlight">【快速解读0.01元】</span>评估</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 皮肤属性 -->
+    <div class="section-card">
+      <!-- 肤色 -->
+      <div class="attribute-group">
+        <div class="attribute-label">肤色</div>
+        
+        <div class="color-bar">
+          <div class="color-tag" style="left: 35%;">中等</div>
+        </div>
+        
+        <div class="attribute-label" style="margin-top: 16px; margin-bottom: 8px;">色调</div>
+        <div class="tone-selector">
+          <div class="tone-option">冷</div>
+          <div class="tone-option active">中性</div>
+          <div class="tone-option">暖</div>
+        </div>
+      </div>
+
+      <!-- 干油性 -->
+      <div class="attribute-group">
+        <div class="attribute-label">干油性</div>
+        
+        <div class="slider-wrapper">
+          <div class="slider-title">
+            <span>脸颊</span>
+          </div>
+          <div class="slider-bar">
+            <div class="slider-dot" style="left: 15%;"></div>
+          </div>
+          <div class="slider-label">
+            <span>0 干性</span>
+            <span>30</span>
+            <span>中性</span>
+            <span>70</span>
+            <span>油性100</span>
+          </div>
+        </div>
+
+        <div class="slider-wrapper">
+          <div class="slider-title">
+            <span>T区</span>
+            <span class="value-display">21%</span>
+          </div>
+          <div class="slider-bar">
+            <div class="slider-dot" style="left: 21%;"></div>
+          </div>
+          <div class="slider-label">
+            <span>0 干性</span>
+            <span>30</span>
+            <span>中性</span>
+            <span>70</span>
+            <span>油性100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 敏感度 -->
+      <div class="attribute-group">
+        <div class="attribute-label">敏感度</div>
+        
+        <div class="slider-wrapper">
+          <div class="slider-bar">
+            <div class="slider-dot" style="left: 10%;"></div>
+          </div>
+          <div class="slider-label">
+            <span>正常</span>
+            <span>轻度</span>
+            <span>中度</span>
+            <span>重度</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 问题详细分析 -->
+    <div class="section-card">
+      <div class="tab-container">
+        <div class="tab-list">
+          <div class="tab-item active">痘痘</div>
+          <div class="tab-item">毛孔</div>
+          <div class="tab-item">黑头</div>
+          <div class="tab-item">皱纹</div>
+          <div class="tab-item">色斑</div>
+        </div>
+      </div>
+
+      <!-- 痘痘内容 -->
+      <div class="tab-content">
+        <div class="tab-title">痘痘 无</div>
+        
+        <div class="face-diagram">
+          <div class="face-illustration">
+            <svg class="face-svg" viewBox="0 0 150 180" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="75" cy="90" rx="50" ry="60" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+              <circle cx="60" cy="75" r="8" fill="#f0f0f0"/>
+              <circle cx="90" cy="75" r="8" fill="#f0f0f0"/>
+              <path d="M 65 105 Q 75 115 85 105" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+            </svg>
+            <img src="../../assets/images/face/face1.jpg" alt="原图" class="original-image">
+          </div>
+          
+          <div class="stats-list">
+            <div class="stat-item">
+              <span>痘印</span>
+              <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span>丘疹</span>
+              <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span>脓疱</span>
+              <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span>结节</span>
+              <span class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="desc-text">
+          你的面部没有明显的痘痘和痘印问题，平时注意保持清洁和适量补水即可维持良好状态。
+        </div>
+      </div>
+    </div>
+
+    <!-- 面相分析区块 -->
+    <div class="section-card">
+      <div class="problems-section">
+        <div class="section-title">面相分析</div>
+        
+        <!-- 面相总评 -->
+        <div class="fortune-summary" style="padding: 16px; background: linear-gradient(135deg, #fef7fb 0%, #f5f7fe 100%); border-radius: 12px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">
+              🔮
+            </div>
+            <div>
+              <div style="font-weight: 600; color: #333; font-size: 16px;" id="fortuneType">福气之相</div>
+              <div style="font-size: 12px; color: #666; margin-top: 4px;">基于中华传统相学智慧分析</div>
+            </div>
+          </div>
+          
+          <div style="padding: 12px; background: white; border-radius: 8px;">
+            <p style="font-weight: 600; color: #1f2937; margin-bottom: 8px;" id="fortuneSummary">天庭饱满，地阁方圆，五官端正</p>
+            <p style="font-size: 13px; color: #666; line-height: 1.6;" id="fortuneDescription">
+              面相整体呈现吉祥之象，预示着贵人运旺、事业有成之相。
+            </p>
+          </div>
+        </div>
+        
+        <!-- 五官特征 -->
+        <div style="margin-bottom: 16px;">
+          <div style="font-weight: 600; color: #333; margin-bottom: 12px; font-size: 14px;">
+            <i class="fas fa-eye" style="color: #8b5cf6; margin-right: 8px;"></i>
+            五官特征解析
+          </div>
+          <div id="facialFeaturesList" style="display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr);">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 运势评估 -->
+        <div>
+          <div style="font-weight: 600; color: #333; margin-bottom: 12px; font-size: 14px;">
+            <i class="fas fa-chart-line" style="color: #8b5cf6; margin-right: 8px;"></i>
+            四维运势评估
+          </div>
+          <div id="fortuneAnalysisList" style="display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr);">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 医学声明 -->
+    <div class="disclaimer">
+      <a href="#" class="disclaimer-link">查看医学测评依据></a><br>
+      报告不代表医生诊断，如有健康问题请及时咨询医生
+    </div>
+  </div>
+
+  <!-- 浮动按钮 -->
+  <div class="float-buttons">
+    <button class="float-btn float-btn-skin" title="皮肤中心">
+      <i class="fas fa-plus"></i>
+    </button>
+    <button class="float-btn float-btn-share" title="分享">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+
+  <!-- 底部操作栏 -->
+  <div class="action-bar">
+    <button class="action-btn action-btn-secondary" onclick="consultExpert()">预约专家</button>
+    <button class="action-btn action-btn-primary" onclick="bookAppointment()">预约治疗</button>
+  </div>
+
+  <!-- 引入共享脚本 -->
+  <script>
+    // 路径助手
+    const basePath = window.PathHelper ? window.PathHelper.getBasePath() : '';
+    
+    // 动态加载脚本
+    function loadScript(src, callback) {
+      const script = document.createElement('script');
+      script.src = basePath + src;
+      script.onload = callback;
+      document.head.appendChild(script);
+    }
+
+    // 动态加载样式
+    function loadStyle(href) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = basePath + href;
+      document.head.appendChild(link);
+    }
+
+    // 加载基础样式
+    loadStyle('/web/assets/css/base.css');
+    
+    // 加载共享脚本
+    loadScript('/shared/storage.js', () => {
+      loadScript('/shared/utils.js', () => {
+        loadScript('/shared/router.js', () => {
+          console.log('所有脚本加载完成');
+        });
+      });
+    });
+
+    // 简单的 Router 实现
+    window.Router = window.Router || {
+      back: () => {
+        window.history.back();
+      },
+      go: (path) => {
+        window.location.href = basePath + path;
+      }
+    };
+
+    // 标签切换功能
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabItems = document.querySelectorAll('.tab-item');
+      
+      tabItems.forEach((item) => {
+        item.addEventListener('click', () => {
+          // 移除所有活动状态
+          tabItems.forEach(tab => tab.classList.remove('active'));
+          
+          // 添加当前活动状态
+          item.classList.add('active');
+          
+          // 这里可以实现内容切换逻辑
+          console.log('切换到标签:', item.textContent);
+        });
+      });
+
+      // 按钮点击事件
+      const actionButtons = document.querySelectorAll('.action-btn, .btn');
+      actionButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          console.log('按钮点击:', e.target.textContent);
+          // 这里可以添加具体的跳转逻辑
+        });
+      });
+
+      // 页面加载时渲染面相分析
+      setTimeout(() => {
+        renderFortuneTelling();
+      }, 500);
+    });
+
+    // ============ 面相分析功能 ============
+    
+    // 面相分析功能
+    function renderFortuneTelling() {
+      console.log('开始渲染面相分析...');
+      
+      // 生成面相数据
+      const fortuneData = generateFortuneData();
+      
+      // 渲染面相总评
+      document.getElementById('fortuneType').textContent = fortuneData.type;
+      document.getElementById('fortuneSummary').textContent = fortuneData.summary;
+      document.getElementById('fortuneDescription').textContent = fortuneData.description;
+      
+      // 渲染五官特征
+      renderFacialFeatures(fortuneData.facialFeatures);
+      
+      // 渲染运势分析
+      renderFortuneAnalysis(fortuneData.fortune);
+      
+      console.log('面相分析渲染完成！');
+    }
+
+    // 生成面相数据
+    function generateFortuneData() {
+      // 模拟数据生成
+      const score = Math.floor(Math.random() * 40) + 60; // 60-100分
+      
+      let type = '福气之相';
+      let summary = '天庭饱满，地阁方圆，五官端正';
+      let description = '面相整体呈现吉祥之象，预示着贵人运旺、事业有成之相。';
+      
+      if (score >= 85) {
+        type = '贵人之相';
+        summary = '天庭饱满，眉目清秀，气宇轩昂';
+        description = '上等佳相，贵人运强，一生多得他人相助。面相端正大气，预示事业有成、财运亨通。';
+      } else if (score >= 75) {
+        type = '福禄之相';
+        summary = '面相匀称，五官协调，福气充盈';
+        description = '福德之相，一生衣食无忧。面相和谐，预示家庭美满、事业稳定、晚年安康。';
+      } else if (score >= 65) {
+        type = '平和之相';
+        summary = '面相平和，五官端正，性格温和';
+        description = '平和安稳之相，为人温和善良。注重修养气质，可逐步提升运势。';
+      }
+      
+      return {
+        type: type,
+        summary: summary,
+        description: description,
+        facialFeatures: [
+          { emoji: '👁️', label: '眼相', value: '桃花眼', meaning: '异性缘佳，善于交际' },
+          { emoji: '👃', label: '鼻相', value: '鼻梁挺拔', meaning: '自立能力强，财运亨通' },
+          { emoji: '👄', label: '口相', value: '唇形饱满', meaning: '口福好，善于表达' },
+          { emoji: '✨', label: '眉相', value: '眉清目秀', meaning: '心思细腻，有艺术天赋' },
+          { emoji: '😊', label: '脸型', value: '鹅蛋脸', meaning: '性格温和，人缘好' },
+          { emoji: '🧠', label: '额相', value: '额头饱满', meaning: '智慧聪颖，思维敏捷' },
+        ],
+        fortune: [
+          { emoji: '💰', label: '财运', score: 4, meaning: '财运亨通' },
+          { emoji: '🏆', label: '事业', score: 5, meaning: '事业运势强劲' },
+          { emoji: '❤️', label: '感情', score: 4, meaning: '桃花运旺盛' },
+          { emoji: '🏥', label: '健康', score: 5, meaning: '身体状况良好' },
+        ]
+      };
+    }
+
+    // 渲染五官特征
+    function renderFacialFeatures(features) {
+      const container = document.getElementById('facialFeaturesList');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      features.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'fortune-feature-item';
+        div.innerHTML = `
+          <span class="fortune-emoji">${item.emoji}</span>
+          <div class="fortune-label">${item.label}</div>
+          <div class="fortune-value">${item.value}</div>
+          <p style="font-size: 11px; color: #6b7280;">${item.meaning}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // 渲染运势分析
+    function renderFortuneAnalysis(fortuneScores) {
+      const container = document.getElementById('fortuneAnalysisList');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      fortuneScores.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'fortune-feature-item';
+        
+        // 生成星星
+        let stars = '';
+        for (let i = 0; i < 5; i++) {
+          stars += `<i class="fas fa-star fortune-star ${i < item.score ? '' : 'empty'}"></i>`;
+        }
+        
+        div.innerHTML = `
+          <span class="fortune-emoji">${item.emoji}</span>
+          <div class="fortune-label">${item.label}</div>
+          <div class="fortune-stars">${stars}</div>
+          <p style="font-size: 11px; color: #6b7280;">${item.meaning}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // 预约专家
+    function consultExpert() {
+      // 跳转到咨询专家页面
+      window.location.href = '../chat/detail.html?context=skin_report_consult';
+    }
+
+    // 预约治疗
+    function bookAppointment() {
+      // 跳转到预约治疗页面
+      window.location.href = '../booking/experts.html';
+    }
+
+    // 返回首页
+    function goToHome() {
+      // 跳转到首页
+      window.location.href = '../../index.html';
+    }
+
+    // 分享报告
+    function shareReport() {
+      if (navigator.share) {
+        navigator.share({
+          title: '逆龄小颜 - AI测肤报告',
+          text: '查看我的AI测肤评估报告',
+          url: window.location.href
+        }).catch(err => console.log('分享失败', err));
+      } else {
+        // 复制链接到剪贴板
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('报告链接已复制到剪贴板');
+        }).catch(() => {
+          alert('您的浏览器不支持分享功能');
+        });
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# AI颜值管家 - Gitee Pages 快速部署脚本
+# 逆龄小颜 - Gitee Pages 快速部署脚本
 # 使用方法: ./deploy.sh "提交说明"
 
 # 颜色定义

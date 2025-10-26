@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人中心 - AI颜值管家</title>
+  <title>个人中心 - 逆龄小颜</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,52 +55,60 @@
   
   <style>
     body {
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 50%, #f5f7fe 100%);
+      background: linear-gradient(135deg, #f0fdf4 0%, #f9fafb 50%, #ffffff 100%);
       min-height: 100vh;
     }
 
-    .profile-header {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
-      color: white;
-      padding: 2rem 1rem 3rem;
-      border-radius: 0 0 30px 30px;
-      position: relative;
-      overflow: hidden;
+    .profile-header-minimal {
+      padding: 1rem;
     }
 
-    .profile-header::before {
-      content: '';
+    .profile-header-minimal .header-content {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 2px 16px rgba(52, 199, 89, 0.08), 0 0 0 1px rgba(52, 199, 89, 0.05);
+    }
+
+    .profile-header-minimal .header-bg {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+      inset: 0;
+      background: linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, transparent 100%);
+      border-radius: 24px;
+      z-index: 0;
     }
 
     .avatar-circle {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      background: white;
+      background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      color: #ec4899;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 4px 20px rgba(52, 199, 89, 0.25);
       position: relative;
       z-index: 10;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .avatar-circle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 24px rgba(52, 199, 89, 0.35);
     }
 
     .stats-card {
-      background: white;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
       padding: 1.5rem;
-      margin-top: -2rem;
       position: relative;
       z-index: 10;
-      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.15);
+      box-shadow: 0 2px 16px rgba(52, 199, 89, 0.08), 0 0 0 1px rgba(52, 199, 89, 0.05);
     }
 
     .stat-item {
@@ -111,7 +119,7 @@
     .stat-number {
       font-size: 2rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -137,7 +145,7 @@
     }
 
     .menu-item:hover {
-      background: linear-gradient(135deg, #fef3f5 0%, #fef7fb 100%);
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
       transform: translateX(5px);
     }
 
@@ -154,23 +162,23 @@
     }
 
     .icon-pink {
-      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
-      color: #ec4899;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #34C759;
     }
 
     .icon-purple {
-      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-      color: #8b5cf6;
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+      color: #22c55e;
     }
 
     .icon-blue {
-      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-      color: #3b82f6;
+      background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+      color: #16a34a;
     }
 
     .icon-green {
       background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      color: #10b981;
+      color: #34C759;
     }
 
     .recent-report {
@@ -188,7 +196,7 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #34C759 0%, #22c55e 100%);
       color: white;
       font-size: 1.5rem;
       font-weight: 700;
@@ -204,39 +212,53 @@
     }
 
     .badge-new {
-      background: linear-gradient(135deg, #fef3f5 0%, #fce7f3 100%);
-      color: #ec4899;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #34C759;
     }
   </style>
 </head>
 <body>
-  <!-- 顶部导航栏 -->
-  <nav class="fixed top-4 left-4 right-4 bg-white rounded-2xl shadow-sm border border-gray-100 px-5 z-50 flex flex-row items-center justify-between" style="height: 52px;">
-    <h1 class="text-base font-semibold text-gray-900">个人中心</h1>
-    <a href="./edit.html" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-pink-500 hover:bg-pink-50 rounded-lg transition-all">
-      <i class="fas fa-cog"></i>
-    </a>
+  <!-- 顶部导航栏 - 极简透明 -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-white to-transparent pt-3 pb-2">
+    <div class="max-w-md mx-auto px-4 flex items-center justify-between">
+      <a href="../../index.html" class="w-10 h-10 flex items-center justify-center">
+        <i class="fas fa-arrow-left text-gray-600 hover:text-green-600 transition-colors"></i>
+      </a>
+      <h1 class="text-lg font-semibold text-gray-800">个人中心</h1>
+      <a href="./edit.html" class="w-10 h-10 flex items-center justify-center">
+        <i class="fas fa-cog text-gray-600 hover:text-green-600 transition-colors"></i>
+      </a>
+    </div>
   </nav>
 
   <!-- 主内容区包裹器 -->
-  <div style=" padding-bottom: 80px;">
+  <div style="padding-bottom: 80px;">
   
-  <!-- 头部用户信息 -->
-  <div class="profile-header" style="padding-top: 84px;">
+  <!-- 头部用户信息 - 极简透明 -->
+  <div class="profile-header-minimal pt-20 pb-6">
     <div class="max-w-md mx-auto px-4">
-      <!-- 用户头像和信息 -->
-      <div class="text-center relative z-10 py-4">
-        <div class="avatar-circle mx-auto mb-4">
-          <i class="fas fa-user"></i>
+      <div class="header-content">
+        <!-- 背景装饰 -->
+        <div class="header-bg"></div>
+        
+        <div class="relative flex items-center gap-5 p-6 z-10">
+          <div class="avatar-circle">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="flex-1">
+            <h1 class="text-2xl font-bold text-gray-800 mb-1" id="userName">逆龄小颜用户</h1>
+            <div class="flex items-center gap-2 text-gray-500">
+              <i class="fas fa-phone-alt text-xs"></i>
+              <p class="text-sm" id="userPhone">138****8888</p>
+            </div>
+          </div>
         </div>
-        <h1 class="text-2xl font-bold mb-2" id="userName">AI颜值管家用户</h1>
-        <p class="text-white/80 text-sm" id="userPhone">138****8888</p>
       </div>
     </div>
   </div>
 
   <!-- 统计数据卡片 -->
-  <div class="max-w-md mx-auto px-4">
+  <div class="max-w-md mx-auto px-4 -mt-4">
     <div class="stats-card">
       <div class="grid grid-cols-3 divide-x divide-gray-100">
         <div class="stat-item">
@@ -258,10 +280,10 @@
     <div class="mt-6" id="recentReportSection" style="display: none;">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-lg font-bold text-gray-800">
-          <i class="fas fa-clock mr-2 text-pink-500"></i>
+          <i class="fas fa-clock mr-2 text-green-500"></i>
           最近评估
         </h2>
-        <a href="./reports.html" class="text-sm text-pink-500 hover:text-pink-600">
+        <a href="./reports.html" class="text-sm text-green-500 hover:text-green-600">
           查看全部 <i class="fas fa-chevron-right text-xs"></i>
         </a>
       </div>
@@ -364,7 +386,7 @@
           </div>
           <div class="flex-1">
             <h4 class="font-semibold text-gray-800">关于我们</h4>
-            <p class="text-sm text-gray-500">了解AI颜值管家</p>
+            <p class="text-sm text-gray-500">了解逆龄小颜</p>
           </div>
           <i class="fas fa-chevron-right text-gray-400"></i>
         </div>
@@ -374,7 +396,7 @@
             <i class="fas fa-sign-out-alt"></i>
           </div>
           <div class="flex-1">
-            <h4 class="font-semibold text-gray-800 text-pink-600">退出登录</h4>
+            <h4 class="font-semibold text-gray-800 text-green-600">退出登录</h4>
             <p class="text-sm text-gray-500">退出当前账号</p>
           </div>
           <i class="fas fa-chevron-right text-gray-400"></i>
@@ -386,25 +408,7 @@
   </div>
   <!-- 结束主内容区包裹器 -->
 
-  <!-- 底部导航栏 -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 flex flex-row justify-around items-center" style="height: 60px;">
-    <a href="../../index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-home text-xl mb-1"></i>
-      <span class="text-xs">首页</span>
-    </a>
-    <a href="../assessment/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-camera text-xl mb-1"></i>
-      <span class="text-xs">评估</span>
-    </a>
-    <a href="../community/index.html" class="flex flex-col items-center justify-center flex-1 text-gray-500 hover:text-primary-400 transition-colors py-2">
-      <i class="fas fa-comments text-xl mb-1"></i>
-      <span class="text-xs">社区</span>
-    </a>
-    <a href="./index.html" class="flex flex-col items-center justify-center flex-1 text-primary-400 transition-colors py-2">
-      <i class="fas fa-user text-xl mb-1"></i>
-      <span class="text-xs">我的</span>
-    </a>
-  </nav>
+
 
   <!-- 引入工具库 -->
   <script src="../../../shared/storage.js"></script>
@@ -423,7 +427,7 @@
     function loadUserInfo() {
       const currentUser = Storage.get('currentUser');
       if (currentUser) {
-        document.getElementById('userName').textContent = currentUser.name || 'AI颜值管家用户';
+        document.getElementById('userName').textContent = currentUser.name || '逆龄小颜用户';
         if (currentUser.phone) {
           const phone = currentUser.phone;
           document.getElementById('userPhone').textContent = 
@@ -519,13 +523,13 @@
       const assessmentHistory = Storage.get('assessmentHistory') || [];
       if (assessmentHistory.length > 0) {
         const recent = assessmentHistory[assessmentHistory.length - 1];
-        window.location.href = `./pages/assessment/report.html?id=${recent.id}`;
+        window.location.href = `../assessment/skin-report.html?id=${recent.id}`;
       }
     }
 
     // 显示关于我们
     function showAbout() {
-      alert('AI颜值管家 v2.1\n\n您的专属AI颜值顾问平台\n\n提供专业的面部评估和个性化治疗方案');
+      alert('逆龄小颜 v2.1\n\n您的专属AI颜值顾问平台\n\n提供专业的面部评估和个性化治疗方案');
     }
 
     // 退出登录
